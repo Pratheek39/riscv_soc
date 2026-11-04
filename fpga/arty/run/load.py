@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 import sys
 import argparse
 from elftools.elf.elffile import ELFFile
@@ -14,7 +14,7 @@ def print_progress(iteration, total, prefix='', suffix='', decimals=1, bar_lengt
     filled_length = int(round(bar_length * iteration / float(total)))
     bar = 'X' * filled_length + ' ' * (bar_length - filled_length)
 
-    sys.stdout.write('\r%s |%s| %s%s %s' % (prefix, bar, percents, '%', suffix)),
+    sys.stdout.write('\r%s |%s| %s%s %s' % (prefix, bar, percents, '%', suffix))
 
     if iteration == total:
         sys.stdout.write('\n')
@@ -35,7 +35,7 @@ def load_elf(filename, bus_if):
       length      = sg['p_filesz']
       data        = sg.data()      
       if data:
-        print "ELF: Loading 0x%x - size %dKB" % (load_addr, (length+1023) / 1024)
+        print("ELF: Loading 0x%x - size %dKB" % (load_addr, (length+1023) // 1024))
         bus_if.write(load_addr, bytearray(data), length)
 
 ##################################################################
@@ -88,8 +88,8 @@ def load_prog_args(filename, bus_if, args):
         offset     = arg_argv_addr
         str_offset = offset + 4 * argc
         for arg in arg_list:
-            buf = bytearray(arg)
-            buf.extend("\0")
+            buf = bytearray(arg.encode())
+            buf.extend(b"\0")
             # Write pointer to string
             bus_if.write32(offset, str_offset)
             # Write string itself

@@ -1,4 +1,4 @@
-#!/usr/bin/env python2.7
+#!/usr/bin/env python3
 import sys
 import argparse
 import os
@@ -17,17 +17,18 @@ def main(argv):
     args = parser.parse_args()
 
     run_path = os.path.dirname(os.path.realpath(__file__)) + "/run"
+    py = sys.executable
 
-    cmd = "%s/poke.py -t %s -d %s -b %s -a 0xF0000000 -v 0x0" % (run_path, args.type, args.device, args.baud)
-    print cmd
+    cmd = "%s %s/poke.py -t %s -d %s -b %s -a 0xF0000000 -v 0x0" % (py, run_path, args.type, args.device, args.baud)
+    print(cmd)
     os.system(cmd)
 
-    cmd = "%s/load.py -t %s -d %s -b %s -f %s -p '%s'" % (run_path, args.type, args.device, args.baud, args.filename, args.progargs)
-    print cmd
+    cmd = "%s %s/load.py -t %s -d %s -b %s -f %s -p '%s'" % (py, run_path, args.type, args.device, args.baud, args.filename, args.progargs)
+    print(cmd)
     os.system(cmd)
 
-    cmd = "%s/console-uart.py -t %s -d %s -b %s -f %s" % (run_path, args.type, args.device, args.baud, args.filename)
-    print cmd
+    cmd = "%s %s/console-uart.py -t %s -d %s -b %s -f %s" % (py, run_path, args.type, args.device, args.baud, args.filename)
+    print(cmd)
     os.system(cmd)
 
 if __name__ == "__main__":

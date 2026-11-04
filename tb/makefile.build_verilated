@@ -1,8 +1,23 @@
 ###############################################################################
 # Variables
 ###############################################################################
-VERILATOR_SRC ?= /usr/share/verilator/include
-SYSTEMC_HOME  ?= /usr/local/systemc-2.3.1
+SYSTEMC_PREFIX  := $(shell brew --prefix systemc 2>/dev/null)
+ifneq ($(SYSTEMC_PREFIX),)
+SYSTEMC_HOME    ?= $(SYSTEMC_PREFIX)
+else
+SYSTEMC_HOME    ?= /usr/local/systemc-2.3.1
+endif
+
+SYSTEMC_LIB_DIR ?= $(shell test -d $(SYSTEMC_HOME)/lib-linux64 && echo $(SYSTEMC_HOME)/lib-linux64 || echo $(SYSTEMC_HOME)/lib)
+SYSTEMC_INCLUDE ?= $(SYSTEMC_HOME)/include
+SYSTEMC_LIBDIR  ?= $(SYSTEMC_LIB_DIR)
+
+VERILATOR_ROOT  := $(shell verilator --getenv VERILATOR_ROOT 2>/dev/null)
+ifneq ($(VERILATOR_ROOT),)
+VERILATOR_SRC   ?= $(VERILATOR_ROOT)/include
+else
+VERILATOR_SRC   ?= /usr/share/verilator/include
+endif
 
 SRC_DIR       ?= verilated/
 OBJ_DIR       ?= obj_verilated/
@@ -18,13 +33,18 @@ INCLUDE_PATH += $(VERILATOR_SRC)
 INCLUDE_PATH += $(VERILATOR_SRC)/vltstd
 
 # Flags
-CFLAGS       ?=
+CFLAGS       ?= -std=c++17
 CFLAGS       += -DVM_TRACE=1 -DVL_USER_FINISH=1
 CFLAGS       += -fpic
 CFLAGS       += $(patsubst %,-I%,$(INCLUDE_PATH))
 CFLAGS       += $(EXTRA_CFLAGS)
 
-LIB_OPT      ?= $(SYSTEMC_HOME)/lib-linux64/libsystemc.a
+UNAME_S := $(shell uname -s)
+ifeq ($(UNAME_S),Darwin)
+AR := /usr/bin/libtool -static -o
+else
+AR := ar rcs
+endif
 
 # SRC / Object list
 src2obj       = $(OBJ_DIR)$(patsubst %$(suffix $(1)),%.o,$(notdir $(1)))
@@ -32,6 +52,7 @@ SRC_LIST      = $(foreach src,$(SRC_DIR),$(wildcard $(src)/*.cpp))
 SRC_LIST     += $(VERILATOR_SRC)/verilated.cpp
 SRC_LIST     += $(VERILATOR_SRC)/verilated_vcd_c.cpp
 SRC_LIST     += $(VERILATOR_SRC)/verilated_vcd_sc.cpp
+SRC_LIST     += $(VERILATOR_SRC)/verilated_threads.cpp
 
 OBJ          ?= $(foreach src,$(SRC_LIST),$(call src2obj,$(src)))
 
@@ -51,7 +72,8 @@ $(OBJ_DIR) $(LIB_DIR):
 $(foreach src,$(SRC_LIST),$(eval $(call template_c,$(src))))
 
 $(LIB_DIR)$(LIBNAME): $(OBJ) | $(LIB_DIR) 
-	g++ -shared -o $(LIB_DIR)$(LIBNAME) $(LIB_OPT) $(OBJ)
+	rm -f $@
+	$(AR) $@ $(OBJ)
 
 clean:
 	rm -rf $(LIB_DIR) $(OBJ_DIR)

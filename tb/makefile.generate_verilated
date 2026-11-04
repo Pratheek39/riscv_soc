@@ -29,7 +29,7 @@ $(OUTPUT_DIR):
 	mkdir -p $@
 
 $(OUTPUT_DIR)/V$(NAME): $(SRC_DIR)/$(SRC).$(SRC_TYPE) | $(OUTPUT_DIR)
-	verilator --sc $(patsubst $(OUTPUT_DIR)/V$(NAME), $(SRC_V_DIR)/$(NAME), $@) --Mdir $(OUTPUT_DIR) -I./$(SRC_V_DIR) $(patsubst %,-I%,$(RTL_INCLUDE)) $(VERILATOR_OPTS) $(VERILATE_PARAMS)
+	verilator --sc -Wno-IGNOREDRETURN -Wno-fatal $(patsubst $(OUTPUT_DIR)/V$(NAME), $(SRC_V_DIR)/$(NAME), $@) --Mdir $(OUTPUT_DIR) -I./$(SRC_V_DIR) $(patsubst %,-I%,$(RTL_INCLUDE)) $(VERILATOR_OPTS) $(VERILATE_PARAMS)
 
 clean:
 	rm -rf $(TARGETS) $(OUTPUT_DIR)

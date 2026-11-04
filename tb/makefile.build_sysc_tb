@@ -1,8 +1,22 @@
 ###############################################################################
 # Variables
 ###############################################################################
-VERILATOR_SRC ?= /usr/share/verilator/include
-SYSTEMC_HOME  ?= /usr/local/systemc-2.3.1
+HOMEBREW_PREFIX ?= /opt/homebrew
+SYSTEMC_PREFIX  := $(shell brew --prefix systemc 2>/dev/null)
+ifneq ($(SYSTEMC_PREFIX),)
+SYSTEMC_HOME    ?= $(SYSTEMC_PREFIX)
+else
+SYSTEMC_HOME    ?= /usr/local/systemc-2.3.1
+endif
+
+SYSTEMC_LIB_DIR ?= $(shell test -d $(SYSTEMC_HOME)/lib-linux64 && echo $(SYSTEMC_HOME)/lib-linux64 || echo $(SYSTEMC_HOME)/lib)
+
+VERILATOR_ROOT  := $(shell verilator --getenv VERILATOR_ROOT 2>/dev/null)
+ifneq ($(VERILATOR_ROOT),)
+VERILATOR_SRC   ?= $(VERILATOR_ROOT)/include
+else
+VERILATOR_SRC   ?= /usr/share/verilator/include
+endif
 
 OBJ_DIR      ?= obj/
 EXE_DIR      ?= build/
@@ -18,20 +32,28 @@ INCLUDE_PATH += ../core/isa_sim
 INCLUDE_PATH += $(VERILATOR_SRC)
 INCLUDE_PATH += $(VERILATOR_SRC)/vltstd
 INCLUDE_PATH += $(SYSTEMC_HOME)/include
+ifneq ($(wildcard $(HOMEBREW_PREFIX)/include/libelf),)
+INCLUDE_PATH += $(HOMEBREW_PREFIX)/include
+INCLUDE_PATH += $(HOMEBREW_PREFIX)/include/libelf
+endif
 
 # Dependancies
 LIB_PATH     ?=
 LIB_PATH     += ./lib 
 LIB_PATH     += ../core/isa_sim
-LIBS          = -lisa_sim -lsyscverilated -lelf -lbfd
+LIB_PATH     += $(SYSTEMC_LIB_DIR)
+ifneq ($(wildcard $(HOMEBREW_PREFIX)/lib),)
+LIB_PATH     += $(HOMEBREW_PREFIX)/lib
+endif
+LIBS          = -L./lib -lsyscverilated -L../core/isa_sim -lisa_sim -lelf -lsystemc
 
 # Flags
-CFLAGS       ?= -fpic -O2
+CFLAGS       ?= -fpic -O2 -std=c++17
 CFLAGS       += $(patsubst %,-I%,$(INCLUDE_PATH))
 CFLAGS       += -DVM_TRACE=1
 LDFLAGS      ?= -O2
-LDFLAGS      += -L$(SYSTEMC_HOME)/lib-linux64 
 LDFLAGS      += $(patsubst %,-L%,$(LIB_PATH))
+LDFLAGS      += -Wl,-rpath,$(SYSTEMC_LIB_DIR)
 
 EXTRA_CLEAN_FILES ?=
 
@@ -56,7 +78,7 @@ $(OBJ_DIR) $(EXE_DIR):
 $(foreach src,$(SRC),$(eval $(call template_c,$(src))))
 
 $(EXE_DIR)$(TARGET): $(OBJ) | $(EXE_DIR) 
-	g++ $(LDFLAGS) $(OBJ) -o $@ -lsystemc $(LIBS)
+	g++ $(LDFLAGS) $(OBJ) $(LIBS) -o $@
 
 clean:
 	rm -rf $(EXE_DIR) $(OBJ_DIR) $(EXTRA_CLEAN_FILES)
