@@ -70,6 +70,7 @@ riscv_soc::riscv_soc(sc_module_name name): sc_module(name)
     m_rtl->mem_arlen_o(m_mem_arlen_out);
     m_rtl->mem_arburst_o(m_mem_arburst_out);
     m_rtl->mem_rready_o(m_mem_rready_out);
+    m_rtl->accel_status_o(m_accel_status_out);
 
     SC_METHOD(async_outputs);
     sensitive << clk_in;

@@ -129,7 +129,7 @@ class alignas(VL_CACHE_LINE_BYTES) Vriscv_soc_riscv_core final {
         CData/*0:0*/ __PVT__u_mmu__DOT__dtlb_valid_q;
         CData/*0:0*/ __PVT__u_mmu__DOT__mem_req_q;
         CData/*0:0*/ __VdfgRegularize_hebeb780c_0_22;
-        CData/*0:0*/ __VdfgRegularize_hebeb780c_0_53;
+        CData/*0:0*/ __VdfgRegularize_hebeb780c_0_55;
         CData/*0:0*/ __Vdly__u_csr__DOT__branch_q;
         CData/*0:0*/ __Vdly__u_csr__DOT__reset_q;
         CData/*0:0*/ __Vdly__u_lsu__DOT__mem_rd_q;
@@ -140,7 +140,7 @@ class alignas(VL_CACHE_LINE_BYTES) Vriscv_soc_riscv_core final {
         SData/*10:0*/ __PVT__mem_d_resp_tag_i;
         SData/*10:0*/ __PVT__mem_d_req_tag_o;
         SData/*10:0*/ __PVT__u_lsu__DOT__mem_req_tag_q;
-        SData/*15:0*/ __VdfgRegularize_hebeb780c_0_44;
+        SData/*15:0*/ __VdfgRegularize_hebeb780c_0_46;
         IData/*31:0*/ __PVT__mem_d_data_rd_i;
         IData/*31:0*/ __PVT__mem_i_inst_i;
         IData/*31:0*/ __PVT__reset_vector_i;
@@ -224,8 +224,8 @@ class alignas(VL_CACHE_LINE_BYTES) Vriscv_soc_riscv_core final {
         IData/*31:0*/ __PVT__u_mmu__DOT__itlb_entry_q;
         IData/*19:0*/ __PVT__u_mmu__DOT__dtlb_va_addr_q;
         IData/*31:0*/ __PVT__u_mmu__DOT__dtlb_entry_q;
-        IData/*31:0*/ __VdfgRegularize_hebeb780c_0_34;
-        IData/*31:0*/ __VdfgRegularize_hebeb780c_0_54;
+        IData/*31:0*/ __VdfgRegularize_hebeb780c_0_36;
+        IData/*31:0*/ __VdfgRegularize_hebeb780c_0_56;
         IData/*31:0*/ __Vdly__u_muldiv__DOT__dividend_q;
         IData/*31:0*/ __Vdly__u_muldiv__DOT__quotient_q;
         QData/*63:0*/ __PVT__u_fetch__DOT__skid_buffer_q;

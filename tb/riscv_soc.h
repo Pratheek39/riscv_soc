@@ -34,6 +34,8 @@ public:
     sc_in  <axi4_slave>  mem_in;
     sc_out <axi4_master> mem_out;
 
+    uint32_t accel_status(void) const { return m_accel_status_out.read().to_uint(); }
+
     //-------------------------------------------------------------
     // Constructor
     //-------------------------------------------------------------
@@ -135,6 +137,7 @@ private:
     sc_signal <sc_uint<8> > m_mem_arlen_out;
     sc_signal <sc_uint<2> > m_mem_arburst_out;
     sc_signal <bool> m_mem_rready_out;
+    sc_signal <sc_uint<32> > m_accel_status_out;
 
 public:
     Vriscv_soc *m_rtl;

@@ -37,7 +37,7 @@ Vriscv_soc__Syms::Vriscv_soc__Syms(VerilatedContext* contextp, const char* namep
     , TOP{this, namep}
 {
     // Check resources
-    Verilated::stackCheck(465);
+    Verilated::stackCheck(714);
     // Setup sub module instances
     TOP__riscv_soc.ctor(this, "riscv_soc");
     TOP__riscv_soc__u_core.ctor(this, "riscv_soc.u_core");

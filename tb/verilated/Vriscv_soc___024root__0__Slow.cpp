@@ -33,10 +33,27 @@ VL_ATTR_COLD void Vriscv_soc___024root___eval_static(Vriscv_soc___024root* vlSel
         = vlSelfRef.__Vcellinp__riscv_soc__rst_cpu_i;
 }
 
+VL_ATTR_COLD void Vriscv_soc_riscv_soc___eval_initial__TOP__riscv_soc(Vriscv_soc_riscv_soc* vlSelf);
+
 VL_ATTR_COLD void Vriscv_soc___024root___eval_initial(Vriscv_soc___024root* vlSelf) {
     VL_DEBUG_IF(VL_DBG_MSGF("+    Vriscv_soc___024root___eval_initial\n"); );
     Vriscv_soc__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
     auto& vlSelfRef = std::ref(*vlSelf).get();
+    // Body
+    Vriscv_soc_riscv_soc___eval_initial__TOP__riscv_soc((&vlSymsp->TOP__riscv_soc));
+    {
+        // Inlined CFunc: __Vm_traceActivitySetAll
+        vlSelfRef.__Vm_traceActivity[0U] = 1U;
+        vlSelfRef.__Vm_traceActivity[1U] = 1U;
+        vlSelfRef.__Vm_traceActivity[2U] = 1U;
+        vlSelfRef.__Vm_traceActivity[3U] = 1U;
+        vlSelfRef.__Vm_traceActivity[4U] = 1U;
+        vlSelfRef.__Vm_traceActivity[5U] = 1U;
+        vlSelfRef.__Vm_traceActivity[6U] = 1U;
+        vlSelfRef.__Vm_traceActivity[7U] = 1U;
+        vlSelfRef.__Vm_traceActivity[8U] = 1U;
+        vlSelfRef.__Vm_traceActivity[9U] = 1U;
+    }
 }
 
 #ifdef VL_DEBUG
@@ -102,9 +119,10 @@ VL_ATTR_COLD bool Vriscv_soc___024root___eval_stl(Vriscv_soc___024root* vlSelf, 
                 Vriscv_soc_riscv_top___stl_sequent__TOP__riscv_soc__u_core__0((&vlSymsp->TOP__riscv_soc__u_core));
                 {
                     // Inlined CFunc: _stl_sequent__TOP__1
-                    VL_ASSIGN_SUI(2, vlSelfRef.inport_bresp_o, vlSymsp->TOP__riscv_soc.__PVT__u_soc__DOT__u_arb__DOT__outport_bresp_i);
-                    VL_ASSIGN_SUI(2, vlSelfRef.inport_rresp_o, vlSymsp->TOP__riscv_soc.__PVT__u_soc__DOT__u_arb__DOT__outport_rresp_i);
-                    VL_ASSIGN_SUI(32, vlSelfRef.inport_rdata_o, vlSymsp->TOP__riscv_soc.__PVT__u_soc__DOT__u_arb__DOT__outport_rdata_i);
+                    VL_ASSIGN_SUI(32, vlSelfRef.accel_status_o, vlSymsp->TOP__riscv_soc.__PVT__u_soc__DOT__u_accel__DOT__status_o);
+                    VL_ASSIGN_SUI(2, vlSelfRef.inport_bresp_o, vlSymsp->TOP__riscv_soc.__PVT__u_soc__DOT__u_accel__DOT__m_bresp_i);
+                    VL_ASSIGN_SUI(2, vlSelfRef.inport_rresp_o, vlSymsp->TOP__riscv_soc.__PVT__u_soc__DOT__u_accel__DOT__m_rresp_i);
+                    VL_ASSIGN_SUI(32, vlSelfRef.inport_rdata_o, vlSymsp->TOP__riscv_soc.__PVT__u_soc__DOT__u_accel__DOT__m_rdata_i);
                     VL_ASSIGN_SII(1, vlSelfRef.inport_bvalid_o, 
                                   ((IData)(vlSymsp->TOP__riscv_soc.__PVT__u_soc__DOT__u_arb__DOT__wr_resp_target_r) 
                                    & (IData)(vlSymsp->TOP__riscv_soc.__PVT__u_soc__DOT__u_arb__DOT__outport_bvalid_i)));
@@ -263,7 +281,6 @@ VL_ATTR_COLD void Vriscv_soc___024root___stl_sequent__TOP__0(Vriscv_soc___024roo
     VL_ASSIGN_ISU(32, vlSelfRef.__Vcellinp__riscv_soc__gpio_input_i, vlSelfRef.gpio_input_i);
     VL_ASSIGN_ISI(1, vlSelfRef.__Vcellinp__riscv_soc__uart_txd_i, vlSelfRef.uart_txd_i);
     VL_ASSIGN_ISI(1, vlSelfRef.__Vcellinp__riscv_soc__rst_cpu_i, vlSelfRef.rst_cpu_i);
-    VL_ASSIGN_ISU(4, vlSelfRef.__Vcellinp__riscv_soc__inport_wstrb_i, vlSelfRef.inport_wstrb_i);
     VL_ASSIGN_ISU(32, vlSelfRef.__Vcellinp__riscv_soc__reset_vector_i, vlSelfRef.reset_vector_i);
     VL_ASSIGN_ISI(1, vlSelfRef.__Vcellinp__riscv_soc__rst_i, vlSelfRef.rst_i);
     VL_ASSIGN_ISI(1, vlSelfRef.__Vcellinp__riscv_soc__clk_i, vlSelfRef.clk_i);
@@ -311,6 +328,7 @@ VL_ATTR_COLD void Vriscv_soc___024root___stl_sequent__TOP__0(Vriscv_soc___024roo
                                                        [vlSymsp->TOP__riscv_soc.__PVT__u_soc__DOT__u_retime__DOT__u_write_cmd_req__DOT__rd_ptr_q] 
                                                        >> 0x0000000eU)));
     VL_ASSIGN_ISI(1, vlSelfRef.__Vcellinp__riscv_soc__spi_miso_i, vlSelfRef.spi_miso_i);
+    VL_ASSIGN_ISU(4, vlSelfRef.__Vcellinp__riscv_soc__inport_wstrb_i, vlSelfRef.inport_wstrb_i);
     VL_ASSIGN_ISU(32, vlSelfRef.__Vcellinp__riscv_soc__inport_wdata_i, vlSelfRef.inport_wdata_i);
     VL_ASSIGN_ISI(1, vlSelfRef.__Vcellinp__riscv_soc__inport_bready_i, vlSelfRef.inport_bready_i);
     VL_ASSIGN_ISI(1, vlSelfRef.__Vcellinp__riscv_soc__inport_rready_i, vlSelfRef.inport_rready_i);

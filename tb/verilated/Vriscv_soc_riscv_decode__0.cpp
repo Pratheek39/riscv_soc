@@ -945,14 +945,14 @@ void Vriscv_soc_riscv_decode___nba_comb__TOP__riscv_soc__u_core__u_core__u_decod
         vlSelfRef.__PVT__stall_scoreboard_r = 1U;
         vlSelfRef.__PVT__opcode_valid_r = 0U;
     }
-    vlSelfRef.__VdfgRegularize_hebeb780c_0_56 = (IData)(
+    vlSelfRef.__VdfgRegularize_hebeb780c_0_58 = (IData)(
                                                         ((0x0001000000000000ULL 
                                                           == 
                                                           (0x0003000000000000ULL 
                                                            & vlSelfRef.__PVT__opcode_instr_q)) 
                                                          & (vlSymsp->TOP__riscv_soc__u_core__u_core.__PVT__opcode_rb_operand_w 
                                                             >> 0x0000001fU)));
-    vlSelfRef.__VdfgRegularize_hebeb780c_0_57 = (1U 
+    vlSelfRef.__VdfgRegularize_hebeb780c_0_59 = (1U 
                                                  & ((1U 
                                                      & (IData)(
                                                                (vlSelfRef.__PVT__opcode_instr_q 

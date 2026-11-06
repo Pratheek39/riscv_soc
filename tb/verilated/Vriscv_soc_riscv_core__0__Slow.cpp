@@ -9,10 +9,10 @@ VL_ATTR_COLD void Vriscv_soc_riscv_core___stl_sequent__TOP__riscv_soc__u_core__u
     Vriscv_soc__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
     auto& vlSelfRef = std::ref(*vlSelf).get();
     // Locals
-    CData/*0:0*/ __VdfgRegularize_hebeb780c_0_51;
-    __VdfgRegularize_hebeb780c_0_51 = 0;
-    CData/*0:0*/ __VdfgRegularize_hebeb780c_0_52;
-    __VdfgRegularize_hebeb780c_0_52 = 0;
+    CData/*0:0*/ __VdfgRegularize_hebeb780c_0_53;
+    __VdfgRegularize_hebeb780c_0_53 = 0;
+    CData/*0:0*/ __VdfgRegularize_hebeb780c_0_54;
+    __VdfgRegularize_hebeb780c_0_54 = 0;
     // Body
     vlSelfRef.__PVT__u_muldiv__DOT__signed_operation_w 
         = (IData)((0ULL != (0x0028000000000000ULL & vlSymsp->TOP__riscv_soc__u_core__u_core__u_decode.__PVT__opcode_instr_q)));
@@ -54,7 +54,7 @@ VL_ATTR_COLD void Vriscv_soc_riscv_core___stl_sequent__TOP__riscv_soc__u_core__u
                                              << 0x0000000cU) 
                                             | (vlSymsp->TOP__riscv_soc__u_core__u_core__u_decode.__PVT__inst_q 
                                                >> 0x00000014U));
-    vlSelfRef.__VdfgRegularize_hebeb780c_0_53 = ((IData)(vlSelfRef.__PVT__u_lsu__DOT__mem_unaligned_ld_q) 
+    vlSelfRef.__VdfgRegularize_hebeb780c_0_55 = ((IData)(vlSelfRef.__PVT__u_lsu__DOT__mem_unaligned_ld_q) 
                                                  | (IData)(vlSelfRef.__PVT__u_lsu__DOT__mem_unaligned_st_q));
     vlSelfRef.__PVT__muldiv_stall_w = (((IData)(vlSelfRef.__PVT__u_muldiv__DOT__div_busy_q) 
                                         & (0U != (0x000000ffU 
@@ -70,7 +70,7 @@ VL_ATTR_COLD void Vriscv_soc_riscv_core___stl_sequent__TOP__riscv_soc__u_core__u
     vlSelfRef.__PVT__u_arb__DOT__src_mmu_w = ((IData)(vlSelfRef.__PVT__u_arb__DOT__read_hold_q)
                                                ? (IData)(vlSelfRef.__PVT__u_arb__DOT__src_mmu_q)
                                                : (IData)(vlSelfRef.__PVT__u_mmu__DOT__mem_req_q));
-    __VdfgRegularize_hebeb780c_0_51 = (1U & ((~ (vlSelfRef.__PVT__u_csr__DOT__csr_sr_q 
+    __VdfgRegularize_hebeb780c_0_53 = (1U & ((~ (vlSelfRef.__PVT__u_csr__DOT__csr_sr_q 
                                                  >> 0x00000012U)) 
                                              & (vlSelfRef.__PVT__u_mmu__DOT__dtlb_entry_q 
                                                 >> 4U)));
@@ -82,16 +82,16 @@ VL_ATTR_COLD void Vriscv_soc_riscv_core___stl_sequent__TOP__riscv_soc__u_core__u
                                             | (IData)(vlSelfRef.__PVT__u_mmu__DOT__store_q));
     vlSelfRef.__PVT__u_mmu__DOT__load_w = ((IData)(vlSelfRef.__PVT__u_lsu__DOT__mem_rd_q) 
                                            | (IData)(vlSelfRef.__PVT__u_mmu__DOT__load_q));
-    vlSelfRef.__VdfgRegularize_hebeb780c_0_54 = ((~ vlSelfRef.__PVT__u_csr__DOT__csr_mideleg_q) 
+    vlSelfRef.__VdfgRegularize_hebeb780c_0_56 = ((~ vlSelfRef.__PVT__u_csr__DOT__csr_mideleg_q) 
                                                  & vlSelfRef.__PVT__u_csr__DOT__irq_pending_r);
-    __VdfgRegularize_hebeb780c_0_52 = ((0U != (IData)(vlSelfRef.__PVT__u_mmu__DOT__store_w)) 
+    __VdfgRegularize_hebeb780c_0_54 = ((0U != (IData)(vlSelfRef.__PVT__u_mmu__DOT__store_w)) 
                                        | (IData)(vlSelfRef.__PVT__u_mmu__DOT__load_w));
     vlSelfRef.__PVT__u_csr__DOT__irq_masked_r = (((IData)(vlSelfRef.__PVT__u_csr__DOT__m_enabled_r) 
                                                   & (0U 
-                                                     != vlSelfRef.__VdfgRegularize_hebeb780c_0_54))
+                                                     != vlSelfRef.__VdfgRegularize_hebeb780c_0_56))
                                                   ? 
                                                  ((- (IData)((IData)(vlSelfRef.__PVT__u_csr__DOT__m_enabled_r))) 
-                                                  & vlSelfRef.__VdfgRegularize_hebeb780c_0_54)
+                                                  & vlSelfRef.__VdfgRegularize_hebeb780c_0_56)
                                                   : 
                                                  (vlSelfRef.__PVT__u_csr__DOT__irq_pending_r 
                                                   & (vlSelfRef.__PVT__u_csr__DOT__csr_mideleg_q 
@@ -102,7 +102,7 @@ VL_ATTR_COLD void Vriscv_soc_riscv_core___stl_sequent__TOP__riscv_soc__u_core__u
                                                                        == (IData)(vlSelfRef.__PVT__u_csr__DOT__csr_mpriv_q)) 
                                                                       & (vlSelfRef.__PVT__u_csr__DOT__csr_sr_q 
                                                                          >> 1U))))))));
-    vlSelfRef.__PVT__u_mmu__DOT__lsu_addr_w = ((IData)(__VdfgRegularize_hebeb780c_0_52)
+    vlSelfRef.__PVT__u_mmu__DOT__lsu_addr_w = ((IData)(__VdfgRegularize_hebeb780c_0_54)
                                                 ? vlSelfRef.__PVT__u_lsu__DOT__mem_addr_q
                                                 : vlSelfRef.__PVT__u_mmu__DOT__lsu_in_addr_q);
     vlSelfRef.__PVT__u_mmu__DOT__dtlb_hit_w = ((IData)(vlSelfRef.__PVT__u_mmu__DOT__dtlb_valid_q) 
@@ -110,7 +110,7 @@ VL_ATTR_COLD void Vriscv_soc_riscv_core___stl_sequent__TOP__riscv_soc__u_core__u
                                                   == 
                                                   (vlSelfRef.__PVT__u_mmu__DOT__lsu_addr_w 
                                                    >> 0x0000000cU)));
-    vlSelfRef.__PVT__u_mmu__DOT__dtlb_miss_w = ((IData)(__VdfgRegularize_hebeb780c_0_52) 
+    vlSelfRef.__PVT__u_mmu__DOT__dtlb_miss_w = ((IData)(__VdfgRegularize_hebeb780c_0_54) 
                                                 & ((~ (IData)(vlSelfRef.__PVT__u_mmu__DOT__dtlb_hit_w)) 
                                                    & (IData)(vlSelfRef.__PVT__u_csr__DOT__mmu_enable_w)));
     vlSelfRef.__PVT__fault_page_store_w = ((IData)(vlSelfRef.__PVT__u_csr__DOT__mmu_enable_w) 
@@ -124,7 +124,7 @@ VL_ATTR_COLD void Vriscv_soc_riscv_core___stl_sequent__TOP__riscv_soc__u_core__u
                                                      (3U 
                                                       & (vlSelfRef.__PVT__u_mmu__DOT__dtlb_entry_q 
                                                          >> 1U)))) 
-                                                   | (IData)(__VdfgRegularize_hebeb780c_0_51))
+                                                   | (IData)(__VdfgRegularize_hebeb780c_0_53))
                                                    : 
                                                   ((~ 
                                                     (vlSelfRef.__PVT__u_mmu__DOT__dtlb_entry_q 
@@ -144,7 +144,7 @@ VL_ATTR_COLD void Vriscv_soc_riscv_core___stl_sequent__TOP__riscv_soc__u_core__u
                                                 ((~ 
                                                   (vlSelfRef.__PVT__u_mmu__DOT__dtlb_entry_q 
                                                    >> 1U)) 
-                                                 | (IData)(__VdfgRegularize_hebeb780c_0_51))
+                                                 | (IData)(__VdfgRegularize_hebeb780c_0_53))
                                                  : (IData)(
                                                            (0x00000012U 
                                                             != 
@@ -154,7 +154,7 @@ VL_ATTR_COLD void Vriscv_soc_riscv_core___stl_sequent__TOP__riscv_soc__u_core__u
     vlSelfRef.__VdfgRegularize_hebeb780c_0_22 = ((IData)(vlSelfRef.__PVT__fault_page_store_w) 
                                                  | (IData)(vlSelfRef.__PVT__mmu_load_fault_w));
     vlSelfRef.__PVT__csr_stall_w = ((IData)(vlSelfRef.__VdfgRegularize_hebeb780c_0_22) 
-                                    | (IData)(vlSelfRef.__VdfgRegularize_hebeb780c_0_53));
+                                    | (IData)(vlSelfRef.__VdfgRegularize_hebeb780c_0_55));
 }
 
 VL_ATTR_COLD void Vriscv_soc_riscv_core___stl_sequent__TOP__riscv_soc__u_core__u_core__1(Vriscv_soc_riscv_core* vlSelf) {
@@ -229,14 +229,14 @@ VL_ATTR_COLD void Vriscv_soc_riscv_core___stl_sequent__TOP__riscv_soc__u_core__u
             vlSelfRef.__PVT__u_lsu__DOT__wb_result_r 
                 = ((2U & (IData)(vlSelfRef.__PVT__u_lsu__DOT__addr_lsb_r))
                     ? ((1U & (IData)(vlSelfRef.__PVT__u_lsu__DOT__addr_lsb_r))
-                        ? (vlSymsp->TOP__riscv_soc.__PVT__u_soc__DOT__u_arb__DOT__outport_rdata_i 
+                        ? (vlSymsp->TOP__riscv_soc.__PVT__u_soc__DOT__u_accel__DOT__m_rdata_i 
                            >> 0x18U) : (0x000000ffU 
-                                        & (vlSymsp->TOP__riscv_soc.__PVT__u_soc__DOT__u_arb__DOT__outport_rdata_i 
+                                        & (vlSymsp->TOP__riscv_soc.__PVT__u_soc__DOT__u_accel__DOT__m_rdata_i 
                                            >> 0x10U)))
                     : ((1U & (IData)(vlSelfRef.__PVT__u_lsu__DOT__addr_lsb_r))
-                        ? (0x000000ffU & (vlSymsp->TOP__riscv_soc.__PVT__u_soc__DOT__u_arb__DOT__outport_rdata_i 
+                        ? (0x000000ffU & (vlSymsp->TOP__riscv_soc.__PVT__u_soc__DOT__u_accel__DOT__m_rdata_i 
                                           >> 8U)) : 
-                       (0x000000ffU & vlSymsp->TOP__riscv_soc.__PVT__u_soc__DOT__u_arb__DOT__outport_rdata_i)));
+                       (0x000000ffU & vlSymsp->TOP__riscv_soc.__PVT__u_soc__DOT__u_accel__DOT__m_rdata_i)));
             if (((IData)(vlSelfRef.__PVT__u_lsu__DOT__load_signed_r) 
                  & (vlSelfRef.__PVT__u_lsu__DOT__wb_result_r 
                     >> 7U))) {
@@ -246,8 +246,8 @@ VL_ATTR_COLD void Vriscv_soc_riscv_core___stl_sequent__TOP__riscv_soc__u_core__u
         } else if (vlSelfRef.__PVT__u_lsu__DOT__load_half_r) {
             vlSelfRef.__PVT__u_lsu__DOT__wb_result_r 
                 = ((2U & (IData)(vlSelfRef.__PVT__u_lsu__DOT__addr_lsb_r))
-                    ? (vlSymsp->TOP__riscv_soc.__PVT__u_soc__DOT__u_arb__DOT__outport_rdata_i 
-                       >> 0x10U) : (0x0000ffffU & vlSymsp->TOP__riscv_soc.__PVT__u_soc__DOT__u_arb__DOT__outport_rdata_i));
+                    ? (vlSymsp->TOP__riscv_soc.__PVT__u_soc__DOT__u_accel__DOT__m_rdata_i 
+                       >> 0x10U) : (0x0000ffffU & vlSymsp->TOP__riscv_soc.__PVT__u_soc__DOT__u_accel__DOT__m_rdata_i));
             if (((IData)(vlSelfRef.__PVT__u_lsu__DOT__load_signed_r) 
                  & (vlSelfRef.__PVT__u_lsu__DOT__wb_result_r 
                     >> 0x0fU))) {
@@ -256,7 +256,7 @@ VL_ATTR_COLD void Vriscv_soc_riscv_core___stl_sequent__TOP__riscv_soc__u_core__u
             }
         } else {
             vlSelfRef.__PVT__u_lsu__DOT__wb_result_r 
-                = vlSymsp->TOP__riscv_soc.__PVT__u_soc__DOT__u_arb__DOT__outport_rdata_i;
+                = vlSymsp->TOP__riscv_soc.__PVT__u_soc__DOT__u_accel__DOT__m_rdata_i;
         }
     } else {
         vlSelfRef.__PVT__u_lsu__DOT__wb_idx_r = 0U;
@@ -341,12 +341,12 @@ VL_ATTR_COLD void Vriscv_soc_riscv_core___stl_sequent__TOP__riscv_soc__u_core__u
     Vriscv_soc__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
     auto& vlSelfRef = std::ref(*vlSelf).get();
     // Locals
-    CData/*0:0*/ __VdfgRegularize_hebeb780c_0_36;
-    __VdfgRegularize_hebeb780c_0_36 = 0;
-    CData/*0:0*/ __VdfgRegularize_hebeb780c_0_48;
-    __VdfgRegularize_hebeb780c_0_48 = 0;
-    CData/*0:0*/ __VdfgRegularize_hebeb780c_0_55;
-    __VdfgRegularize_hebeb780c_0_55 = 0;
+    CData/*0:0*/ __VdfgRegularize_hebeb780c_0_38;
+    __VdfgRegularize_hebeb780c_0_38 = 0;
+    CData/*0:0*/ __VdfgRegularize_hebeb780c_0_50;
+    __VdfgRegularize_hebeb780c_0_50 = 0;
+    CData/*0:0*/ __VdfgRegularize_hebeb780c_0_57;
+    __VdfgRegularize_hebeb780c_0_57 = 0;
     VlWide<3>/*95:0*/ __Vtemp_2;
     VlWide<3>/*95:0*/ __Vtemp_3;
     VlWide<3>/*95:0*/ __Vtemp_4;
@@ -354,25 +354,25 @@ VL_ATTR_COLD void Vriscv_soc_riscv_core___stl_sequent__TOP__riscv_soc__u_core__u
     vlSelfRef.__PVT__lsu_opcode_valid_w = ((IData)(vlSymsp->TOP__riscv_soc__u_core__u_core__u_decode.__PVT__opcode_valid_r) 
                                            & ((~ (IData)(vlSelfRef.__PVT__csr_stall_w)) 
                                               & (~ (IData)(vlSelfRef.__PVT__muldiv_stall_w))));
-    __VdfgRegularize_hebeb780c_0_48 = ((~ (IData)(vlSelfRef.__PVT__lsu_stall_w)) 
+    __VdfgRegularize_hebeb780c_0_50 = ((~ (IData)(vlSelfRef.__PVT__lsu_stall_w)) 
                                        & (IData)(vlSymsp->TOP__riscv_soc__u_core__u_core__u_decode.__PVT__opcode_valid_r));
-    __Vtemp_2[0U] = (IData)((((QData)((IData)(vlSymsp->TOP__riscv_soc__u_core__u_core__u_decode.__VdfgRegularize_hebeb780c_0_57)) 
+    __Vtemp_2[0U] = (IData)((((QData)((IData)(vlSymsp->TOP__riscv_soc__u_core__u_core__u_decode.__VdfgRegularize_hebeb780c_0_59)) 
                               << 0x00000020U) | (QData)((IData)(vlSelfRef.__PVT__opcode_ra_operand_w))));
-    __Vtemp_2[1U] = (((- (IData)((IData)(vlSymsp->TOP__riscv_soc__u_core__u_core__u_decode.__VdfgRegularize_hebeb780c_0_57))) 
-                      << 1U) | (IData)(((((QData)((IData)(vlSymsp->TOP__riscv_soc__u_core__u_core__u_decode.__VdfgRegularize_hebeb780c_0_57)) 
+    __Vtemp_2[1U] = (((- (IData)((IData)(vlSymsp->TOP__riscv_soc__u_core__u_core__u_decode.__VdfgRegularize_hebeb780c_0_59))) 
+                      << 1U) | (IData)(((((QData)((IData)(vlSymsp->TOP__riscv_soc__u_core__u_core__u_decode.__VdfgRegularize_hebeb780c_0_59)) 
                                           << 0x00000020U) 
                                          | (QData)((IData)(vlSelfRef.__PVT__opcode_ra_operand_w))) 
                                         >> 0x00000020U)));
-    __Vtemp_2[2U] = ((- (IData)((IData)(vlSymsp->TOP__riscv_soc__u_core__u_core__u_decode.__VdfgRegularize_hebeb780c_0_57))) 
+    __Vtemp_2[2U] = ((- (IData)((IData)(vlSymsp->TOP__riscv_soc__u_core__u_core__u_decode.__VdfgRegularize_hebeb780c_0_59))) 
                      >> 0x0000001fU);
-    __Vtemp_3[0U] = (IData)((((QData)((IData)(vlSymsp->TOP__riscv_soc__u_core__u_core__u_decode.__VdfgRegularize_hebeb780c_0_56)) 
+    __Vtemp_3[0U] = (IData)((((QData)((IData)(vlSymsp->TOP__riscv_soc__u_core__u_core__u_decode.__VdfgRegularize_hebeb780c_0_58)) 
                               << 0x00000020U) | (QData)((IData)(vlSelfRef.__PVT__opcode_rb_operand_w))));
-    __Vtemp_3[1U] = (((- (IData)((IData)(vlSymsp->TOP__riscv_soc__u_core__u_core__u_decode.__VdfgRegularize_hebeb780c_0_56))) 
-                      << 1U) | (IData)(((((QData)((IData)(vlSymsp->TOP__riscv_soc__u_core__u_core__u_decode.__VdfgRegularize_hebeb780c_0_56)) 
+    __Vtemp_3[1U] = (((- (IData)((IData)(vlSymsp->TOP__riscv_soc__u_core__u_core__u_decode.__VdfgRegularize_hebeb780c_0_58))) 
+                      << 1U) | (IData)(((((QData)((IData)(vlSymsp->TOP__riscv_soc__u_core__u_core__u_decode.__VdfgRegularize_hebeb780c_0_58)) 
                                           << 0x00000020U) 
                                          | (QData)((IData)(vlSelfRef.__PVT__opcode_rb_operand_w))) 
                                         >> 0x00000020U)));
-    __Vtemp_3[2U] = ((- (IData)((IData)(vlSymsp->TOP__riscv_soc__u_core__u_core__u_decode.__VdfgRegularize_hebeb780c_0_56))) 
+    __Vtemp_3[2U] = ((- (IData)((IData)(vlSymsp->TOP__riscv_soc__u_core__u_core__u_decode.__VdfgRegularize_hebeb780c_0_58))) 
                      >> 0x0000001fU);
     VL_MUL_W(3, __Vtemp_4, __Vtemp_2, __Vtemp_3);
     vlSelfRef.__PVT__u_muldiv__DOT__mult_result_w[0U] 
@@ -433,9 +433,9 @@ VL_ATTR_COLD void Vriscv_soc_riscv_core___stl_sequent__TOP__riscv_soc__u_core__u
     vlSelfRef.__PVT__exec_opcode_valid_w = ((~ (IData)(vlSelfRef.__PVT__lsu_stall_w)) 
                                             & (IData)(vlSelfRef.__PVT__lsu_opcode_valid_w));
     vlSelfRef.__PVT__muldiv_opcode_valid_w = ((~ (IData)(vlSelfRef.__PVT__csr_stall_w)) 
-                                              & (IData)(__VdfgRegularize_hebeb780c_0_48));
+                                              & (IData)(__VdfgRegularize_hebeb780c_0_50));
     vlSelfRef.__PVT__csr_opcode_valid_w = ((~ (IData)(vlSelfRef.__PVT__muldiv_stall_w)) 
-                                           & (IData)(__VdfgRegularize_hebeb780c_0_48));
+                                           & (IData)(__VdfgRegularize_hebeb780c_0_50));
     vlSelfRef.__PVT__mmu_ifetch_rd_w = ((IData)(vlSelfRef.__PVT__u_fetch__DOT__active_q) 
                                         & ((~ (IData)(vlSelfRef.__PVT__u_fetch__DOT__icache_busy_w)) 
                                            & (IData)(vlSelfRef.__PVT__fetch_accept_w)));
@@ -457,14 +457,14 @@ VL_ATTR_COLD void Vriscv_soc_riscv_core___stl_sequent__TOP__riscv_soc__u_core__u
                                     | (IData)((vlSymsp->TOP__riscv_soc__u_core__u_core__u_decode.__PVT__opcode_instr_q 
                                                >> 0x00000037U))))))) 
            & (IData)(vlSelfRef.__PVT__csr_opcode_valid_w));
-    __VdfgRegularize_hebeb780c_0_55 = (((IData)(vlSelfRef.__PVT__u_csr__DOT__set_r) 
+    __VdfgRegularize_hebeb780c_0_57 = (((IData)(vlSelfRef.__PVT__u_csr__DOT__set_r) 
                                         | (IData)(vlSelfRef.__PVT__u_csr__DOT__clr_r)) 
                                        & (IData)(vlSelfRef.__PVT__csr_opcode_valid_w));
     vlSelfRef.__PVT__fetch_branch_w = ((IData)(vlSelfRef.__PVT__u_csr__DOT__branch_q) 
                                        | (IData)(vlSelfRef.__PVT__branch_request_w));
     vlSelfRef.__PVT__mmu_flush_w = ((0x0180U == (vlSymsp->TOP__riscv_soc__u_core__u_core__u_decode.__PVT__inst_q 
                                                  >> 0x00000014U)) 
-                                    & (IData)(__VdfgRegularize_hebeb780c_0_55));
+                                    & (IData)(__VdfgRegularize_hebeb780c_0_57));
     vlSelfRef.__PVT__u_csr__DOT__csr_access_fault_w 
         = ((((IData)(vlSelfRef.__PVT__u_csr__DOT__csr_mpriv_q) 
              < (3U & (vlSymsp->TOP__riscv_soc__u_core__u_core__u_decode.__PVT__inst_q 
@@ -479,7 +479,7 @@ VL_ATTR_COLD void Vriscv_soc_riscv_core___stl_sequent__TOP__riscv_soc__u_core__u
                                                          != 
                                                          (0x000f8000U 
                                                           & vlSymsp->TOP__riscv_soc__u_core__u_core__u_decode.__PVT__inst_q)))))) 
-           & (IData)(__VdfgRegularize_hebeb780c_0_55));
+           & (IData)(__VdfgRegularize_hebeb780c_0_57));
     vlSelfRef.__PVT__u_fetch__DOT__branch_pc_w = ((
                                                    (~ (IData)(vlSelfRef.__PVT__fetch_branch_w)) 
                                                    & (IData)(vlSelfRef.__PVT__u_fetch__DOT__branch_valid_q))
@@ -517,7 +517,7 @@ VL_ATTR_COLD void Vriscv_soc_riscv_core___stl_sequent__TOP__riscv_soc__u_core__u
     vlSelfRef.__PVT__u_mmu__DOT__itlb_miss_w = ((IData)(vlSelfRef.__PVT__mmu_ifetch_rd_w) 
                                                 & ((~ (IData)(vlSelfRef.__PVT__u_mmu__DOT__itlb_hit_w)) 
                                                    & (IData)(vlSelfRef.__PVT__u_csr__DOT__mmu_enable_w)));
-    __VdfgRegularize_hebeb780c_0_36 = ((IData)(vlSelfRef.__PVT__u_csr__DOT__mmu_enable_w) 
+    __VdfgRegularize_hebeb780c_0_38 = ((IData)(vlSelfRef.__PVT__u_csr__DOT__mmu_enable_w) 
                                        & (IData)(vlSelfRef.__PVT__u_mmu__DOT__itlb_hit_w));
     vlSelfRef.__PVT__mmu_fetch_fault_w = (((1U == (IData)(vlSelfRef.__PVT__u_csr__DOT__csr_mpriv_q))
                                             ? ((~ (vlSelfRef.__PVT__u_mmu__DOT__itlb_entry_q 
@@ -532,9 +532,9 @@ VL_ATTR_COLD void Vriscv_soc_riscv_core___stl_sequent__TOP__riscv_soc__u_core__u
                                                   (3U 
                                                    & (vlSelfRef.__PVT__u_mmu__DOT__itlb_entry_q 
                                                       >> 3U))))) 
-                                          & (IData)(__VdfgRegularize_hebeb780c_0_36));
+                                          & (IData)(__VdfgRegularize_hebeb780c_0_38));
     vlSelfRef.__PVT__mmu_ifetch_accept_w = ((((~ (IData)(vlSelfRef.__PVT__u_csr__DOT__mmu_enable_w)) 
-                                              | (IData)(__VdfgRegularize_hebeb780c_0_36)) 
+                                              | (IData)(__VdfgRegularize_hebeb780c_0_38)) 
                                              & (IData)(vlSymsp->TOP__riscv_soc__u_core__u_icache.__PVT__req_accept_o)) 
                                             | (IData)(vlSelfRef.__PVT__mmu_fetch_fault_w));
     vlSelfRef.__PVT__u_fetch__DOT__stall_w = (1U & 
@@ -739,10 +739,10 @@ VL_ATTR_COLD void Vriscv_soc_riscv_core___ctor_var_reset(Vriscv_soc_riscv_core* 
     vlSelf->__PVT__u_mmu__DOT__dtlb_entry_q = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 17769713418442643009ull);
     vlSelf->__PVT__u_mmu__DOT__mem_req_q = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 586365220882509387ull);
     vlSelf->__VdfgRegularize_hebeb780c_0_22 = 0;
-    vlSelf->__VdfgRegularize_hebeb780c_0_34 = 0;
-    vlSelf->__VdfgRegularize_hebeb780c_0_44 = 0;
-    vlSelf->__VdfgRegularize_hebeb780c_0_53 = 0;
-    vlSelf->__VdfgRegularize_hebeb780c_0_54 = 0;
+    vlSelf->__VdfgRegularize_hebeb780c_0_36 = 0;
+    vlSelf->__VdfgRegularize_hebeb780c_0_46 = 0;
+    vlSelf->__VdfgRegularize_hebeb780c_0_55 = 0;
+    vlSelf->__VdfgRegularize_hebeb780c_0_56 = 0;
     vlSelf->__Vdly__u_muldiv__DOT__dividend_q = 0;
     vlSelf->__Vdly__u_muldiv__DOT__quotient_q = 0;
     vlSelf->__Vdly__u_csr__DOT__branch_q = 0;

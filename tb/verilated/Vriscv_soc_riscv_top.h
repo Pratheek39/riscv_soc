@@ -93,8 +93,8 @@ class alignas(VL_CACHE_LINE_BYTES) Vriscv_soc_riscv_top final {
         CData/*2:0*/ __PVT__u_dport_bridge__DOT__u_req__DOT__count_q;
         CData/*2:0*/ __VdfgRegularize_hebeb780c_0_16;
         CData/*0:0*/ __VdfgRegularize_hebeb780c_0_25;
-        CData/*0:0*/ __VdfgRegularize_hebeb780c_0_32;
-        CData/*0:0*/ __VdfgRegularize_hebeb780c_0_58;
+        CData/*0:0*/ __VdfgRegularize_hebeb780c_0_34;
+        CData/*0:0*/ __VdfgRegularize_hebeb780c_0_60;
         IData/*31:0*/ __PVT__axi_i_rdata_i;
         IData/*31:0*/ __PVT__axi_d_rdata_i;
         IData/*31:0*/ __PVT__reset_vector_i;

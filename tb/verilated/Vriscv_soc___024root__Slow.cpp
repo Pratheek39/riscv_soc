@@ -64,6 +64,7 @@ Vriscv_soc___024root::Vriscv_soc___024root(Vriscv_soc__Syms* symsp, const char* 
     , mem_awaddr_o("mem_awaddr_o")
     , mem_wdata_o("mem_wdata_o")
     , mem_araddr_o("mem_araddr_o")
+    , accel_status_o("accel_status_o")
  {
     vlSymsp = symsp;
     vlNamep = strdup(namep);

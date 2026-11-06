@@ -49,6 +49,25 @@ static uint32_t accel_read(uint32_t offset)
     return accel_regs[offset >> 2];
 }
 
+static void print_matrix(const char *name,
+                         const int32_t *matrix,
+                         uint32_t rows,
+                         uint32_t cols)
+{
+    sim_puts(name);
+    sim_puts(":\n");
+
+    for (uint32_t row = 0; row < rows; ++row)
+    {
+        for (uint32_t col = 0; col < cols; ++col)
+        {
+            sim_put_dec(matrix[row * cols + col]);
+            sim_puts(" ");
+        }
+        sim_putc('\n');
+    }
+}
+
 static void calculate_reference(void)
 {
     for (uint32_t row = 0; row < MATRIX_M; ++row)
@@ -86,6 +105,9 @@ static int check_result(void)
 int main(void)
 {
     calculate_reference();
+    print_matrix("Input A", matrix_a, MATRIX_M, MATRIX_K);
+    print_matrix("Input B", matrix_b, MATRIX_K, MATRIX_N);
+    print_matrix("Expected C", expected_c, MATRIX_M, MATRIX_N);
 
     accel_write(ACCEL_A_ADDR, (uint32_t)(uintptr_t)matrix_a);
     accel_write(ACCEL_B_ADDR, (uint32_t)(uintptr_t)matrix_b);
@@ -119,6 +141,8 @@ int main(void)
         sim_putc('\n');
         sim_exit(1);
     }
+
+    print_matrix("Output C", matrix_c, MATRIX_M, MATRIX_N);
 
     if (!check_result())
         sim_exit(1);

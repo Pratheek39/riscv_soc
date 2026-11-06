@@ -105,6 +105,7 @@ module riscv_soc
     ,output [  7:0]  mem_arlen_o
     ,output [  1:0]  mem_arburst_o
     ,output          mem_rready_o
+    ,output [ 31:0]  accel_status_o
 );
 
 wire  [  3:0]  axi4_conv_bid_w;
@@ -408,6 +409,7 @@ soc u_soc
     ,.mem_arlen_o(mem_arlen_o)
     ,.mem_arburst_o(mem_arburst_o)
     ,.mem_rready_o(mem_rready_o)
+    ,.accel_status_o(accel_status_o)
     ,.cpu_i_awready_o(axi4_i_awready_w)
     ,.cpu_i_wready_o(axi4_i_wready_w)
     ,.cpu_i_bvalid_o(axi4_i_bvalid_w)

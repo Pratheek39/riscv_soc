@@ -140,6 +140,7 @@ module soc
     ,output [  7:0]  mem_arlen_o
     ,output [  1:0]  mem_arburst_o
     ,output          mem_rready_o
+    ,output [31:0]   accel_status_o
     ,output          cpu_i_awready_o
     ,output          cpu_i_wready_o
     ,output          cpu_i_bvalid_o
@@ -325,15 +326,33 @@ wire           axi_tap_output5_arready_w;
 wire           axi_tap_output5_rvalid_w;
 wire  [ 31:0]  axi_tap_output5_rdata_w;
 wire  [  1:0]  axi_tap_output5_rresp_w;
-
-assign axi_tap_output5_awready_w = 1'b0;
-assign axi_tap_output5_wready_w  = 1'b0;
-assign axi_tap_output5_bvalid_w  = 1'b0;
-assign axi_tap_output5_bresp_w   = 2'b0;
-assign axi_tap_output5_arready_w = 1'b0;
-assign axi_tap_output5_rvalid_w  = 1'b0;
-assign axi_tap_output5_rdata_w   = 32'b0;
-assign axi_tap_output5_rresp_w   = 2'b0;
+wire           accel_awvalid_w;
+wire  [ 31:0]  accel_awaddr_w;
+wire  [  3:0]  accel_awid_w;
+wire  [  7:0]  accel_awlen_w;
+wire  [  1:0]  accel_awburst_w;
+wire           accel_wvalid_w;
+wire  [ 31:0]  accel_wdata_w;
+wire  [  3:0]  accel_wstrb_w;
+wire           accel_wlast_w;
+wire           accel_bready_w;
+wire           accel_arvalid_w;
+wire  [ 31:0]  accel_araddr_w;
+wire  [  3:0]  accel_arid_w;
+wire  [  7:0]  accel_arlen_w;
+wire  [  1:0]  accel_arburst_w;
+wire           accel_rready_w;
+wire           accel_awready_w;
+wire           accel_wready_w;
+wire           accel_bvalid_w;
+wire  [  1:0]  accel_bresp_w;
+wire  [  3:0]  accel_bid_w;
+wire           accel_arready_w;
+wire           accel_rvalid_w;
+wire  [ 31:0]  accel_rdata_w;
+wire  [  1:0]  accel_rresp_w;
+wire  [  3:0]  accel_rid_w;
+wire           accel_rlast_w;
 wire  [  3:0]  axi_tap_output0_wstrb_w;
 wire           axi_tap_output2_bvalid_w;
 wire           axi_tap_output4_bready_w;
@@ -596,6 +615,58 @@ axi4_lite_tap u_axi_tap
     ,.outport_peripheral5_rready_o(axi_tap_output5_rready_w)
 );
 
+accel_matmul u_accel
+(
+     .clk_i(clk_i)
+    ,.rst_i(rst_i)
+    ,.cfg_awvalid_i(axi_tap_output5_awvalid_w)
+    ,.cfg_awaddr_i(axi_tap_output5_awaddr_w)
+    ,.cfg_wvalid_i(axi_tap_output5_wvalid_w)
+    ,.cfg_wdata_i(axi_tap_output5_wdata_w)
+    ,.cfg_wstrb_i(axi_tap_output5_wstrb_w)
+    ,.cfg_bready_i(axi_tap_output5_bready_w)
+    ,.cfg_arvalid_i(axi_tap_output5_arvalid_w)
+    ,.cfg_araddr_i(axi_tap_output5_araddr_w)
+    ,.cfg_rready_i(axi_tap_output5_rready_w)
+    ,.m_awready_i(accel_awready_w)
+    ,.m_wready_i(accel_wready_w)
+    ,.m_bvalid_i(accel_bvalid_w)
+    ,.m_bresp_i(accel_bresp_w)
+    ,.m_bid_i(accel_bid_w)
+    ,.m_arready_i(accel_arready_w)
+    ,.m_rvalid_i(accel_rvalid_w)
+    ,.m_rdata_i(accel_rdata_w)
+    ,.m_rresp_i(accel_rresp_w)
+    ,.m_rid_i(accel_rid_w)
+    ,.m_rlast_i(accel_rlast_w)
+    ,.cfg_awready_o(axi_tap_output5_awready_w)
+    ,.cfg_wready_o(axi_tap_output5_wready_w)
+    ,.cfg_bvalid_o(axi_tap_output5_bvalid_w)
+    ,.cfg_bresp_o(axi_tap_output5_bresp_w)
+    ,.cfg_arready_o(axi_tap_output5_arready_w)
+    ,.cfg_rvalid_o(axi_tap_output5_rvalid_w)
+    ,.cfg_rdata_o(axi_tap_output5_rdata_w)
+    ,.cfg_rresp_o(axi_tap_output5_rresp_w)
+    ,.status_o(accel_status_o)
+    ,.m_awvalid_o(accel_awvalid_w)
+    ,.m_awaddr_o(accel_awaddr_w)
+    ,.m_awid_o(accel_awid_w)
+    ,.m_awlen_o(accel_awlen_w)
+    ,.m_awburst_o(accel_awburst_w)
+    ,.m_wvalid_o(accel_wvalid_w)
+    ,.m_wdata_o(accel_wdata_w)
+    ,.m_wstrb_o(accel_wstrb_w)
+    ,.m_wlast_o(accel_wlast_w)
+    ,.m_bready_o(accel_bready_w)
+    ,.m_arvalid_o(accel_arvalid_w)
+    ,.m_araddr_o(accel_araddr_w)
+    ,.m_arid_o(accel_arid_w)
+    ,.m_arlen_o(accel_arlen_w)
+    ,.m_arburst_o(accel_arburst_w)
+    ,.m_rready_o(accel_rready_w)
+    ,.intr_o()
+);
+
 
 axi4_arb u_arb
 (
@@ -650,22 +721,22 @@ axi4_arb u_arb
     ,.inport2_arlen_i(cpu_i_arlen_i)
     ,.inport2_arburst_i(cpu_i_arburst_i)
     ,.inport2_rready_i(cpu_i_rready_i)
-    ,.inport3_awvalid_i(1'b0)
-    ,.inport3_awaddr_i(32'b0)
-    ,.inport3_awid_i(4'b0)
-    ,.inport3_awlen_i(8'b0)
-    ,.inport3_awburst_i(2'b0)
-    ,.inport3_wvalid_i(1'b0)
-    ,.inport3_wdata_i(32'b0)
-    ,.inport3_wstrb_i(4'b0)
-    ,.inport3_wlast_i(1'b0)
-    ,.inport3_bready_i(1'b0)
-    ,.inport3_arvalid_i(1'b0)
-    ,.inport3_araddr_i(32'b0)
-    ,.inport3_arid_i(4'b0)
-    ,.inport3_arlen_i(8'b0)
-    ,.inport3_arburst_i(2'b0)
-    ,.inport3_rready_i(1'b0)
+    ,.inport3_awvalid_i(accel_awvalid_w)
+    ,.inport3_awaddr_i(accel_awaddr_w)
+    ,.inport3_awid_i(accel_awid_w)
+    ,.inport3_awlen_i(accel_awlen_w)
+    ,.inport3_awburst_i(accel_awburst_w)
+    ,.inport3_wvalid_i(accel_wvalid_w)
+    ,.inport3_wdata_i(accel_wdata_w)
+    ,.inport3_wstrb_i(accel_wstrb_w)
+    ,.inport3_wlast_i(accel_wlast_w)
+    ,.inport3_bready_i(accel_bready_w)
+    ,.inport3_arvalid_i(accel_arvalid_w)
+    ,.inport3_araddr_i(accel_araddr_w)
+    ,.inport3_arid_i(accel_arid_w)
+    ,.inport3_arlen_i(accel_arlen_w)
+    ,.inport3_arburst_i(accel_arburst_w)
+    ,.inport3_rready_i(accel_rready_w)
     ,.outport_awready_i(axi_arb_out_awready_w)
     ,.outport_wready_i(axi_arb_out_wready_w)
     ,.outport_bvalid_i(axi_arb_out_bvalid_w)
@@ -712,17 +783,17 @@ axi4_arb u_arb
     ,.inport2_rresp_o(cpu_i_rresp_o)
     ,.inport2_rid_o(cpu_i_rid_o)
     ,.inport2_rlast_o(cpu_i_rlast_o)
-    ,.inport3_awready_o()
-    ,.inport3_wready_o()
-    ,.inport3_bvalid_o()
-    ,.inport3_bresp_o()
-    ,.inport3_bid_o()
-    ,.inport3_arready_o()
-    ,.inport3_rvalid_o()
-    ,.inport3_rdata_o()
-    ,.inport3_rresp_o()
-    ,.inport3_rid_o()
-    ,.inport3_rlast_o()
+    ,.inport3_awready_o(accel_awready_w)
+    ,.inport3_wready_o(accel_wready_w)
+    ,.inport3_bvalid_o(accel_bvalid_w)
+    ,.inport3_bresp_o(accel_bresp_w)
+    ,.inport3_bid_o(accel_bid_w)
+    ,.inport3_arready_o(accel_arready_w)
+    ,.inport3_rvalid_o(accel_rvalid_w)
+    ,.inport3_rdata_o(accel_rdata_w)
+    ,.inport3_rresp_o(accel_rresp_w)
+    ,.inport3_rid_o(accel_rid_w)
+    ,.inport3_rlast_o(accel_rlast_w)
     ,.outport_awvalid_o(axi_arb_out_awvalid_w)
     ,.outport_awaddr_o(axi_arb_out_awaddr_w)
     ,.outport_awid_o(axi_arb_out_awid_w)

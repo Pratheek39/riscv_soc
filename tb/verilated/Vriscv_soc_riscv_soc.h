@@ -134,13 +134,8 @@ class alignas(VL_CACHE_LINE_BYTES) Vriscv_soc_riscv_soc final {
         CData/*0:0*/ __PVT__u_soc__DOT__u_arb__DOT__outport_awready_i;
         CData/*0:0*/ __PVT__u_soc__DOT__u_arb__DOT__outport_wready_i;
         CData/*0:0*/ __PVT__u_soc__DOT__u_arb__DOT__outport_bvalid_i;
-        CData/*1:0*/ __PVT__u_soc__DOT__u_arb__DOT__outport_bresp_i;
-        CData/*3:0*/ __PVT__u_soc__DOT__u_arb__DOT__outport_bid_i;
         CData/*0:0*/ __PVT__u_soc__DOT__u_arb__DOT__outport_arready_i;
         CData/*0:0*/ __PVT__u_soc__DOT__u_arb__DOT__outport_rvalid_i;
-        CData/*1:0*/ __PVT__u_soc__DOT__u_arb__DOT__outport_rresp_i;
-        CData/*3:0*/ __PVT__u_soc__DOT__u_arb__DOT__outport_rid_i;
-        CData/*0:0*/ __PVT__u_soc__DOT__u_arb__DOT__outport_rlast_i;
         CData/*0:0*/ __PVT__u_soc__DOT__u_arb__DOT__inport1_awready_o;
         CData/*0:0*/ __PVT__u_soc__DOT__u_arb__DOT__inport1_wready_o;
         CData/*0:0*/ __PVT__u_soc__DOT__u_arb__DOT__inport1_bvalid_o;
@@ -148,16 +143,14 @@ class alignas(VL_CACHE_LINE_BYTES) Vriscv_soc_riscv_soc final {
         CData/*0:0*/ __PVT__u_soc__DOT__u_arb__DOT__outport_awvalid_o;
         CData/*0:0*/ __PVT__u_soc__DOT__u_arb__DOT__outport_wvalid_o;
         CData/*0:0*/ __PVT__u_soc__DOT__u_arb__DOT__outport_wlast_o;
-        CData/*0:0*/ __PVT__u_soc__DOT__u_arb__DOT__outport_bready_o;
-    };
-    struct {
         CData/*0:0*/ __PVT__u_soc__DOT__u_arb__DOT__outport_arvalid_o;
         CData/*3:0*/ __PVT__u_soc__DOT__u_arb__DOT__outport_arid_o;
-        CData/*0:0*/ __PVT__u_soc__DOT__u_arb__DOT__outport_rready_o;
         CData/*0:0*/ __PVT__u_soc__DOT__u_arb__DOT__read_hold_q;
         CData/*3:0*/ __PVT__u_soc__DOT__u_arb__DOT__read_grant_w;
         CData/*3:0*/ __PVT__u_soc__DOT__u_arb__DOT__rd_resp_target_r;
         CData/*0:0*/ __PVT__u_soc__DOT__u_arb__DOT__write_hold_q;
+    };
+    struct {
         CData/*0:0*/ __PVT__u_soc__DOT__u_arb__DOT__write_dataphase_q;
         CData/*3:0*/ __PVT__u_soc__DOT__u_arb__DOT__write_grant_w;
         CData/*0:0*/ __PVT__u_soc__DOT__u_arb__DOT__write_hold_r;
@@ -185,6 +178,31 @@ class alignas(VL_CACHE_LINE_BYTES) Vriscv_soc_riscv_soc final {
         CData/*0:0*/ __PVT__u_soc__DOT__u_gpio__DOT__rvalid_q;
         CData/*0:0*/ __PVT__u_soc__DOT__u_gpio__DOT__bvalid_q;
         CData/*0:0*/ __PVT__u_soc__DOT__u_gpio__DOT__intr_q;
+        CData/*3:0*/ __PVT__u_soc__DOT__u_accel__DOT__cfg_wstrb_i;
+        CData/*0:0*/ __PVT__u_soc__DOT__u_accel__DOT__cfg_bready_i;
+        CData/*0:0*/ __PVT__u_soc__DOT__u_accel__DOT__cfg_arvalid_i;
+        CData/*0:0*/ __PVT__u_soc__DOT__u_accel__DOT__cfg_rready_i;
+        CData/*1:0*/ __PVT__u_soc__DOT__u_accel__DOT__m_bresp_i;
+        CData/*3:0*/ __PVT__u_soc__DOT__u_accel__DOT__m_bid_i;
+        CData/*0:0*/ __PVT__u_soc__DOT__u_accel__DOT__m_arready_i;
+        CData/*0:0*/ __PVT__u_soc__DOT__u_accel__DOT__m_rvalid_i;
+        CData/*1:0*/ __PVT__u_soc__DOT__u_accel__DOT__m_rresp_i;
+        CData/*3:0*/ __PVT__u_soc__DOT__u_accel__DOT__m_rid_i;
+        CData/*0:0*/ __PVT__u_soc__DOT__u_accel__DOT__m_rlast_i;
+        CData/*0:0*/ __PVT__u_soc__DOT__u_accel__DOT__cfg_awready_o;
+        CData/*0:0*/ __PVT__u_soc__DOT__u_accel__DOT__m_arvalid_o;
+        CData/*3:0*/ __PVT__u_soc__DOT__u_accel__DOT__state_q;
+        CData/*2:0*/ __PVT__u_soc__DOT__u_accel__DOT__m_q;
+        CData/*2:0*/ __PVT__u_soc__DOT__u_accel__DOT__n_q;
+        CData/*2:0*/ __PVT__u_soc__DOT__u_accel__DOT__k_q;
+        CData/*3:0*/ __PVT__u_soc__DOT__u_accel__DOT__index_q;
+        CData/*3:0*/ __PVT__u_soc__DOT__u_accel__DOT__compute_q;
+        CData/*0:0*/ __PVT__u_soc__DOT__u_accel__DOT__bvalid_q;
+        CData/*0:0*/ __PVT__u_soc__DOT__u_accel__DOT__rvalid_q;
+        CData/*0:0*/ __PVT__u_soc__DOT__u_accel__DOT__read_en_w;
+        CData/*0:0*/ __PVT__u_soc__DOT__u_accel__DOT__write_en_w;
+        CData/*0:0*/ __PVT__u_soc__DOT__u_accel__DOT__addresses_ok_w;
+        CData/*0:0*/ __PVT__u_soc__DOT__u_accel__DOT__start_ok_w;
         CData/*1:0*/ __PVT__u_soc__DOT__u_axi_tap__DOT__outport_bresp_i;
         CData/*3:0*/ __PVT__u_soc__DOT__u_axi_tap__DOT__outport_bid_i;
         CData/*1:0*/ __PVT__u_soc__DOT__u_axi_tap__DOT__outport_rresp_i;
@@ -197,6 +215,8 @@ class alignas(VL_CACHE_LINE_BYTES) Vriscv_soc_riscv_soc final {
         CData/*0:0*/ __PVT__u_soc__DOT__u_axi_tap__DOT__outport_peripheral4_awready_i;
         CData/*0:0*/ __PVT__u_soc__DOT__u_axi_tap__DOT__outport_awvalid_o;
         CData/*0:0*/ __PVT__u_soc__DOT__u_axi_tap__DOT__outport_wvalid_o;
+    };
+    struct {
         CData/*0:0*/ __PVT__u_soc__DOT__u_axi_tap__DOT__outport_arvalid_o;
         CData/*0:0*/ __PVT__u_soc__DOT__u_axi_tap__DOT__outport_peripheral0_arvalid_o;
         CData/*0:0*/ __PVT__u_soc__DOT__u_axi_tap__DOT__outport_peripheral1_arvalid_o;
@@ -215,8 +235,6 @@ class alignas(VL_CACHE_LINE_BYTES) Vriscv_soc_riscv_soc final {
         CData/*3:0*/ __PVT__u_soc__DOT__u_axi_tap__DOT__write_pending_r;
         CData/*3:0*/ __PVT__u_soc__DOT__u_axi_tap__DOT__awid_q;
         CData/*2:0*/ __PVT__u_soc__DOT__u_axi_tap__DOT__write_port_q;
-    };
-    struct {
         CData/*2:0*/ __PVT__u_soc__DOT__u_axi_tap__DOT__write_port_r;
         CData/*0:0*/ __PVT__u_soc__DOT__u_axi_tap__DOT__write_incr_w;
         CData/*0:0*/ __PVT__u_soc__DOT__u_axi_tap__DOT__write_decr_w;
@@ -263,6 +281,8 @@ class alignas(VL_CACHE_LINE_BYTES) Vriscv_soc_riscv_soc final {
         CData/*0:0*/ __PVT__u_soc__DOT__u_uart__DOT__tx_complete_q;
         CData/*0:0*/ __PVT__u_soc__DOT__u_uart__DOT__intr_q;
         CData/*0:0*/ __PVT__u_soc__DOT__u_intc__DOT__read_en_w;
+    };
+    struct {
         CData/*0:0*/ __PVT__u_soc__DOT__u_intc__DOT__write_en_w;
         CData/*0:0*/ __PVT__u_soc__DOT__u_intc__DOT__irq_isr_wr_q;
         CData/*0:0*/ __PVT__u_soc__DOT__u_intc__DOT__irq_ipr_wr_q;
@@ -280,21 +300,18 @@ class alignas(VL_CACHE_LINE_BYTES) Vriscv_soc_riscv_soc final {
         CData/*3:0*/ __PVT__u_soc__DOT__u_intc__DOT__irq_enable_q;
         CData/*3:0*/ __PVT__u_soc__DOT__u_intc__DOT__irq_pending_q;
         CData/*0:0*/ __PVT__u_soc__DOT__u_intc__DOT__intr_q;
-        CData/*0:0*/ __VdfgRegularize_hebeb780c_0_3;
-    };
-    struct {
-        CData/*0:0*/ __VdfgRegularize_hebeb780c_0_5;
+        CData/*0:0*/ __VdfgRegularize_hebeb780c_0_7;
         CData/*3:0*/ __VdfgRegularize_hebeb780c_0_12;
         CData/*3:0*/ __VdfgRegularize_hebeb780c_0_13;
         CData/*0:0*/ __VdfgRegularize_hebeb780c_0_14;
         CData/*0:0*/ __VdfgRegularize_hebeb780c_0_24;
         CData/*0:0*/ __VdfgRegularize_hebeb780c_0_26;
-        CData/*0:0*/ __VdfgRegularize_hebeb780c_0_27;
-        CData/*0:0*/ __VdfgRegularize_hebeb780c_0_30;
-        CData/*0:0*/ __VdfgRegularize_hebeb780c_0_31;
-        CData/*0:0*/ __VdfgRegularize_hebeb780c_0_45;
-        CData/*0:0*/ __VdfgRegularize_hebeb780c_0_46;
-        CData/*0:0*/ __VdfgRegularize_hebeb780c_0_63;
+        CData/*0:0*/ __VdfgRegularize_hebeb780c_0_29;
+        CData/*0:0*/ __VdfgRegularize_hebeb780c_0_32;
+        CData/*0:0*/ __VdfgRegularize_hebeb780c_0_33;
+        CData/*0:0*/ __VdfgRegularize_hebeb780c_0_47;
+        CData/*0:0*/ __VdfgRegularize_hebeb780c_0_48;
+        CData/*0:0*/ __VdfgRegularize_hebeb780c_0_65;
         IData/*31:0*/ reset_vector_i;
         IData/*31:0*/ inport_awaddr_i;
         IData/*31:0*/ inport_wdata_i;
@@ -307,15 +324,12 @@ class alignas(VL_CACHE_LINE_BYTES) Vriscv_soc_riscv_soc final {
         IData/*31:0*/ mem_awaddr_o;
         IData/*31:0*/ mem_wdata_o;
         IData/*31:0*/ mem_araddr_o;
+        IData/*31:0*/ accel_status_o;
         IData/*31:0*/ __PVT__u_soc__DOT__u_spi__DOT__spi_srr_reset_q;
         IData/*31:0*/ __PVT__u_soc__DOT__u_spi__DOT__data_r;
         IData/*31:0*/ __PVT__u_soc__DOT__u_spi__DOT__rd_data_q;
         IData/*31:0*/ __PVT__u_soc__DOT__u_spi__DOT__clk_div_q;
         IData/*31:0*/ __PVT__u_soc__DOT__u_arb__DOT__inport1_awaddr_i;
-        IData/*31:0*/ __PVT__u_soc__DOT__u_arb__DOT__outport_rdata_i;
-        IData/*31:0*/ __PVT__u_soc__DOT__u_arb__DOT__outport_awaddr_o;
-        IData/*31:0*/ __PVT__u_soc__DOT__u_arb__DOT__outport_wdata_o;
-        IData/*31:0*/ __PVT__u_soc__DOT__u_arb__DOT__outport_araddr_o;
         IData/*31:0*/ __PVT__u_soc__DOT__u_gpio__DOT__wr_data_q;
         IData/*31:0*/ __PVT__u_soc__DOT__u_gpio__DOT__gpio_direction_output_q;
         IData/*31:0*/ __PVT__u_soc__DOT__u_gpio__DOT__gpio_int_mask_enable_q;
@@ -331,6 +345,25 @@ class alignas(VL_CACHE_LINE_BYTES) Vriscv_soc_riscv_soc final {
         IData/*31:0*/ __PVT__u_soc__DOT__u_gpio__DOT__interrupt_raw_r;
         IData/*31:0*/ __PVT__u_soc__DOT__u_gpio__DOT__input_last_q;
         IData/*31:0*/ __PVT__u_soc__DOT__u_gpio__DOT__interrupt_level_r;
+        IData/*31:0*/ __PVT__u_soc__DOT__u_accel__DOT__cfg_awaddr_i;
+        IData/*31:0*/ __PVT__u_soc__DOT__u_accel__DOT__cfg_wdata_i;
+    };
+    struct {
+        IData/*31:0*/ __PVT__u_soc__DOT__u_accel__DOT__cfg_araddr_i;
+        IData/*31:0*/ __PVT__u_soc__DOT__u_accel__DOT__m_rdata_i;
+        IData/*31:0*/ __PVT__u_soc__DOT__u_accel__DOT__status_o;
+        IData/*31:0*/ __PVT__u_soc__DOT__u_accel__DOT__a_addr_q;
+        IData/*31:0*/ __PVT__u_soc__DOT__u_accel__DOT__b_addr_q;
+        IData/*31:0*/ __PVT__u_soc__DOT__u_accel__DOT__c_addr_q;
+        IData/*31:0*/ __PVT__u_soc__DOT__u_accel__DOT__cycle_q;
+        IData/*31:0*/ __PVT__u_soc__DOT__u_accel__DOT__mac_cycle_q;
+        IData/*31:0*/ __PVT__u_soc__DOT__u_accel__DOT__error_q;
+        IData/*31:0*/ __PVT__u_soc__DOT__u_accel__DOT__rd_data_q;
+        IData/*31:0*/ __PVT__u_soc__DOT__u_accel__DOT__data_r;
+        IData/*31:0*/ __PVT__u_soc__DOT__u_accel__DOT__i;
+        IData/*31:0*/ __PVT__u_soc__DOT__u_accel__DOT__row;
+        IData/*31:0*/ __PVT__u_soc__DOT__u_accel__DOT__col;
+        IData/*31:0*/ __PVT__u_soc__DOT__u_accel__DOT__q_idx;
         IData/*31:0*/ __PVT__u_soc__DOT__u_axi_tap__DOT__outport_rdata_i;
         IData/*31:0*/ __PVT__u_soc__DOT__u_timer__DOT__wr_data_q;
         IData/*31:0*/ __PVT__u_soc__DOT__u_timer__DOT__timer_cmp0_value_q;
@@ -343,16 +376,21 @@ class alignas(VL_CACHE_LINE_BYTES) Vriscv_soc_riscv_soc final {
         IData/*31:0*/ __PVT__u_soc__DOT__u_uart__DOT__rx_count_q;
         IData/*31:0*/ __PVT__u_soc__DOT__u_intc__DOT__wr_data_q;
         IData/*31:0*/ __PVT__u_soc__DOT__u_intc__DOT__rd_data_q;
-        IData/*31:0*/ __VdfgRegularize_hebeb780c_0_60;
+        IData/*31:0*/ __VdfgRegularize_hebeb780c_0_62;
         VlUnpacked<QData/*45:0*/, 2> __PVT__u_soc__DOT__u_retime__DOT__u_read_req__DOT__ram_q;
         VlUnpacked<QData/*45:0*/, 2> __PVT__u_soc__DOT__u_retime__DOT__u_write_cmd_req__DOT__ram_q;
         VlUnpacked<QData/*38:0*/, 2> __PVT__u_soc__DOT__u_retime__DOT__u_read_resp__DOT__ram_q;
-    };
-    struct {
         VlUnpacked<CData/*5:0*/, 2> __PVT__u_soc__DOT__u_retime__DOT__u_write_resp__DOT__ram_q;
         VlUnpacked<QData/*36:0*/, 2> __PVT__u_soc__DOT__u_retime__DOT__u_write_data_req__DOT__ram_q;
         VlUnpacked<CData/*7:0*/, 4> __PVT__u_soc__DOT__u_spi__DOT__u_rx_fifo__DOT__ram_q;
         VlUnpacked<CData/*7:0*/, 4> __PVT__u_soc__DOT__u_spi__DOT__u_tx_fifo__DOT__ram_q;
+        VlUnpacked<IData/*31:0*/, 16> __PVT__u_soc__DOT__u_accel__DOT__a_mem;
+        VlUnpacked<IData/*31:0*/, 16> __PVT__u_soc__DOT__u_accel__DOT__b_mem;
+        VlUnpacked<VlUnpacked<IData/*31:0*/, 4>, 4> __PVT__u_soc__DOT__u_accel__DOT__accum;
+        VlUnpacked<VlUnpacked<IData/*31:0*/, 4>, 4> __PVT__u_soc__DOT__u_accel__DOT__a_pipe;
+        VlUnpacked<VlUnpacked<IData/*31:0*/, 4>, 4> __PVT__u_soc__DOT__u_accel__DOT__b_pipe;
+        VlUnpacked<IData/*31:0*/, 4> __PVT__u_soc__DOT__u_accel__DOT__a_feed;
+        VlUnpacked<IData/*31:0*/, 4> __PVT__u_soc__DOT__u_accel__DOT__b_feed;
     };
 
     // INTERNAL VARIABLES

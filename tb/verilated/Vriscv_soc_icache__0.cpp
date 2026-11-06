@@ -23,7 +23,7 @@ void Vriscv_soc_icache___nba_sequent__TOP__riscv_soc__u_core__u_icache__0(Vriscv
         vlSelfRef.__PVT__lookup_addr_q = 0U;
     } else {
         if (((IData)(vlSymsp->TOP__riscv_soc.__PVT__u_soc__DOT__u_arb__DOT__inport2_rvalid_o) 
-             & (IData)(vlSymsp->TOP__riscv_soc.__PVT__u_soc__DOT__u_arb__DOT__outport_rlast_i))) {
+             & (IData)(vlSymsp->TOP__riscv_soc.__PVT__u_soc__DOT__u_accel__DOT__m_rlast_i))) {
             vlSelfRef.__Vdly__replace_way_q = (1U & 
                                                ((IData)(1U) 
                                                 + (IData)(vlSelfRef.__PVT__replace_way_q)));
@@ -45,7 +45,7 @@ void Vriscv_soc_icache___nba_sequent__TOP__riscv_soc__u_core__u_icache__0(Vriscv
                                             + (IData)(vlSelfRef.__PVT__data_write_addr_q)));
         }
         if (((IData)(vlSymsp->TOP__riscv_soc.__PVT__u_soc__DOT__u_arb__DOT__inport2_rvalid_o) 
-             & (0U != (IData)(vlSymsp->TOP__riscv_soc.__PVT__u_soc__DOT__u_arb__DOT__outport_rresp_i)))) {
+             & (0U != (IData)(vlSymsp->TOP__riscv_soc.__PVT__u_soc__DOT__u_accel__DOT__m_rresp_i)))) {
             vlSelfRef.__PVT__axi_error_q = 1U;
         } else if (vlSelfRef.__PVT__req_valid_o) {
             vlSelfRef.__PVT__axi_error_q = 0U;

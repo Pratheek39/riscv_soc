@@ -148,6 +148,18 @@ public:
     {
         return m_mem->read(addr);
     }
+
+    bool read_mmio(uint32_t addr, uint32_t *data)
+    {
+        if ((addr & 0xff000000u) == 0x95000000u &&
+            (addr & 0xffu) == 0x04u)
+        {
+            *data = m_dut->accel_status();
+            return true;
+        }
+
+        return false;
+    }
     //-----------------------------------------------------------------
     // step: Execute 1 clock cycle
     //-----------------------------------------------------------------

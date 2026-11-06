@@ -53,8 +53,8 @@ class alignas(VL_CACHE_LINE_BYTES) Vriscv_soc_riscv_decode final {
     CData/*0:0*/ __PVT__invalid_inst_w;
     CData/*0:0*/ __PVT__opcode_valid_r;
     CData/*0:0*/ __VdfgRegularize_hebeb780c_0_23;
-    CData/*0:0*/ __VdfgRegularize_hebeb780c_0_56;
-    CData/*0:0*/ __VdfgRegularize_hebeb780c_0_57;
+    CData/*0:0*/ __VdfgRegularize_hebeb780c_0_58;
+    CData/*0:0*/ __VdfgRegularize_hebeb780c_0_59;
     IData/*31:0*/ __PVT__fetch_instr_i;
     IData/*31:0*/ __PVT__fetch_pc_i;
     IData/*31:0*/ __PVT__branch_pc_i;

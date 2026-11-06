@@ -68,6 +68,7 @@ Vriscv_soc::Vriscv_soc(sc_core::sc_module_name /* unused */)
     , mem_awaddr_o{vlSymsp->TOP.mem_awaddr_o}
     , mem_wdata_o{vlSymsp->TOP.mem_wdata_o}
     , mem_araddr_o{vlSymsp->TOP.mem_araddr_o}
+    , accel_status_o{vlSymsp->TOP.accel_status_o}
     , riscv_soc{vlSymsp->TOP.riscv_soc}
     , rootp{&(vlSymsp->TOP)}
 {
@@ -299,6 +300,6 @@ VL_ATTR_COLD void Vriscv_soc::traceBaseModel(VerilatedTraceBaseC* tfp, int level
             " use --trace-fst with VerilatedFst object, and --trace-vcd with VerilatedVcd object");
     }
     stfp->spTrace()->addModel(this);
-    stfp->spTrace()->addInitCb(&trace_init, &(vlSymsp->TOP), name(), false, 872);
+    stfp->spTrace()->addInitCb(&trace_init, &(vlSymsp->TOP), name(), false, 1003);
     Vriscv_soc___024root__trace_register(&(vlSymsp->TOP), stfp->spTrace());
 }

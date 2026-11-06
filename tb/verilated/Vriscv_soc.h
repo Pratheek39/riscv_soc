@@ -93,6 +93,7 @@ class alignas(VL_CACHE_LINE_BYTES) Vriscv_soc VL_NOT_FINAL : public ::sc_core::s
     sc_core::sc_out<sc_dt::sc_uint<32> > &mem_awaddr_o;
     sc_core::sc_out<sc_dt::sc_uint<32> > &mem_wdata_o;
     sc_core::sc_out<sc_dt::sc_uint<32> > &mem_araddr_o;
+    sc_core::sc_out<sc_dt::sc_uint<32> > &accel_status_o;
 
     // CELLS
     // Public to allow access to /* verilator public */ items.
