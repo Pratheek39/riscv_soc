@@ -22,8 +22,8 @@ void Vriscv_soc_icache___nba_sequent__TOP__riscv_soc__u_core__u_icache__0(Vriscv
         vlSelfRef.__PVT__lookup_valid_q = 0U;
         vlSelfRef.__PVT__lookup_addr_q = 0U;
     } else {
-        if (((IData)(vlSymsp->TOP__riscv_soc.__PVT__axi4_i_rvalid_w) 
-             & (IData)(vlSymsp->TOP__riscv_soc.__PVT__axi4_i_rlast_w))) {
+        if (((IData)(vlSymsp->TOP__riscv_soc.__PVT__u_soc__DOT__u_arb__DOT__inport2_rvalid_o) 
+             & (IData)(vlSymsp->TOP__riscv_soc.__PVT__u_soc__DOT__u_arb__DOT__outport_rlast_i))) {
             vlSelfRef.__Vdly__replace_way_q = (1U & 
                                                ((IData)(1U) 
                                                 + (IData)(vlSelfRef.__PVT__replace_way_q)));
@@ -39,31 +39,30 @@ void Vriscv_soc_icache___nba_sequent__TOP__riscv_soc__u_core__u_icache__0(Vriscv
                                          & (vlSelfRef.__PVT__lookup_addr_q 
                                             >> 2U));
         } else if (((2U == (IData)(vlSelfRef.__PVT__state_q)) 
-                    & (IData)(vlSymsp->TOP__riscv_soc.__PVT__axi4_i_rvalid_w))) {
+                    & (IData)(vlSymsp->TOP__riscv_soc.__PVT__u_soc__DOT__u_arb__DOT__inport2_rvalid_o))) {
             __Vdly__data_write_addr_q = (0x000007ffU 
                                          & ((IData)(1U) 
                                             + (IData)(vlSelfRef.__PVT__data_write_addr_q)));
         }
-        if (((IData)(vlSymsp->TOP__riscv_soc.__PVT__axi4_i_rvalid_w) 
-             & (0U != (IData)(vlSymsp->TOP__riscv_soc.inport_rresp_o)))) {
+        if (((IData)(vlSymsp->TOP__riscv_soc.__PVT__u_soc__DOT__u_arb__DOT__inport2_rvalid_o) 
+             & (0U != (IData)(vlSymsp->TOP__riscv_soc.__PVT__u_soc__DOT__u_arb__DOT__outport_rresp_i)))) {
             vlSelfRef.__PVT__axi_error_q = 1U;
-        } else if (vlSymsp->TOP__riscv_soc__u_core.__PVT__icache_valid_w) {
+        } else if (vlSelfRef.__PVT__req_valid_o) {
             vlSelfRef.__PVT__axi_error_q = 0U;
         }
-        if (((IData)(vlSymsp->TOP__riscv_soc__u_core.__PVT__icache_rd_w) 
-             & (IData)(vlSymsp->TOP__riscv_soc__u_core.__PVT__icache_accept_w))) {
+        if (((IData)(vlSelfRef.__PVT__req_rd_i) & (IData)(vlSelfRef.__PVT__req_accept_o))) {
             vlSelfRef.__PVT__lookup_valid_q = 1U;
-            vlSelfRef.__PVT__lookup_addr_q = vlSymsp->TOP__riscv_soc__u_core.__PVT__icache_pc_w;
-        } else if (vlSymsp->TOP__riscv_soc__u_core.__PVT__icache_valid_w) {
+            vlSelfRef.__PVT__lookup_addr_q = vlSelfRef.__PVT__req_pc_i;
+        } else if (vlSelfRef.__PVT__req_valid_o) {
             vlSelfRef.__PVT__lookup_valid_q = 0U;
         }
     }
     vlSelfRef.__PVT__invalidate_q = 0U;
     vlSelfRef.__PVT__axi_arvalid_q = ((~ (IData)(vlSymsp->TOP.__Vcellinp__riscv_soc__rst_cpu_i)) 
-                                      & ((IData)(vlSymsp->TOP__riscv_soc.__PVT__axi4_i_arvalid_w) 
+                                      & ((IData)(vlSymsp->TOP__riscv_soc.__PVT__u_soc__DOT__u_arb__DOT__inport2_arvalid_i) 
                                          & (~ (((IData)(vlSymsp->TOP__riscv_soc.__PVT__u_soc__DOT__u_arb__DOT__read_grant_w) 
                                                 >> 2U) 
-                                               & (IData)(vlSymsp->TOP__riscv_soc.__PVT__u_soc__DOT__axi_arb_out_arready_w)))));
+                                               & (IData)(vlSymsp->TOP__riscv_soc.__PVT__u_soc__DOT__u_arb__DOT__outport_arready_i)))));
     vlSelfRef.__PVT__data_write_addr_q = __Vdly__data_write_addr_q;
 }
 
@@ -116,7 +115,7 @@ void Vriscv_soc_icache___nba_comb__TOP__riscv_soc__u_core__u_icache__1(Vriscv_so
                                                 & (IData)(vlSelfRef.__PVT__state_q))
                                                 ? 1U
                                                 : ((IData)(vlSelfRef.__PVT__state_q) 
-                                                   | (- (IData)((IData)(vlSymsp->TOP__riscv_soc.__VdfgRegularize_hebeb780c_0_22)))))
+                                                   | (- (IData)((IData)(vlSymsp->TOP__riscv_soc.__VdfgRegularize_hebeb780c_0_24)))))
                                             : ((1U 
                                                 & (IData)(vlSelfRef.__PVT__state_q))
                                                 ? (
@@ -137,6 +136,8 @@ void Vriscv_soc_icache___nba_comb__TOP__riscv_soc__u_core__u_icache__1(Vriscv_so
                                                      == (IData)(vlSelfRef.__PVT__flush_addr_q))
                                                      ? 1U
                                                      : (IData)(vlSelfRef.__PVT__state_q))))));
+    vlSelfRef.__PVT__req_accept_o = ((1U == (IData)(vlSelfRef.__PVT__state_q)) 
+                                     & (2U != (IData)(vlSelfRef.__PVT__next_state_r)));
 }
 
 void Vriscv_soc_icache___nba_comb__TOP__riscv_soc__u_core__u_icache__2(Vriscv_soc_icache* vlSelf) {
@@ -144,6 +145,13 @@ void Vriscv_soc_icache___nba_comb__TOP__riscv_soc__u_core__u_icache__2(Vriscv_so
     Vriscv_soc__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
     auto& vlSelfRef = std::ref(*vlSelf).get();
     // Body
+    vlSelfRef.__PVT__req_pc_i = ((((IData)(vlSymsp->TOP__riscv_soc__u_core__u_core.__PVT__u_csr__DOT__mmu_enable_w)
+                                    ? (vlSymsp->TOP__riscv_soc__u_core__u_core.__PVT__u_mmu__DOT__itlb_entry_q 
+                                       >> 0x0000000cU)
+                                    : (vlSymsp->TOP__riscv_soc__u_core__u_core.__PVT__mmu_ifetch_pc_w 
+                                       >> 0x0000000cU)) 
+                                  << 0x0000000cU) | 
+                                 (0x00000fffU & vlSymsp->TOP__riscv_soc__u_core__u_core.__PVT__mmu_ifetch_pc_w));
     vlSelfRef.__PVT__tag_addr_r = (0x000000ffU & ((0U 
                                                    == (IData)(vlSelfRef.__PVT__state_q))
                                                    ? (IData)(vlSelfRef.__PVT__flush_addr_q)
@@ -156,7 +164,7 @@ void Vriscv_soc_icache___nba_comb__TOP__riscv_soc__u_core__u_icache__2(Vriscv_so
                                                    (vlSelfRef.__PVT__lookup_addr_q 
                                                     >> 5U)
                                                     : 
-                                                   (vlSymsp->TOP__riscv_soc__u_core.__PVT__icache_pc_w 
+                                                   (vlSelfRef.__PVT__req_pc_i 
                                                     >> 5U))));
     vlSelfRef.__PVT__data_addr_r = (0x000007ffU & (
                                                    (2U 
@@ -169,6 +177,27 @@ void Vriscv_soc_icache___nba_comb__TOP__riscv_soc__u_core__u_icache__2(Vriscv_so
                                                     (vlSelfRef.__PVT__lookup_addr_q 
                                                      >> 2U)
                                                      : 
-                                                    (vlSymsp->TOP__riscv_soc__u_core.__PVT__icache_pc_w 
+                                                    (vlSelfRef.__PVT__req_pc_i 
                                                      >> 2U))));
+}
+
+void Vriscv_soc_icache___nba_comb__TOP__riscv_soc__u_core__u_icache__3(Vriscv_soc_icache* vlSelf) {
+    VL_DEBUG_IF(VL_DBG_MSGF("+          Vriscv_soc_icache___nba_comb__TOP__riscv_soc__u_core__u_icache__3\n"); );
+    Vriscv_soc__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
+    auto& vlSelfRef = std::ref(*vlSelf).get();
+    // Body
+    vlSelfRef.__PVT__req_valid_o = ((IData)(vlSelfRef.__PVT__lookup_valid_q) 
+                                    & ((IData)(vlSelfRef.__PVT__tag_hit_any_w) 
+                                       & (1U == (IData)(vlSelfRef.__PVT__state_q))));
+}
+
+void Vriscv_soc_icache___nba_comb__TOP__riscv_soc__u_core__u_icache__4(Vriscv_soc_icache* vlSelf) {
+    VL_DEBUG_IF(VL_DBG_MSGF("+          Vriscv_soc_icache___nba_comb__TOP__riscv_soc__u_core__u_icache__4\n"); );
+    Vriscv_soc__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
+    auto& vlSelfRef = std::ref(*vlSelf).get();
+    // Body
+    vlSelfRef.__PVT__req_rd_i = (((~ (IData)(vlSymsp->TOP__riscv_soc__u_core__u_core.__PVT__u_csr__DOT__mmu_enable_w)) 
+                                  & (IData)(vlSymsp->TOP__riscv_soc__u_core__u_core.__PVT__mmu_ifetch_rd_w)) 
+                                 | ((~ (IData)(vlSymsp->TOP__riscv_soc__u_core__u_core.__PVT__mmu_fetch_fault_w)) 
+                                    & (IData)(vlSymsp->TOP__riscv_soc__u_core__u_core.__PVT__u_mmu__DOT__itlb_hit_w)));
 }

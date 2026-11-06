@@ -13,6 +13,8 @@ NAME             ?= riscv_soc
 
 RTL_INCLUDE       = ../core/core/$(CORE)
 RTL_INCLUDE      += ../soc
+RTL_SOURCES       = $(wildcard $(SRC_DIR)/*.v)
+RTL_SOURCES      += $(wildcard ../core/core/$(CORE)/*.v)
 
 # Verilator options
 VERILATE_PARAMS  ?= --trace
@@ -28,8 +30,8 @@ all: $(TARGETS)
 $(OUTPUT_DIR):
 	mkdir -p $@
 
-$(OUTPUT_DIR)/V$(NAME): $(SRC_DIR)/$(SRC).$(SRC_TYPE) | $(OUTPUT_DIR)
-	verilator --sc -Wno-IGNOREDRETURN -Wno-fatal $(patsubst $(OUTPUT_DIR)/V$(NAME), $(SRC_V_DIR)/$(NAME), $@) --Mdir $(OUTPUT_DIR) -I./$(SRC_V_DIR) $(patsubst %,-I%,$(RTL_INCLUDE)) $(VERILATOR_OPTS) $(VERILATE_PARAMS)
+$(OUTPUT_DIR)/V$(NAME): $(RTL_SOURCES) | $(OUTPUT_DIR)
+	verilator --sc -Wno-IGNOREDRETURN -Wno-fatal $(RTL_SOURCES) --top-module $(NAME) --Mdir $(OUTPUT_DIR) -I./$(SRC_V_DIR) $(patsubst %,-I%,$(RTL_INCLUDE)) $(VERILATOR_OPTS) $(VERILATE_PARAMS)
 
 clean:
 	rm -rf $(TARGETS) $(OUTPUT_DIR)

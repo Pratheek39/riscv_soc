@@ -12,9 +12,9 @@ VL_ATTR_COLD void Vriscv_soc_riscv_top___stl_sequent__TOP__riscv_soc__u_core__0(
     CData/*0:0*/ __VdfgRegularize_hebeb780c_0_59;
     __VdfgRegularize_hebeb780c_0_59 = 0;
     // Body
-    vlSelfRef.__PVT__dport_bridge_accept_w = ((4U != (IData)(vlSelfRef.__PVT__u_dport_bridge__DOT__u_resp__DOT__count_q)) 
-                                              & (4U 
-                                                 != (IData)(vlSelfRef.__PVT__u_dport_bridge__DOT__u_req__DOT__count_q)));
+    vlSelfRef.__PVT__u_dport_bridge__DOT__mem_accept_o 
+        = ((4U != (IData)(vlSelfRef.__PVT__u_dport_bridge__DOT__u_resp__DOT__count_q)) 
+           & (4U != (IData)(vlSelfRef.__PVT__u_dport_bridge__DOT__u_req__DOT__count_q)));
     vlSelfRef.__VdfgRegularize_hebeb780c_0_16 = (7U 
                                                  & (vlSelfRef.__PVT__u_dport_bridge__DOT__u_resp__DOT__ram_q
                                                     [vlSelfRef.__PVT__u_dport_bridge__DOT__u_resp__DOT__rd_ptr_q] 
@@ -24,39 +24,37 @@ VL_ATTR_COLD void Vriscv_soc_riscv_top___stl_sequent__TOP__riscv_soc__u_core__0(
                                                     [vlSelfRef.__PVT__u_dport_bridge__DOT__u_req__DOT__rd_ptr_q][2U] 
                                                     >> 4U));
     if (vlSymsp->TOP__riscv_soc__u_core__u_core.__PVT__u_arb__DOT__src_mmu_w) {
-        vlSelfRef.__PVT__dport_bridge_wr_w = 0U;
-        vlSelfRef.__PVT__dport_bridge_rd_w = vlSymsp->TOP__riscv_soc__u_core__u_core.__PVT__u_mmu__DOT__mem_req_q;
-    } else if (vlSymsp->TOP__riscv_soc__u_core__u_core.__PVT__u_mmu__DOT__vm_enable_w) {
-        vlSelfRef.__PVT__dport_bridge_wr_w = ((IData)(vlSymsp->TOP__riscv_soc__u_core__u_core.__PVT__u_mmu__DOT__store_w) 
-                                              & (- (IData)(
-                                                           ((~ (IData)(vlSymsp->TOP__riscv_soc__u_core__u_core.__PVT__fault_page_store_w)) 
-                                                            & (IData)(vlSymsp->TOP__riscv_soc__u_core__u_core.__PVT__u_mmu__DOT__dtlb_hit_w)))));
-        vlSelfRef.__PVT__dport_bridge_rd_w = ((IData)(vlSymsp->TOP__riscv_soc__u_core__u_core.__PVT__u_mmu__DOT__load_w) 
-                                              & ((~ (IData)(vlSymsp->TOP__riscv_soc__u_core__u_core.__PVT__mmu_load_fault_w)) 
-                                                 & (IData)(vlSymsp->TOP__riscv_soc__u_core__u_core.__PVT__u_mmu__DOT__dtlb_hit_w)));
+        vlSelfRef.__PVT__u_dport_bridge__DOT__mem_wr_i = 0U;
+        vlSelfRef.__PVT__u_dport_bridge__DOT__mem_rd_i 
+            = vlSymsp->TOP__riscv_soc__u_core__u_core.__PVT__u_mmu__DOT__mem_req_q;
+    } else if (vlSymsp->TOP__riscv_soc__u_core__u_core.__PVT__u_csr__DOT__mmu_enable_w) {
+        vlSelfRef.__PVT__u_dport_bridge__DOT__mem_wr_i 
+            = ((IData)(vlSymsp->TOP__riscv_soc__u_core__u_core.__PVT__u_mmu__DOT__store_w) 
+               & (- (IData)(((~ (IData)(vlSymsp->TOP__riscv_soc__u_core__u_core.__PVT__fault_page_store_w)) 
+                             & (IData)(vlSymsp->TOP__riscv_soc__u_core__u_core.__PVT__u_mmu__DOT__dtlb_hit_w)))));
+        vlSelfRef.__PVT__u_dport_bridge__DOT__mem_rd_i 
+            = ((IData)(vlSymsp->TOP__riscv_soc__u_core__u_core.__PVT__u_mmu__DOT__load_w) 
+               & ((~ (IData)(vlSymsp->TOP__riscv_soc__u_core__u_core.__PVT__mmu_load_fault_w)) 
+                  & (IData)(vlSymsp->TOP__riscv_soc__u_core__u_core.__PVT__u_mmu__DOT__dtlb_hit_w)));
     } else {
-        vlSelfRef.__PVT__dport_bridge_wr_w = vlSymsp->TOP__riscv_soc__u_core__u_core.__PVT__u_lsu__DOT__mem_wr_q;
-        vlSelfRef.__PVT__dport_bridge_rd_w = vlSymsp->TOP__riscv_soc__u_core__u_core.__PVT__u_lsu__DOT__mem_rd_q;
+        vlSelfRef.__PVT__u_dport_bridge__DOT__mem_wr_i 
+            = vlSymsp->TOP__riscv_soc__u_core__u_core.__PVT__u_lsu__DOT__mem_wr_q;
+        vlSelfRef.__PVT__u_dport_bridge__DOT__mem_rd_i 
+            = vlSymsp->TOP__riscv_soc__u_core__u_core.__PVT__u_lsu__DOT__mem_rd_q;
     }
-    vlSelfRef.__PVT__dport_bridge_error_w = ((IData)(vlSymsp->TOP__riscv_soc.__PVT__axi4_d_bvalid_w)
-                                              ? (0U 
-                                                 != (IData)(vlSymsp->TOP__riscv_soc.inport_bresp_o))
-                                              : (0U 
-                                                 != (IData)(vlSymsp->TOP__riscv_soc.inport_rresp_o)));
-    vlSelfRef.__PVT__dport_bridge_ack_w = ((IData)(vlSymsp->TOP__riscv_soc.__PVT__axi4_d_bvalid_w) 
-                                           | (((IData)(vlSymsp->TOP__riscv_soc.__PVT__u_soc__DOT__u_arb__DOT__rd_resp_target_r) 
-                                               >> 1U) 
-                                              & (IData)(vlSymsp->TOP__riscv_soc.__PVT__u_soc__DOT__axi_arb_out_rvalid_w)));
-    vlSelfRef.__PVT__icache_valid_w = ((IData)(vlSymsp->TOP__riscv_soc__u_core__u_icache.__PVT__lookup_valid_q) 
-                                       & ((IData)(vlSymsp->TOP__riscv_soc__u_core__u_icache.__PVT__tag_hit_any_w) 
-                                          & (1U == (IData)(vlSymsp->TOP__riscv_soc__u_core__u_icache.__PVT__state_q))));
-    vlSelfRef.__PVT__icache_accept_w = ((1U == (IData)(vlSymsp->TOP__riscv_soc__u_core__u_icache.__PVT__state_q)) 
-                                        & (2U != (IData)(vlSymsp->TOP__riscv_soc__u_core__u_icache.__PVT__next_state_r)));
-    __VdfgRegularize_hebeb780c_0_59 = ((0U != (IData)(vlSelfRef.__PVT__dport_bridge_wr_w)) 
-                                       | (IData)(vlSelfRef.__PVT__dport_bridge_rd_w));
+    vlSelfRef.__PVT__u_dport_bridge__DOT__mem_error_o 
+        = ((IData)(vlSymsp->TOP__riscv_soc.__PVT__u_soc__DOT__u_arb__DOT__inport1_bvalid_o)
+            ? (0U != (IData)(vlSymsp->TOP__riscv_soc.__PVT__u_soc__DOT__u_arb__DOT__outport_bresp_i))
+            : (0U != (IData)(vlSymsp->TOP__riscv_soc.__PVT__u_soc__DOT__u_arb__DOT__outport_rresp_i)));
+    vlSelfRef.__PVT__u_dport_bridge__DOT__mem_ack_o 
+        = ((IData)(vlSymsp->TOP__riscv_soc.__PVT__u_soc__DOT__u_arb__DOT__inport1_bvalid_o) 
+           | (((IData)(vlSymsp->TOP__riscv_soc.__PVT__u_soc__DOT__u_arb__DOT__rd_resp_target_r) 
+               >> 1U) & (IData)(vlSymsp->TOP__riscv_soc.__PVT__u_soc__DOT__u_arb__DOT__outport_rvalid_i)));
+    __VdfgRegularize_hebeb780c_0_59 = ((0U != (IData)(vlSelfRef.__PVT__u_dport_bridge__DOT__mem_wr_i)) 
+                                       | (IData)(vlSelfRef.__PVT__u_dport_bridge__DOT__mem_rd_i));
     vlSelfRef.__VdfgRegularize_hebeb780c_0_58 = ((0U 
                                                   == (IData)(vlSelfRef.__PVT__u_dport_bridge__DOT__u_req__DOT__count_q)) 
-                                                 | ((~ (IData)(vlSelfRef.__PVT__dport_bridge_ack_w)) 
+                                                 | ((~ (IData)(vlSelfRef.__PVT__u_dport_bridge__DOT__mem_ack_o)) 
                                                     & (IData)(vlSelfRef.__PVT__u_dport_bridge__DOT__request_pending_q)));
     vlSelfRef.__PVT__u_dport_bridge__DOT__req_push_w 
         = ((4U != (IData)(vlSelfRef.__PVT__u_dport_bridge__DOT__u_resp__DOT__count_q)) 
@@ -66,25 +64,6 @@ VL_ATTR_COLD void Vriscv_soc_riscv_top___stl_sequent__TOP__riscv_soc__u_core__0(
            & (IData)(__VdfgRegularize_hebeb780c_0_59));
     vlSelfRef.__VdfgRegularize_hebeb780c_0_25 = ((IData)(vlSelfRef.__VdfgRegularize_hebeb780c_0_32) 
                                                  | (IData)(vlSelfRef.__VdfgRegularize_hebeb780c_0_58));
-}
-
-VL_ATTR_COLD void Vriscv_soc_riscv_top___stl_sequent__TOP__riscv_soc__u_core__2(Vriscv_soc_riscv_top* vlSelf) {
-    VL_DEBUG_IF(VL_DBG_MSGF("+        Vriscv_soc_riscv_top___stl_sequent__TOP__riscv_soc__u_core__2\n"); );
-    Vriscv_soc__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
-    auto& vlSelfRef = std::ref(*vlSelf).get();
-    // Body
-    vlSelfRef.__PVT__icache_pc_w = ((((IData)(vlSymsp->TOP__riscv_soc__u_core__u_core.__PVT__u_mmu__DOT__vm_enable_w)
-                                       ? (vlSymsp->TOP__riscv_soc__u_core__u_core.__PVT__u_mmu__DOT__itlb_entry_q 
-                                          >> 0x0000000cU)
-                                       : (vlSymsp->TOP__riscv_soc__u_core__u_core.__PVT__mmu_ifetch_pc_w 
-                                          >> 0x0000000cU)) 
-                                     << 0x0000000cU) 
-                                    | (0x00000fffU 
-                                       & vlSymsp->TOP__riscv_soc__u_core__u_core.__PVT__mmu_ifetch_pc_w));
-    vlSelfRef.__PVT__icache_rd_w = (((~ (IData)(vlSymsp->TOP__riscv_soc__u_core__u_core.__PVT__u_mmu__DOT__vm_enable_w)) 
-                                     & (IData)(vlSymsp->TOP__riscv_soc__u_core__u_core.__PVT__mmu_ifetch_rd_w)) 
-                                    | ((~ (IData)(vlSymsp->TOP__riscv_soc__u_core__u_core.__PVT__mmu_fetch_fault_w)) 
-                                       & (IData)(vlSymsp->TOP__riscv_soc__u_core__u_core.__PVT__u_mmu__DOT__itlb_hit_w)));
 }
 
 VL_ATTR_COLD void Vriscv_soc_riscv_top___ctor_var_reset(Vriscv_soc_riscv_top* vlSelf) {
@@ -165,15 +144,11 @@ VL_ATTR_COLD void Vriscv_soc_riscv_top___ctor_var_reset(Vriscv_soc_riscv_top* vl
     vlSelf->__PVT__axi_d_arlen_o = VL_SCOPED_RAND_RESET_I(8, __VscopeHash, 3091326693240492017ull);
     vlSelf->__PVT__axi_d_arburst_o = VL_SCOPED_RAND_RESET_I(2, __VscopeHash, 5938601795384425900ull);
     vlSelf->__PVT__axi_d_rready_o = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 750985352688682445ull);
-    vlSelf->__PVT__dport_bridge_accept_w = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 5059258307286854336ull);
-    vlSelf->__PVT__icache_pc_w = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 13188624741496613158ull);
-    vlSelf->__PVT__icache_rd_w = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 1027462849533309677ull);
-    vlSelf->__PVT__dport_bridge_error_w = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 13907794991826431067ull);
-    vlSelf->__PVT__dport_bridge_rd_w = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 10268591296820156327ull);
-    vlSelf->__PVT__icache_accept_w = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 15156429100120985597ull);
-    vlSelf->__PVT__icache_valid_w = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 17389654207004030164ull);
-    vlSelf->__PVT__dport_bridge_ack_w = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 10499819422451848185ull);
-    vlSelf->__PVT__dport_bridge_wr_w = VL_SCOPED_RAND_RESET_I(4, __VscopeHash, 1349294053913868384ull);
+    vlSelf->__PVT__u_dport_bridge__DOT__mem_rd_i = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 13371316471138803827ull);
+    vlSelf->__PVT__u_dport_bridge__DOT__mem_wr_i = VL_SCOPED_RAND_RESET_I(4, __VscopeHash, 10664176200487623054ull);
+    vlSelf->__PVT__u_dport_bridge__DOT__mem_accept_o = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 3256630754438564423ull);
+    vlSelf->__PVT__u_dport_bridge__DOT__mem_ack_o = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 17827296737660009386ull);
+    vlSelf->__PVT__u_dport_bridge__DOT__mem_error_o = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 2345113418534437107ull);
     vlSelf->__PVT__u_dport_bridge__DOT__write_complete_w = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 14789773791785228214ull);
     vlSelf->__PVT__u_dport_bridge__DOT__read_complete_w = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 2892196520621874277ull);
     vlSelf->__PVT__u_dport_bridge__DOT__request_pending_q = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 9097720293666508254ull);

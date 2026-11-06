@@ -40,14 +40,13 @@ VL_ATTR_COLD void Vriscv_soc_riscv_exec___ctor_var_reset(Vriscv_soc_riscv_exec* 
     vlSelf->__PVT__stall_o = 0U;
     ;
     vlSelf->__PVT__rd_x_q = VL_SCOPED_RAND_RESET_I(5, __VscopeHash, 12641935862572147160ull);
-    vlSelf->__PVT__imm12_r = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 2527723061160783524ull);
-    vlSelf->__PVT__alu_func_r = VL_SCOPED_RAND_RESET_I(4, __VscopeHash, 7566839925673945463ull);
-    vlSelf->__PVT__alu_input_a_r = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 12854928807987750277ull);
-    vlSelf->__PVT__alu_input_b_r = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 13171217469350354753ull);
     vlSelf->__PVT__branch_r = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 6269576432420957588ull);
     vlSelf->__PVT__result_q = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 10969619753148672842ull);
     vlSelf->__PVT__v_dbg_valid_q = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 7457940917363301915ull);
     vlSelf->__PVT__v_dbg_pc_q = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 3590528233879809091ull);
+    vlSelf->__PVT__u_alu__DOT__alu_op_i = VL_SCOPED_RAND_RESET_I(4, __VscopeHash, 7995652240929288098ull);
+    vlSelf->__PVT__u_alu__DOT__alu_a_i = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 1095676946677905297ull);
+    vlSelf->__PVT__u_alu__DOT__alu_b_i = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 14221276321394699628ull);
     vlSelf->__PVT__u_alu__DOT__result_r = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 7787747001623389270ull);
     vlSelf->__PVT__u_alu__DOT__shift_right_fill_r = VL_SCOPED_RAND_RESET_I(16, __VscopeHash, 12848713521611739921ull);
     vlSelf->__PVT__u_alu__DOT__shift_right_1_r = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 744597458558614260ull);

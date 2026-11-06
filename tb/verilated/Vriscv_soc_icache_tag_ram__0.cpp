@@ -20,7 +20,7 @@ void Vriscv_soc_icache_tag_ram___nba_sequent__TOP__riscv_soc__u_core__u_icache__
     if (((0U == (IData)(vlSymsp->TOP__riscv_soc__u_core__u_icache.__PVT__state_q)) 
          | ((2U == (IData)(vlSymsp->TOP__riscv_soc__u_core__u_icache.__PVT__state_q)) 
             & ((~ (IData)(vlSymsp->TOP__riscv_soc__u_core__u_icache.__PVT__replace_way_q)) 
-               & (IData)(vlSymsp->TOP__riscv_soc.__VdfgRegularize_hebeb780c_0_22))))) {
+               & (IData)(vlSymsp->TOP__riscv_soc.__VdfgRegularize_hebeb780c_0_24))))) {
         __VdlyVal__ram__v0 = vlSymsp->TOP__riscv_soc__u_core__u_icache.__PVT__tag_data_in_r;
         __VdlyDim0__ram__v0 = vlSymsp->TOP__riscv_soc__u_core__u_icache.__PVT__tag_addr_r;
         __VdlySet__ram__v0 = 1U;
@@ -47,7 +47,7 @@ void Vriscv_soc_icache_tag_ram___nba_sequent__TOP__riscv_soc__u_core__u_icache__
     if (((0U == (IData)(vlSymsp->TOP__riscv_soc__u_core__u_icache.__PVT__state_q)) 
          | ((2U == (IData)(vlSymsp->TOP__riscv_soc__u_core__u_icache.__PVT__state_q)) 
             & ((IData)(vlSymsp->TOP__riscv_soc__u_core__u_icache.__PVT__replace_way_q) 
-               & (IData)(vlSymsp->TOP__riscv_soc.__VdfgRegularize_hebeb780c_0_22))))) {
+               & (IData)(vlSymsp->TOP__riscv_soc.__VdfgRegularize_hebeb780c_0_24))))) {
         __VdlyVal__ram__v0 = vlSymsp->TOP__riscv_soc__u_core__u_icache.__PVT__tag_data_in_r;
         __VdlyDim0__ram__v0 = vlSymsp->TOP__riscv_soc__u_core__u_icache.__PVT__tag_addr_r;
         __VdlySet__ram__v0 = 1U;

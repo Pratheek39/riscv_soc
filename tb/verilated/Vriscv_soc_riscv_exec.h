@@ -26,9 +26,9 @@ class alignas(VL_CACHE_LINE_BYTES) Vriscv_soc_riscv_exec final {
     CData/*0:0*/ __PVT__writeback_squash_o;
     CData/*0:0*/ __PVT__stall_o;
     CData/*4:0*/ __PVT__rd_x_q;
-    CData/*3:0*/ __PVT__alu_func_r;
     CData/*0:0*/ __PVT__branch_r;
     CData/*0:0*/ __PVT__v_dbg_valid_q;
+    CData/*3:0*/ __PVT__u_alu__DOT__alu_op_i;
     CData/*0:0*/ __Vfunc_less_than_signed__0__Vfuncout;
     SData/*15:0*/ __PVT__u_alu__DOT__shift_right_fill_r;
     IData/*31:0*/ __PVT__opcode_opcode_i;
@@ -37,13 +37,12 @@ class alignas(VL_CACHE_LINE_BYTES) Vriscv_soc_riscv_exec final {
     IData/*31:0*/ __PVT__opcode_rb_operand_i;
     IData/*31:0*/ __PVT__branch_pc_o;
     IData/*31:0*/ __PVT__writeback_value_o;
-    IData/*31:0*/ __PVT__imm12_r;
-    IData/*31:0*/ __PVT__alu_input_a_r;
-    IData/*31:0*/ __PVT__alu_input_b_r;
     IData/*31:0*/ __PVT__less_than_signed__Vstatic__v;
     IData/*31:0*/ __PVT__greater_than_signed__Vstatic__v;
     IData/*31:0*/ __PVT__result_q;
     IData/*31:0*/ __PVT__v_dbg_pc_q;
+    IData/*31:0*/ __PVT__u_alu__DOT__alu_a_i;
+    IData/*31:0*/ __PVT__u_alu__DOT__alu_b_i;
     IData/*31:0*/ __PVT__u_alu__DOT__result_r;
     IData/*31:0*/ __PVT__u_alu__DOT__shift_right_1_r;
     IData/*31:0*/ __PVT__u_alu__DOT__shift_right_2_r;

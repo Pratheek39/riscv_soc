@@ -31,12 +31,12 @@ VM_CLASSES_FAST += \
   Vriscv_soc___024root__0 \
   Vriscv_soc_riscv_soc__0 \
   Vriscv_soc_riscv_top__0 \
-  Vriscv_soc_riscv_core__0 \
   Vriscv_soc_icache__0 \
-  Vriscv_soc_riscv_exec__0 \
-  Vriscv_soc_riscv_decode__0 \
-  Vriscv_soc_icache_tag_ram__0 \
+  Vriscv_soc_riscv_core__0 \
   Vriscv_soc_icache_data_ram__0 \
+  Vriscv_soc_icache_tag_ram__0 \
+  Vriscv_soc_riscv_decode__0 \
+  Vriscv_soc_riscv_exec__0 \
   Vriscv_soc_riscv_regfile__0 \
 
 # Generated module classes, non-fast-path, compile with low/medium optimization
@@ -48,18 +48,18 @@ VM_CLASSES_SLOW += \
   Vriscv_soc_riscv_soc__0__Slow \
   Vriscv_soc_riscv_top__Slow \
   Vriscv_soc_riscv_top__0__Slow \
-  Vriscv_soc_riscv_core__Slow \
-  Vriscv_soc_riscv_core__0__Slow \
   Vriscv_soc_icache__Slow \
   Vriscv_soc_icache__0__Slow \
-  Vriscv_soc_riscv_exec__Slow \
-  Vriscv_soc_riscv_exec__0__Slow \
-  Vriscv_soc_riscv_decode__Slow \
-  Vriscv_soc_riscv_decode__0__Slow \
-  Vriscv_soc_icache_tag_ram__Slow \
-  Vriscv_soc_icache_tag_ram__0__Slow \
+  Vriscv_soc_riscv_core__Slow \
+  Vriscv_soc_riscv_core__0__Slow \
   Vriscv_soc_icache_data_ram__Slow \
   Vriscv_soc_icache_data_ram__0__Slow \
+  Vriscv_soc_icache_tag_ram__Slow \
+  Vriscv_soc_icache_tag_ram__0__Slow \
+  Vriscv_soc_riscv_decode__Slow \
+  Vriscv_soc_riscv_decode__0__Slow \
+  Vriscv_soc_riscv_exec__Slow \
+  Vriscv_soc_riscv_exec__0__Slow \
   Vriscv_soc_riscv_regfile__Slow \
   Vriscv_soc_riscv_regfile__0__Slow \
 

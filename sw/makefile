@@ -4,6 +4,7 @@ CC       := $(CROSS)gcc
 ARCH     := -march=rv32im_zicsr -mabi=ilp32
 BUILD    := build
 TARGET   := $(BUILD)/demo.elf
+MATMUL_TARGET := $(BUILD)/matmul.elf
 LDSCRIPT := link.ld
 
 CFLAGS   := $(ARCH) -nostdlib -ffreestanding -O2 -g -Wall -Wextra \
@@ -12,9 +13,10 @@ CXXFLAGS := $(CFLAGS) -fno-exceptions -fno-rtti -std=c++17
 LDFLAGS  := -nostdlib -T $(LDSCRIPT) -Wl,--gc-sections
 
 OBJS := $(BUILD)/crt0.o $(BUILD)/main.o $(BUILD)/sim_console.o $(BUILD)/helper.o
+MATMUL_OBJS := $(BUILD)/crt0.o $(BUILD)/test_matmul.o $(BUILD)/sim_console.o
 
-.PHONY: all run clean
-all: $(TARGET)
+.PHONY: all run run-matmul clean
+all: $(TARGET) $(MATMUL_TARGET)
 
 $(BUILD):
 	mkdir -p $@
@@ -31,9 +33,15 @@ $(BUILD)/%.o: %.cpp $(LDSCRIPT) | $(BUILD)
 $(TARGET): $(OBJS) $(LDSCRIPT)
 	$(CC) $(ARCH) $(LDFLAGS) -o $@ $(OBJS)
 
+$(MATMUL_TARGET): $(MATMUL_OBJS) $(LDSCRIPT)
+	$(CC) $(ARCH) $(LDFLAGS) -o $@ $(MATMUL_OBJS)
+
 # test.x resolves helper libraries by relative path, so it must run from tb/
 run: $(TARGET)
 	cd ../tb && ./build/test.x -f $(CURDIR)/$(TARGET)
+
+run-matmul: $(MATMUL_TARGET)
+	cd ../tb && ./build/test.x -f $(CURDIR)/$(MATMUL_TARGET)
 
 clean:
 	rm -rf $(BUILD)

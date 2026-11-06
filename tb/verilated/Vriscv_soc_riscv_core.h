@@ -97,6 +97,7 @@ class alignas(VL_CACHE_LINE_BYTES) Vriscv_soc_riscv_core final {
         CData/*0:0*/ __PVT__u_csr__DOT__writeback_squash_q;
         CData/*0:0*/ __PVT__u_csr__DOT__branch_q;
         CData/*0:0*/ __PVT__u_csr__DOT__reset_q;
+        CData/*0:0*/ __PVT__u_csr__DOT__mmu_enable_w;
         CData/*0:0*/ __PVT__u_lsu__DOT__mem_rd_q;
         CData/*3:0*/ __PVT__u_lsu__DOT__mem_wr_q;
         CData/*0:0*/ __PVT__u_lsu__DOT__mem_cacheable_q;
@@ -122,13 +123,12 @@ class alignas(VL_CACHE_LINE_BYTES) Vriscv_soc_riscv_core final {
         CData/*0:0*/ __PVT__u_mmu__DOT__itlb_hit_w;
         CData/*0:0*/ __PVT__u_mmu__DOT__dtlb_hit_w;
         CData/*0:0*/ __PVT__u_mmu__DOT__dtlb_req_q;
-        CData/*0:0*/ __PVT__u_mmu__DOT__vm_enable_w;
         CData/*0:0*/ __PVT__u_mmu__DOT__itlb_miss_w;
         CData/*0:0*/ __PVT__u_mmu__DOT__dtlb_miss_w;
         CData/*0:0*/ __PVT__u_mmu__DOT__itlb_valid_q;
         CData/*0:0*/ __PVT__u_mmu__DOT__dtlb_valid_q;
         CData/*0:0*/ __PVT__u_mmu__DOT__mem_req_q;
-        CData/*0:0*/ __VdfgRegularize_hebeb780c_0_23;
+        CData/*0:0*/ __VdfgRegularize_hebeb780c_0_22;
         CData/*0:0*/ __VdfgRegularize_hebeb780c_0_53;
         CData/*0:0*/ __Vdly__u_csr__DOT__branch_q;
         CData/*0:0*/ __Vdly__u_csr__DOT__reset_q;
@@ -181,6 +181,7 @@ class alignas(VL_CACHE_LINE_BYTES) Vriscv_soc_riscv_core final {
         IData/*31:0*/ __PVT__u_csr__DOT__csr_satp_q;
         IData/*31:0*/ __PVT__u_csr__DOT__csr_sscratch_q;
         IData/*31:0*/ __PVT__u_csr__DOT__pc_m_q;
+        IData/*31:0*/ __PVT__u_csr__DOT__imm12_r;
         IData/*31:0*/ __PVT__u_csr__DOT__csr_mepc_r;
         IData/*31:0*/ __PVT__u_csr__DOT__csr_mcause_r;
         IData/*31:0*/ __PVT__u_csr__DOT__csr_sr_r;
@@ -216,14 +217,14 @@ class alignas(VL_CACHE_LINE_BYTES) Vriscv_soc_riscv_core final {
         IData/*31:0*/ __PVT__u_mmu__DOT__request_addr_w;
         IData/*31:0*/ __PVT__u_mmu__DOT__pte_addr_q;
         IData/*31:0*/ __PVT__u_mmu__DOT__pte_entry_q;
-        IData/*31:0*/ __PVT__u_mmu__DOT__virt_addr_q;
     };
     struct {
+        IData/*31:0*/ __PVT__u_mmu__DOT__virt_addr_q;
         IData/*19:0*/ __PVT__u_mmu__DOT__itlb_va_addr_q;
         IData/*31:0*/ __PVT__u_mmu__DOT__itlb_entry_q;
         IData/*19:0*/ __PVT__u_mmu__DOT__dtlb_va_addr_q;
         IData/*31:0*/ __PVT__u_mmu__DOT__dtlb_entry_q;
-        IData/*31:0*/ __VdfgRegularize_hebeb780c_0_33;
+        IData/*31:0*/ __VdfgRegularize_hebeb780c_0_34;
         IData/*31:0*/ __VdfgRegularize_hebeb780c_0_54;
         IData/*31:0*/ __Vdly__u_muldiv__DOT__dividend_q;
         IData/*31:0*/ __Vdly__u_muldiv__DOT__quotient_q;

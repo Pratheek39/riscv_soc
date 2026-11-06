@@ -1095,7 +1095,7 @@ VL_ATTR_COLD void Vriscv_soc_riscv_decode___ctor_var_reset(Vriscv_soc_riscv_deco
     vlSelf->__PVT__opcode_valid_r = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 14362362785066316541ull);
     vlSelf->__PVT__current_scoreboard_r = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 8492296849499238027ull);
     vlSelf->__PVT__dbg_inst_imm = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 1299786899921334960ull);
-    vlSelf->__VdfgRegularize_hebeb780c_0_24 = 0;
+    vlSelf->__VdfgRegularize_hebeb780c_0_23 = 0;
     vlSelf->__VdfgRegularize_hebeb780c_0_56 = 0;
     vlSelf->__VdfgRegularize_hebeb780c_0_57 = 0;
     vlSelf->__Vdly__pc_q = 0;

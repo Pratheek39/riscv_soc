@@ -17,12 +17,12 @@
 #include "Vriscv_soc___024root.h"
 #include "Vriscv_soc_riscv_soc.h"
 #include "Vriscv_soc_riscv_top.h"
-#include "Vriscv_soc_riscv_core.h"
 #include "Vriscv_soc_icache.h"
-#include "Vriscv_soc_riscv_exec.h"
-#include "Vriscv_soc_riscv_decode.h"
-#include "Vriscv_soc_icache_tag_ram.h"
+#include "Vriscv_soc_riscv_core.h"
 #include "Vriscv_soc_icache_data_ram.h"
+#include "Vriscv_soc_icache_tag_ram.h"
+#include "Vriscv_soc_riscv_decode.h"
+#include "Vriscv_soc_riscv_exec.h"
 #include "Vriscv_soc_riscv_regfile.h"
 
 // DPI TYPES for DPI Export callbacks (Internal use)

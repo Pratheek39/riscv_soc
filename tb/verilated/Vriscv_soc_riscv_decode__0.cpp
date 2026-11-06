@@ -1225,7 +1225,7 @@ void Vriscv_soc_riscv_decode___nba_comb__TOP__riscv_soc__u_core__u_core__u_decod
     vlSelfRef.__PVT__scoreboard_r = ((~ ((IData)(1U) 
                                          << (IData)(vlSymsp->TOP__riscv_soc__u_core__u_core.__PVT__u_muldiv__DOT__wb_rd_q))) 
                                      & vlSelfRef.__PVT__scoreboard_r);
-    vlSelfRef.__VdfgRegularize_hebeb780c_0_24 = ((IData)(
+    vlSelfRef.__VdfgRegularize_hebeb780c_0_23 = ((IData)(
                                                          (vlSelfRef.__PVT__opcode_instr_q 
                                                           >> 0x00000026U)) 
                                                  & (IData)(vlSymsp->TOP__riscv_soc__u_core__u_core.__PVT__csr_opcode_valid_w));

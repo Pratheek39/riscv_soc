@@ -133,7 +133,7 @@ void Vriscv_soc_riscv_core___nba_sequent__TOP__riscv_soc__u_core__u_core__0(Vris
             vlSelfRef.__PVT__u_fetch__DOT__pc_d_q = vlSelfRef.__PVT__mmu_ifetch_pc_w;
             vlSelfRef.__PVT__u_fetch__DOT__icache_fetch_q 
                 = (1U & (~ (IData)(vlSelfRef.__PVT__mmu_fetch_fault_w)));
-        } else if (vlSymsp->TOP__riscv_soc__u_core.__PVT__icache_valid_w) {
+        } else if (vlSymsp->TOP__riscv_soc__u_core__u_icache.__PVT__req_valid_o) {
             vlSelfRef.__PVT__u_fetch__DOT__icache_fetch_q = 0U;
         }
         if ((1U & (~ (IData)(vlSelfRef.__PVT__u_fetch__DOT__stall_w)))) {
@@ -157,13 +157,13 @@ void Vriscv_soc_riscv_core___nba_sequent__TOP__riscv_soc__u_core__u_core__0(Vris
                 = (0x0000001fU & (vlSymsp->TOP__riscv_soc__u_core__u_core__u_decode.__PVT__inst_q 
                                   >> 7U));
         }
-        if ((((IData)(vlSymsp->TOP__riscv_soc__u_core.__PVT__dport_bridge_rd_w) 
-              | (0U != (IData)(vlSymsp->TOP__riscv_soc__u_core.__PVT__dport_bridge_wr_w))) 
-             & (~ (IData)(vlSymsp->TOP__riscv_soc__u_core.__PVT__dport_bridge_accept_w)))) {
+        if ((((IData)(vlSymsp->TOP__riscv_soc__u_core.__PVT__u_dport_bridge__DOT__mem_rd_i) 
+              | (0U != (IData)(vlSymsp->TOP__riscv_soc__u_core.__PVT__u_dport_bridge__DOT__mem_wr_i))) 
+             & (~ (IData)(vlSymsp->TOP__riscv_soc__u_core.__PVT__u_dport_bridge__DOT__mem_accept_o)))) {
             vlSelfRef.__PVT__u_arb__DOT__read_hold_q = 1U;
             vlSelfRef.__PVT__u_arb__DOT__src_mmu_q 
                 = vlSelfRef.__PVT__u_arb__DOT__src_mmu_w;
-        } else if (vlSymsp->TOP__riscv_soc__u_core.__PVT__dport_bridge_accept_w) {
+        } else if (vlSymsp->TOP__riscv_soc__u_core.__PVT__u_dport_bridge__DOT__mem_accept_o) {
             vlSelfRef.__PVT__u_arb__DOT__read_hold_q = 0U;
         }
         if (((0U == (IData)(vlSelfRef.__PVT__u_mmu__DOT__state_q)) 
@@ -173,12 +173,12 @@ void Vriscv_soc_riscv_core___nba_sequent__TOP__riscv_soc__u_core__u_core__0(Vris
         } else if ((((((1U == (IData)(vlSelfRef.__PVT__u_mmu__DOT__state_q)) 
                        & (IData)(vlSelfRef.__PVT__arb_mmu_ack_w)) 
                       & (~ (IData)(vlSelfRef.__PVT__arb_mmu_error_w))) 
-                     & vlSymsp->TOP__riscv_soc.inport_rdata_o) 
+                     & vlSymsp->TOP__riscv_soc.__PVT__u_soc__DOT__u_arb__DOT__outport_rdata_i) 
                     & (~ (IData)((0U != (0x0000000eU 
-                                         & vlSymsp->TOP__riscv_soc.inport_rdata_o)))))) {
+                                         & vlSymsp->TOP__riscv_soc.__PVT__u_soc__DOT__u_arb__DOT__outport_rdata_i)))))) {
             vlSelfRef.__PVT__u_mmu__DOT__mem_req_q = 1U;
         } else if (((IData)(vlSelfRef.__PVT__u_arb__DOT__src_mmu_w) 
-                    & (IData)(vlSymsp->TOP__riscv_soc__u_core.__PVT__dport_bridge_accept_w))) {
+                    & (IData)(vlSymsp->TOP__riscv_soc__u_core.__PVT__u_dport_bridge__DOT__mem_accept_o))) {
             vlSelfRef.__PVT__u_mmu__DOT__mem_req_q = 0U;
         }
         if ((0U != (IData)(vlSelfRef.__PVT__u_lsu__DOT__mem_wr_q))) {
@@ -417,10 +417,10 @@ void Vriscv_soc_riscv_core___nba_sequent__TOP__riscv_soc__u_core__u_core__1(Vris
                             : vlSelfRef.__PVT__u_csr__DOT__csr_mtvec_q)
                         : ((1U & (IData)((vlSymsp->TOP__riscv_soc__u_core__u_core__u_decode.__PVT__opcode_instr_q 
                                           >> 0x00000026U)))
-                            ? vlSelfRef.__VdfgRegularize_hebeb780c_0_33
+                            ? vlSelfRef.__VdfgRegularize_hebeb780c_0_34
                             : ((1U & (IData)((vlSymsp->TOP__riscv_soc__u_core__u_core__u_decode.__PVT__opcode_instr_q 
                                               >> 0x00000027U)))
-                                ? vlSelfRef.__VdfgRegularize_hebeb780c_0_33
+                                ? vlSelfRef.__VdfgRegularize_hebeb780c_0_34
                                 : (((0x20000000U & vlSymsp->TOP__riscv_soc__u_core__u_core__u_decode.__PVT__inst_q)
                                      ? vlSelfRef.__PVT__u_csr__DOT__csr_mepc_q
                                      : vlSelfRef.__PVT__u_csr__DOT__csr_sepc_q) 
@@ -506,19 +506,19 @@ void Vriscv_soc_riscv_core___nba_sequent__TOP__riscv_soc__u_core__u_core__1(Vris
     } else if (((1U == (IData)(vlSelfRef.__PVT__u_mmu__DOT__state_q)) 
                 & (IData)(vlSelfRef.__PVT__arb_mmu_ack_w))) {
         if ((1U & ((IData)(vlSelfRef.__PVT__arb_mmu_error_w) 
-                   | (~ vlSymsp->TOP__riscv_soc.inport_rdata_o)))) {
+                   | (~ vlSymsp->TOP__riscv_soc.__PVT__u_soc__DOT__u_arb__DOT__outport_rdata_i)))) {
             vlSelfRef.__PVT__u_mmu__DOT__pte_entry_q = 0U;
             vlSelfRef.__Vdly__u_mmu__DOT__state_q = 3U;
-        } else if ((IData)((0U != (0x0000000eU & vlSymsp->TOP__riscv_soc.inport_rdata_o)))) {
+        } else if ((IData)((0U != (0x0000000eU & vlSymsp->TOP__riscv_soc.__PVT__u_soc__DOT__u_arb__DOT__outport_rdata_i)))) {
             vlSelfRef.__PVT__u_mmu__DOT__pte_entry_q 
-                = (((0xfffff000U & (vlSymsp->TOP__riscv_soc.inport_rdata_o 
+                = (((0xfffff000U & (vlSymsp->TOP__riscv_soc.__PVT__u_soc__DOT__u_arb__DOT__outport_rdata_i 
                                     << 2U)) | (0x003ff000U 
                                                & vlSelfRef.__PVT__u_mmu__DOT__request_addr_w)) 
-                   | (0x000003ffU & vlSymsp->TOP__riscv_soc.inport_rdata_o));
+                   | (0x000003ffU & vlSymsp->TOP__riscv_soc.__PVT__u_soc__DOT__u_arb__DOT__outport_rdata_i));
             vlSelfRef.__Vdly__u_mmu__DOT__state_q = 3U;
         } else {
             vlSelfRef.__PVT__u_mmu__DOT__pte_addr_q 
-                = ((0xfffff000U & (vlSymsp->TOP__riscv_soc.inport_rdata_o 
+                = ((0xfffff000U & (vlSymsp->TOP__riscv_soc.__PVT__u_soc__DOT__u_arb__DOT__outport_rdata_i 
                                    << 2U)) + (0x00000ffcU 
                                               & (vlSelfRef.__PVT__u_mmu__DOT__request_addr_w 
                                                  >> 0x0000000aU)));
@@ -527,10 +527,10 @@ void Vriscv_soc_riscv_core___nba_sequent__TOP__riscv_soc__u_core__u_core__1(Vris
     } else if (((2U == (IData)(vlSelfRef.__PVT__u_mmu__DOT__state_q)) 
                 & (IData)(vlSelfRef.__PVT__arb_mmu_ack_w))) {
         vlSelfRef.__PVT__u_mmu__DOT__pte_entry_q = 
-            ((1U & vlSymsp->TOP__riscv_soc.inport_rdata_o)
-              ? ((0xfffff000U & (vlSymsp->TOP__riscv_soc.inport_rdata_o 
+            ((1U & vlSymsp->TOP__riscv_soc.__PVT__u_soc__DOT__u_arb__DOT__outport_rdata_i)
+              ? ((0xfffff000U & (vlSymsp->TOP__riscv_soc.__PVT__u_soc__DOT__u_arb__DOT__outport_rdata_i 
                                  << 2U)) | (0x000003ffU 
-                                            & vlSymsp->TOP__riscv_soc.inport_rdata_o))
+                                            & vlSymsp->TOP__riscv_soc.__PVT__u_soc__DOT__u_arb__DOT__outport_rdata_i))
               : 0U);
         vlSelfRef.__Vdly__u_mmu__DOT__state_q = 3U;
     } else if ((3U == (IData)(vlSelfRef.__PVT__u_mmu__DOT__state_q))) {
@@ -600,11 +600,11 @@ void Vriscv_soc_riscv_core___nba_sequent__TOP__riscv_soc__u_core__u_core__1(Vris
         if (((((IData)(vlSelfRef.__PVT__csr_opcode_valid_w) 
                & ((IData)(vlSelfRef.__PVT__u_csr__DOT__set_r) 
                   | (IData)(vlSelfRef.__PVT__u_csr__DOT__clr_r))) 
-              & (0x07b2U == (0x00000fffU & vlSymsp->TOP__riscv_soc__u_core__u_core__u_exec.__PVT__imm12_r))) 
+              & (0x07b2U == (0x00000fffU & vlSelfRef.__PVT__u_csr__DOT__imm12_r))) 
              & (~ (IData)(vlSelfRef.__PVT__u_csr__DOT__csr_access_fault_w)))) {
             if (VL_UNLIKELY(((0U == (0xff000000U & vlSelfRef.__PVT__u_csr__DOT__data_r))))) {
-                VL_FINISH_MT("../core/core/rv32imsu/riscv_csr.v", 926, "");
-                VL_FINISH_MT("../core/core/rv32imsu/riscv_csr.v", 927, "");
+                VL_FINISH_MT("../soc/../core/core/rv32imsu/riscv_csr.v", 926, "");
+                VL_FINISH_MT("../soc/../core/core/rv32imsu/riscv_csr.v", 927, "");
             } else if (VL_UNLIKELY(((0x01000000U == 
                                      (0xff000000U & vlSelfRef.__PVT__u_csr__DOT__data_r))))) {
                 VL_WRITEF_NX("%c",1, '#',8,(0x000000ffU 
@@ -659,10 +659,10 @@ void Vriscv_soc_riscv_core___nba_sequent__TOP__riscv_soc__u_core__u_core__1(Vris
                                                     == (IData)(vlSelfRef.__PVT__u_csr__DOT__csr_mpriv_q)) 
                                                    & (vlSelfRef.__PVT__u_csr__DOT__csr_sr_q 
                                                       >> 3U)));
-    vlSelfRef.__PVT__u_mmu__DOT__vm_enable_w = ((3U 
-                                                 != (IData)(vlSelfRef.__PVT__u_csr__DOT__csr_mpriv_q)) 
-                                                & (vlSelfRef.__PVT__u_csr__DOT__csr_satp_q 
-                                                   >> 0x0000001fU));
+    vlSelfRef.__PVT__u_csr__DOT__mmu_enable_w = ((3U 
+                                                  != (IData)(vlSelfRef.__PVT__u_csr__DOT__csr_mpriv_q)) 
+                                                 & (vlSelfRef.__PVT__u_csr__DOT__csr_satp_q 
+                                                    >> 0x0000001fU));
     vlSelfRef.__PVT__u_muldiv__DOT__div_complete_w 
         = ((~ (0U != vlSelfRef.__PVT__u_muldiv__DOT__q_mask_q)) 
            & (IData)(vlSelfRef.__PVT__u_muldiv__DOT__div_busy_q));
@@ -670,8 +670,8 @@ void Vriscv_soc_riscv_core___nba_sequent__TOP__riscv_soc__u_core__u_core__1(Vris
                                                  & vlSelfRef.__PVT__u_csr__DOT__irq_pending_r);
     vlSelfRef.__PVT__u_mmu__DOT__dtlb_miss_w = ((IData)(__VdfgRegularize_hebeb780c_0_52) 
                                                 & ((~ (IData)(vlSelfRef.__PVT__u_mmu__DOT__dtlb_hit_w)) 
-                                                   & (IData)(vlSelfRef.__PVT__u_mmu__DOT__vm_enable_w)));
-    vlSelfRef.__PVT__fault_page_store_w = ((IData)(vlSelfRef.__PVT__u_mmu__DOT__vm_enable_w) 
+                                                   & (IData)(vlSelfRef.__PVT__u_csr__DOT__mmu_enable_w)));
+    vlSelfRef.__PVT__fault_page_store_w = ((IData)(vlSelfRef.__PVT__u_csr__DOT__mmu_enable_w) 
                                            & ((0U != (IData)(vlSelfRef.__PVT__u_mmu__DOT__store_w)) 
                                               & (((1U 
                                                    == (IData)(vlSelfRef.__PVT__u_csr__DOT__csr_mpriv_q))
@@ -694,7 +694,7 @@ void Vriscv_soc_riscv_core___nba_sequent__TOP__riscv_soc__u_core__u_core__1(Vris
                                                         & (vlSelfRef.__PVT__u_mmu__DOT__dtlb_entry_q 
                                                            >> 1U)))))) 
                                                  & (IData)(vlSelfRef.__PVT__u_mmu__DOT__dtlb_hit_w))));
-    vlSelfRef.__PVT__mmu_load_fault_w = ((IData)(vlSelfRef.__PVT__u_mmu__DOT__vm_enable_w) 
+    vlSelfRef.__PVT__mmu_load_fault_w = ((IData)(vlSelfRef.__PVT__u_csr__DOT__mmu_enable_w) 
                                          & ((IData)(vlSelfRef.__PVT__u_mmu__DOT__load_w) 
                                             & (((1U 
                                                  == (IData)(vlSelfRef.__PVT__u_csr__DOT__csr_mpriv_q))
@@ -725,16 +725,16 @@ void Vriscv_soc_riscv_core___nba_sequent__TOP__riscv_soc__u_core__u_core__1(Vris
                                                                        == (IData)(vlSelfRef.__PVT__u_csr__DOT__csr_mpriv_q)) 
                                                                       & (vlSelfRef.__PVT__u_csr__DOT__csr_sr_q 
                                                                          >> 1U))))))));
-    vlSelfRef.__VdfgRegularize_hebeb780c_0_23 = ((IData)(vlSelfRef.__PVT__fault_page_store_w) 
+    vlSelfRef.__VdfgRegularize_hebeb780c_0_22 = ((IData)(vlSelfRef.__PVT__fault_page_store_w) 
                                                  | (IData)(vlSelfRef.__PVT__mmu_load_fault_w));
-    vlSelfRef.__PVT__csr_stall_w = ((IData)(vlSelfRef.__VdfgRegularize_hebeb780c_0_23) 
+    vlSelfRef.__PVT__csr_stall_w = ((IData)(vlSelfRef.__VdfgRegularize_hebeb780c_0_22) 
                                     | (IData)(vlSelfRef.__VdfgRegularize_hebeb780c_0_53));
-    vlSelfRef.__PVT__mmu_lsu_accept_w = ((((~ (IData)(vlSelfRef.__PVT__u_mmu__DOT__vm_enable_w)) 
-                                           | ((IData)(vlSelfRef.__PVT__u_mmu__DOT__vm_enable_w) 
+    vlSelfRef.__PVT__mmu_lsu_accept_w = ((((~ (IData)(vlSelfRef.__PVT__u_csr__DOT__mmu_enable_w)) 
+                                           | ((IData)(vlSelfRef.__PVT__u_csr__DOT__mmu_enable_w) 
                                               & (IData)(vlSelfRef.__PVT__u_mmu__DOT__dtlb_hit_w))) 
                                           & ((~ (IData)(vlSelfRef.__PVT__u_arb__DOT__src_mmu_w)) 
-                                             & (IData)(vlSymsp->TOP__riscv_soc__u_core.__PVT__dport_bridge_accept_w))) 
-                                         | (IData)(vlSelfRef.__VdfgRegularize_hebeb780c_0_23));
+                                             & (IData)(vlSymsp->TOP__riscv_soc__u_core.__PVT__u_dport_bridge__DOT__mem_accept_o))) 
+                                         | (IData)(vlSelfRef.__VdfgRegularize_hebeb780c_0_22));
     vlSelfRef.__PVT__lsu_stall_w = ((~ (IData)(vlSelfRef.__PVT__mmu_lsu_accept_w)) 
                                     & ((IData)(vlSelfRef.__PVT__u_lsu__DOT__mem_invalidate_q) 
                                        | ((IData)(vlSelfRef.__PVT__u_lsu__DOT__mem_flush_q) 
@@ -773,6 +773,12 @@ void Vriscv_soc_riscv_core___nba_sequent__TOP__riscv_soc__u_core__u_core__2(Vris
                                               & (IData)(
                                                         (vlSymsp->TOP__riscv_soc__u_core__u_core__u_decode.__PVT__opcode_instr_q 
                                                          >> 0x00000033U))))));
+    vlSelfRef.__PVT__u_csr__DOT__imm12_r = (((- (IData)(
+                                                        (vlSymsp->TOP__riscv_soc__u_core__u_core__u_decode.__PVT__inst_q 
+                                                         >> 0x0000001fU))) 
+                                             << 0x0000000cU) 
+                                            | (vlSymsp->TOP__riscv_soc__u_core__u_core__u_decode.__PVT__inst_q 
+                                               >> 0x00000014U));
 }
 
 void Vriscv_soc_riscv_core___nba_comb__TOP__riscv_soc__u_core__u_core__0(Vriscv_soc_riscv_core* vlSelf) {
@@ -800,13 +806,13 @@ void Vriscv_soc_riscv_core___nba_comb__TOP__riscv_soc__u_core__u_core__1(Vriscv_
     auto& vlSelfRef = std::ref(*vlSelf).get();
     // Body
     vlSelfRef.__PVT__arb_mmu_ack_w = ((7U == (IData)(vlSymsp->TOP__riscv_soc__u_core.__VdfgRegularize_hebeb780c_0_16)) 
-                                      & (IData)(vlSymsp->TOP__riscv_soc__u_core.__PVT__dport_bridge_ack_w));
+                                      & (IData)(vlSymsp->TOP__riscv_soc__u_core.__PVT__u_dport_bridge__DOT__mem_ack_o));
     vlSelfRef.__PVT__mmu_lsu_ack_w = ((7U != (IData)(vlSymsp->TOP__riscv_soc__u_core.__VdfgRegularize_hebeb780c_0_16)) 
-                                      & (IData)(vlSymsp->TOP__riscv_soc__u_core.__PVT__dport_bridge_ack_w));
-    vlSelfRef.__PVT__arb_mmu_error_w = ((IData)(vlSymsp->TOP__riscv_soc__u_core.__PVT__dport_bridge_error_w) 
+                                      & (IData)(vlSymsp->TOP__riscv_soc__u_core.__PVT__u_dport_bridge__DOT__mem_ack_o));
+    vlSelfRef.__PVT__arb_mmu_error_w = ((IData)(vlSymsp->TOP__riscv_soc__u_core.__PVT__u_dport_bridge__DOT__mem_error_o) 
                                         & (7U == (IData)(vlSymsp->TOP__riscv_soc__u_core.__VdfgRegularize_hebeb780c_0_16)));
     vlSelfRef.__PVT__mmu_lsu_error_w = ((7U != (IData)(vlSymsp->TOP__riscv_soc__u_core.__VdfgRegularize_hebeb780c_0_16)) 
-                                        & (IData)(vlSymsp->TOP__riscv_soc__u_core.__PVT__dport_bridge_error_w));
+                                        & (IData)(vlSymsp->TOP__riscv_soc__u_core.__PVT__u_dport_bridge__DOT__mem_error_o));
     vlSelfRef.__PVT__u_lsu__DOT__wb_result_r = 0U;
     vlSelfRef.__PVT__u_lsu__DOT__wb_idx_r = (0x0000001fU 
                                              & vlSymsp->TOP__riscv_soc__u_core.__PVT__u_dport_bridge__DOT__u_resp__DOT__ram_q
@@ -839,14 +845,14 @@ void Vriscv_soc_riscv_core___nba_comb__TOP__riscv_soc__u_core__u_core__1(Vriscv_
             vlSelfRef.__PVT__u_lsu__DOT__wb_result_r 
                 = ((2U & (IData)(vlSelfRef.__PVT__u_lsu__DOT__addr_lsb_r))
                     ? ((1U & (IData)(vlSelfRef.__PVT__u_lsu__DOT__addr_lsb_r))
-                        ? (vlSymsp->TOP__riscv_soc.inport_rdata_o 
+                        ? (vlSymsp->TOP__riscv_soc.__PVT__u_soc__DOT__u_arb__DOT__outport_rdata_i 
                            >> 0x18U) : (0x000000ffU 
-                                        & (vlSymsp->TOP__riscv_soc.inport_rdata_o 
+                                        & (vlSymsp->TOP__riscv_soc.__PVT__u_soc__DOT__u_arb__DOT__outport_rdata_i 
                                            >> 0x10U)))
                     : ((1U & (IData)(vlSelfRef.__PVT__u_lsu__DOT__addr_lsb_r))
-                        ? (0x000000ffU & (vlSymsp->TOP__riscv_soc.inport_rdata_o 
+                        ? (0x000000ffU & (vlSymsp->TOP__riscv_soc.__PVT__u_soc__DOT__u_arb__DOT__outport_rdata_i 
                                           >> 8U)) : 
-                       (0x000000ffU & vlSymsp->TOP__riscv_soc.inport_rdata_o)));
+                       (0x000000ffU & vlSymsp->TOP__riscv_soc.__PVT__u_soc__DOT__u_arb__DOT__outport_rdata_i)));
             if (((IData)(vlSelfRef.__PVT__u_lsu__DOT__load_signed_r) 
                  & (vlSelfRef.__PVT__u_lsu__DOT__wb_result_r 
                     >> 7U))) {
@@ -856,8 +862,8 @@ void Vriscv_soc_riscv_core___nba_comb__TOP__riscv_soc__u_core__u_core__1(Vriscv_
         } else if (vlSelfRef.__PVT__u_lsu__DOT__load_half_r) {
             vlSelfRef.__PVT__u_lsu__DOT__wb_result_r 
                 = ((2U & (IData)(vlSelfRef.__PVT__u_lsu__DOT__addr_lsb_r))
-                    ? (vlSymsp->TOP__riscv_soc.inport_rdata_o 
-                       >> 0x10U) : (0x0000ffffU & vlSymsp->TOP__riscv_soc.inport_rdata_o));
+                    ? (vlSymsp->TOP__riscv_soc.__PVT__u_soc__DOT__u_arb__DOT__outport_rdata_i 
+                       >> 0x10U) : (0x0000ffffU & vlSymsp->TOP__riscv_soc.__PVT__u_soc__DOT__u_arb__DOT__outport_rdata_i));
             if (((IData)(vlSelfRef.__PVT__u_lsu__DOT__load_signed_r) 
                  & (vlSelfRef.__PVT__u_lsu__DOT__wb_result_r 
                     >> 0x0fU))) {
@@ -866,7 +872,7 @@ void Vriscv_soc_riscv_core___nba_comb__TOP__riscv_soc__u_core__u_core__1(Vriscv_
             }
         } else {
             vlSelfRef.__PVT__u_lsu__DOT__wb_result_r 
-                = vlSymsp->TOP__riscv_soc.inport_rdata_o;
+                = vlSymsp->TOP__riscv_soc.__PVT__u_soc__DOT__u_arb__DOT__outport_rdata_i;
         }
     } else {
         vlSelfRef.__PVT__u_lsu__DOT__wb_idx_r = 0U;
@@ -924,7 +930,7 @@ void Vriscv_soc_riscv_core___nba_comb__TOP__riscv_soc__u_core__u_core__1(Vriscv_
                                                       (vlSymsp->TOP__riscv_soc__u_core__u_core__u_decode.__PVT__opcode_instr_q 
                                                        >> 0x00000016U)))
                                          ? (0xfffffffeU 
-                                            & (vlSymsp->TOP__riscv_soc__u_core__u_core__u_exec.__PVT__imm12_r 
+                                            & (vlSelfRef.__PVT__u_csr__DOT__imm12_r 
                                                + vlSelfRef.__PVT__opcode_ra_operand_w))
                                          : (vlSymsp->TOP__riscv_soc__u_core__u_core__u_decode.__PVT__pc_q 
                                             + (((- (IData)(
@@ -951,8 +957,8 @@ void Vriscv_soc_riscv_core___nba_comb__TOP__riscv_soc__u_core__u_core__2(Vriscv_
     Vriscv_soc__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
     auto& vlSelfRef = std::ref(*vlSelf).get();
     // Locals
-    CData/*0:0*/ __VdfgRegularize_hebeb780c_0_47;
-    __VdfgRegularize_hebeb780c_0_47 = 0;
+    CData/*0:0*/ __VdfgRegularize_hebeb780c_0_48;
+    __VdfgRegularize_hebeb780c_0_48 = 0;
     CData/*0:0*/ __VdfgRegularize_hebeb780c_0_55;
     __VdfgRegularize_hebeb780c_0_55 = 0;
     VlWide<3>/*95:0*/ __Vtemp_2;
@@ -962,7 +968,7 @@ void Vriscv_soc_riscv_core___nba_comb__TOP__riscv_soc__u_core__u_core__2(Vriscv_
     vlSelfRef.__PVT__lsu_opcode_valid_w = ((IData)(vlSymsp->TOP__riscv_soc__u_core__u_core__u_decode.__PVT__opcode_valid_r) 
                                            & ((~ (IData)(vlSelfRef.__PVT__csr_stall_w)) 
                                               & (~ (IData)(vlSelfRef.__PVT__muldiv_stall_w))));
-    __VdfgRegularize_hebeb780c_0_47 = ((~ (IData)(vlSelfRef.__PVT__lsu_stall_w)) 
+    __VdfgRegularize_hebeb780c_0_48 = ((~ (IData)(vlSelfRef.__PVT__lsu_stall_w)) 
                                        & (IData)(vlSymsp->TOP__riscv_soc__u_core__u_core__u_decode.__PVT__opcode_valid_r));
     __Vtemp_2[0U] = (IData)((((QData)((IData)(vlSymsp->TOP__riscv_soc__u_core__u_core__u_decode.__VdfgRegularize_hebeb780c_0_57)) 
                               << 0x00000020U) | (QData)((IData)(vlSelfRef.__PVT__opcode_ra_operand_w))));
@@ -1041,9 +1047,9 @@ void Vriscv_soc_riscv_core___nba_comb__TOP__riscv_soc__u_core__u_core__2(Vriscv_
     vlSelfRef.__PVT__exec_opcode_valid_w = ((~ (IData)(vlSelfRef.__PVT__lsu_stall_w)) 
                                             & (IData)(vlSelfRef.__PVT__lsu_opcode_valid_w));
     vlSelfRef.__PVT__muldiv_opcode_valid_w = ((~ (IData)(vlSelfRef.__PVT__csr_stall_w)) 
-                                              & (IData)(__VdfgRegularize_hebeb780c_0_47));
+                                              & (IData)(__VdfgRegularize_hebeb780c_0_48));
     vlSelfRef.__PVT__csr_opcode_valid_w = ((~ (IData)(vlSelfRef.__PVT__muldiv_stall_w)) 
-                                           & (IData)(__VdfgRegularize_hebeb780c_0_47));
+                                           & (IData)(__VdfgRegularize_hebeb780c_0_48));
     vlSelfRef.__PVT__branch_request_w = ((IData)(vlSymsp->TOP__riscv_soc__u_core__u_core__u_exec.__PVT__branch_r) 
                                          & (IData)(vlSelfRef.__PVT__exec_opcode_valid_w));
     vlSelfRef.__PVT__u_muldiv__DOT__div_start_w = ((IData)(vlSelfRef.__PVT__muldiv_opcode_valid_w) 
@@ -1128,15 +1134,15 @@ void Vriscv_soc_riscv_core___nba_comb__TOP__riscv_soc__u_core__u_core__3(Vriscv_
                                                           << 4U))) 
                                                    | ((((3U 
                                                          == (IData)(vlSelfRef.__PVT__u_csr__DOT__csr_mpriv_q)) 
-                                                        & (IData)(vlSymsp->TOP__riscv_soc__u_core__u_core__u_decode.__VdfgRegularize_hebeb780c_0_24)) 
+                                                        & (IData)(vlSymsp->TOP__riscv_soc__u_core__u_core__u_decode.__VdfgRegularize_hebeb780c_0_23)) 
                                                        << 3U) 
                                                       | ((((1U 
                                                             == (IData)(vlSelfRef.__PVT__u_csr__DOT__csr_mpriv_q)) 
-                                                           & (IData)(vlSymsp->TOP__riscv_soc__u_core__u_core__u_decode.__VdfgRegularize_hebeb780c_0_24)) 
+                                                           & (IData)(vlSymsp->TOP__riscv_soc__u_core__u_core__u_decode.__VdfgRegularize_hebeb780c_0_23)) 
                                                           << 1U) 
                                                          | ((0U 
                                                              == (IData)(vlSelfRef.__PVT__u_csr__DOT__csr_mpriv_q)) 
-                                                            & (IData)(vlSymsp->TOP__riscv_soc__u_core__u_core__u_decode.__VdfgRegularize_hebeb780c_0_24))))) 
+                                                            & (IData)(vlSymsp->TOP__riscv_soc__u_core__u_core__u_decode.__VdfgRegularize_hebeb780c_0_23))))) 
                                                   << 8U) 
                                                  | (((((((IData)(vlSelfRef.__PVT__mmu_lsu_ack_w) 
                                                          & ((0U 
@@ -1168,7 +1174,7 @@ void Vriscv_soc_riscv_core___nba_comb__TOP__riscv_soc__u_core__u_core__3(Vriscv_
                                                                     >> 0x00000037U)) 
                                                            & (IData)(vlSelfRef.__PVT__csr_opcode_valid_w)) 
                                                           << 1U))));
-    vlSelfRef.__VdfgRegularize_hebeb780c_0_33 = (((1U 
+    vlSelfRef.__VdfgRegularize_hebeb780c_0_34 = (((1U 
                                                    >= (IData)(vlSelfRef.__PVT__u_csr__DOT__csr_mpriv_q)) 
                                                   & (0U 
                                                      != 
@@ -1237,7 +1243,7 @@ void Vriscv_soc_riscv_core___nba_comb__TOP__riscv_soc__u_core__u_core__3(Vriscv_
                 vlSelfRef.__PVT__u_csr__DOT__csr_sepc_r 
                     = vlSelfRef.__PVT__u_csr__DOT__pc_m_q;
                 vlSelfRef.__PVT__u_csr__DOT__csr_stval_r 
-                    = ((IData)(vlSelfRef.__VdfgRegularize_hebeb780c_0_23)
+                    = ((IData)(vlSelfRef.__VdfgRegularize_hebeb780c_0_22)
                         ? vlSelfRef.__PVT__u_mmu__DOT__lsu_in_addr_q
                         : (vlSelfRef.__PVT__u_lsu__DOT__mem_addr_q 
                            & (- (IData)((IData)(vlSelfRef.__VdfgRegularize_hebeb780c_0_53)))));
@@ -1418,31 +1424,31 @@ void Vriscv_soc_riscv_core___nba_comb__TOP__riscv_soc__u_core__u_core__3(Vriscv_
                                                    & (vlSymsp->TOP__riscv_soc__u_core__u_core__u_decode.__PVT__inst_q 
                                                       >> 0x0000000fU))
                                                 : vlSelfRef.__PVT__opcode_ra_operand_w);
-        if ((0x00000800U & vlSymsp->TOP__riscv_soc__u_core__u_core__u_exec.__PVT__imm12_r)) {
-            if ((0x00000400U & vlSymsp->TOP__riscv_soc__u_core__u_core__u_exec.__PVT__imm12_r)) {
-                if ((0x00000200U & vlSymsp->TOP__riscv_soc__u_core__u_core__u_exec.__PVT__imm12_r)) {
-                    if ((0x00000100U & vlSymsp->TOP__riscv_soc__u_core__u_core__u_exec.__PVT__imm12_r)) {
-                        if ((1U & (~ (vlSymsp->TOP__riscv_soc__u_core__u_core__u_exec.__PVT__imm12_r 
+        if ((0x00000800U & vlSelfRef.__PVT__u_csr__DOT__imm12_r)) {
+            if ((0x00000400U & vlSelfRef.__PVT__u_csr__DOT__imm12_r)) {
+                if ((0x00000200U & vlSelfRef.__PVT__u_csr__DOT__imm12_r)) {
+                    if ((0x00000100U & vlSelfRef.__PVT__u_csr__DOT__imm12_r)) {
+                        if ((1U & (~ (vlSelfRef.__PVT__u_csr__DOT__imm12_r 
                                       >> 7U)))) {
-                            if ((1U & (~ (vlSymsp->TOP__riscv_soc__u_core__u_core__u_exec.__PVT__imm12_r 
+                            if ((1U & (~ (vlSelfRef.__PVT__u_csr__DOT__imm12_r 
                                           >> 6U)))) {
-                                if ((1U & (~ (vlSymsp->TOP__riscv_soc__u_core__u_core__u_exec.__PVT__imm12_r 
+                                if ((1U & (~ (vlSelfRef.__PVT__u_csr__DOT__imm12_r 
                                               >> 5U)))) {
                                     if ((0x00000010U 
-                                         & vlSymsp->TOP__riscv_soc__u_core__u_core__u_exec.__PVT__imm12_r)) {
+                                         & vlSelfRef.__PVT__u_csr__DOT__imm12_r)) {
                                         if ((1U & (~ 
-                                                   (vlSymsp->TOP__riscv_soc__u_core__u_core__u_exec.__PVT__imm12_r 
+                                                   (vlSelfRef.__PVT__u_csr__DOT__imm12_r 
                                                     >> 3U)))) {
                                             if ((4U 
-                                                 & vlSymsp->TOP__riscv_soc__u_core__u_core__u_exec.__PVT__imm12_r)) {
+                                                 & vlSelfRef.__PVT__u_csr__DOT__imm12_r)) {
                                                 if (
                                                     (1U 
                                                      & (~ 
-                                                        (vlSymsp->TOP__riscv_soc__u_core__u_core__u_exec.__PVT__imm12_r 
+                                                        (vlSelfRef.__PVT__u_csr__DOT__imm12_r 
                                                          >> 1U)))) {
                                                     if (
                                                         (1U 
-                                                         & (~ vlSymsp->TOP__riscv_soc__u_core__u_core__u_exec.__PVT__imm12_r))) {
+                                                         & (~ vlSelfRef.__PVT__u_csr__DOT__imm12_r))) {
                                                         vlSelfRef.__PVT__u_csr__DOT__result_r = 0U;
                                                     }
                                                 }
@@ -1453,28 +1459,28 @@ void Vriscv_soc_riscv_core___nba_comb__TOP__riscv_soc__u_core__u_core__3(Vriscv_
                             }
                         }
                     }
-                } else if ((1U & (~ (vlSymsp->TOP__riscv_soc__u_core__u_core__u_exec.__PVT__imm12_r 
+                } else if ((1U & (~ (vlSelfRef.__PVT__u_csr__DOT__imm12_r 
                                      >> 8U)))) {
-                    if ((1U & (~ (vlSymsp->TOP__riscv_soc__u_core__u_core__u_exec.__PVT__imm12_r 
+                    if ((1U & (~ (vlSelfRef.__PVT__u_csr__DOT__imm12_r 
                                   >> 7U)))) {
-                        if ((1U & (~ (vlSymsp->TOP__riscv_soc__u_core__u_core__u_exec.__PVT__imm12_r 
+                        if ((1U & (~ (vlSelfRef.__PVT__u_csr__DOT__imm12_r 
                                       >> 6U)))) {
-                            if ((1U & (~ (vlSymsp->TOP__riscv_soc__u_core__u_core__u_exec.__PVT__imm12_r 
+                            if ((1U & (~ (vlSelfRef.__PVT__u_csr__DOT__imm12_r 
                                           >> 5U)))) {
-                                if ((1U & (~ (vlSymsp->TOP__riscv_soc__u_core__u_core__u_exec.__PVT__imm12_r 
+                                if ((1U & (~ (vlSelfRef.__PVT__u_csr__DOT__imm12_r 
                                               >> 4U)))) {
-                                    if ((1U & (~ (vlSymsp->TOP__riscv_soc__u_core__u_core__u_exec.__PVT__imm12_r 
+                                    if ((1U & (~ (vlSelfRef.__PVT__u_csr__DOT__imm12_r 
                                                   >> 3U)))) {
                                         if ((1U & (~ 
-                                                   (vlSymsp->TOP__riscv_soc__u_core__u_core__u_exec.__PVT__imm12_r 
+                                                   (vlSelfRef.__PVT__u_csr__DOT__imm12_r 
                                                     >> 2U)))) {
                                             if ((1U 
                                                  & (~ 
-                                                    (vlSymsp->TOP__riscv_soc__u_core__u_core__u_exec.__PVT__imm12_r 
+                                                    (vlSelfRef.__PVT__u_csr__DOT__imm12_r 
                                                      >> 1U)))) {
                                                 if (
                                                     (1U 
-                                                     & (~ vlSymsp->TOP__riscv_soc__u_core__u_core__u_exec.__PVT__imm12_r))) {
+                                                     & (~ vlSelfRef.__PVT__u_csr__DOT__imm12_r))) {
                                                     vlSelfRef.__PVT__u_csr__DOT__result_r 
                                                         = vlSelfRef.__PVT__u_csr__DOT__csr_mcycle_q;
                                                 }
@@ -1487,27 +1493,27 @@ void Vriscv_soc_riscv_core___nba_comb__TOP__riscv_soc__u_core__u_core__3(Vriscv_
                     }
                 }
             }
-        } else if ((1U & (~ (vlSymsp->TOP__riscv_soc__u_core__u_core__u_exec.__PVT__imm12_r 
+        } else if ((1U & (~ (vlSelfRef.__PVT__u_csr__DOT__imm12_r 
                              >> 0x0000000aU)))) {
-            if ((0x00000200U & vlSymsp->TOP__riscv_soc__u_core__u_core__u_exec.__PVT__imm12_r)) {
-                if ((0x00000100U & vlSymsp->TOP__riscv_soc__u_core__u_core__u_exec.__PVT__imm12_r)) {
-                    if ((1U & (~ (vlSymsp->TOP__riscv_soc__u_core__u_core__u_exec.__PVT__imm12_r 
+            if ((0x00000200U & vlSelfRef.__PVT__u_csr__DOT__imm12_r)) {
+                if ((0x00000100U & vlSelfRef.__PVT__u_csr__DOT__imm12_r)) {
+                    if ((1U & (~ (vlSelfRef.__PVT__u_csr__DOT__imm12_r 
                                   >> 7U)))) {
-                        if ((0x00000040U & vlSymsp->TOP__riscv_soc__u_core__u_core__u_exec.__PVT__imm12_r)) {
-                            if ((1U & (~ (vlSymsp->TOP__riscv_soc__u_core__u_core__u_exec.__PVT__imm12_r 
+                        if ((0x00000040U & vlSelfRef.__PVT__u_csr__DOT__imm12_r)) {
+                            if ((1U & (~ (vlSelfRef.__PVT__u_csr__DOT__imm12_r 
                                           >> 5U)))) {
-                                if ((1U & (~ (vlSymsp->TOP__riscv_soc__u_core__u_core__u_exec.__PVT__imm12_r 
+                                if ((1U & (~ (vlSelfRef.__PVT__u_csr__DOT__imm12_r 
                                               >> 4U)))) {
-                                    if ((1U & (~ (vlSymsp->TOP__riscv_soc__u_core__u_core__u_exec.__PVT__imm12_r 
+                                    if ((1U & (~ (vlSelfRef.__PVT__u_csr__DOT__imm12_r 
                                                   >> 3U)))) {
-                                        if ((4U & vlSymsp->TOP__riscv_soc__u_core__u_core__u_exec.__PVT__imm12_r)) {
+                                        if ((4U & vlSelfRef.__PVT__u_csr__DOT__imm12_r)) {
                                             if ((1U 
                                                  & (~ 
-                                                    (vlSymsp->TOP__riscv_soc__u_core__u_core__u_exec.__PVT__imm12_r 
+                                                    (vlSelfRef.__PVT__u_csr__DOT__imm12_r 
                                                      >> 1U)))) {
                                                 if (
                                                     (1U 
-                                                     & (~ vlSymsp->TOP__riscv_soc__u_core__u_core__u_exec.__PVT__imm12_r))) {
+                                                     & (~ vlSelfRef.__PVT__u_csr__DOT__imm12_r))) {
                                                     vlSelfRef.__PVT__u_csr__DOT__data_r 
                                                         = 
                                                         (0x00000aaaU 
@@ -1536,9 +1542,9 @@ void Vriscv_soc_riscv_core___nba_comb__TOP__riscv_soc__u_core__u_core__3(Vriscv_
                                             }
                                         } else if (
                                                    (2U 
-                                                    & vlSymsp->TOP__riscv_soc__u_core__u_core__u_exec.__PVT__imm12_r)) {
+                                                    & vlSelfRef.__PVT__u_csr__DOT__imm12_r)) {
                                             if ((1U 
-                                                 & (~ vlSymsp->TOP__riscv_soc__u_core__u_core__u_exec.__PVT__imm12_r))) {
+                                                 & (~ vlSelfRef.__PVT__u_csr__DOT__imm12_r))) {
                                                 vlSelfRef.__PVT__u_csr__DOT__data_r 
                                                     = 
                                                     (0x8000000fU 
@@ -1566,7 +1572,7 @@ void Vriscv_soc_riscv_core___nba_comb__TOP__riscv_soc__u_core__u_core__3(Vriscv_
                                             }
                                         } else if (
                                                    (1U 
-                                                    & vlSymsp->TOP__riscv_soc__u_core__u_core__u_exec.__PVT__imm12_r)) {
+                                                    & vlSelfRef.__PVT__u_csr__DOT__imm12_r)) {
                                             if (((IData)(vlSelfRef.__PVT__u_csr__DOT__set_r) 
                                                  & (IData)(vlSelfRef.__PVT__u_csr__DOT__clr_r))) {
                                                 vlSelfRef.__PVT__u_csr__DOT__csr_mepc_r 
@@ -1606,18 +1612,18 @@ void Vriscv_soc_riscv_core___nba_comb__TOP__riscv_soc__u_core__u_core__3(Vriscv_
                                     }
                                 }
                             }
-                        } else if ((1U & (~ (vlSymsp->TOP__riscv_soc__u_core__u_core__u_exec.__PVT__imm12_r 
+                        } else if ((1U & (~ (vlSelfRef.__PVT__u_csr__DOT__imm12_r 
                                              >> 5U)))) {
-                            if ((1U & (~ (vlSymsp->TOP__riscv_soc__u_core__u_core__u_exec.__PVT__imm12_r 
+                            if ((1U & (~ (vlSelfRef.__PVT__u_csr__DOT__imm12_r 
                                           >> 4U)))) {
-                                if ((1U & (~ (vlSymsp->TOP__riscv_soc__u_core__u_core__u_exec.__PVT__imm12_r 
+                                if ((1U & (~ (vlSelfRef.__PVT__u_csr__DOT__imm12_r 
                                               >> 3U)))) {
-                                    if ((4U & vlSymsp->TOP__riscv_soc__u_core__u_core__u_exec.__PVT__imm12_r)) {
+                                    if ((4U & vlSelfRef.__PVT__u_csr__DOT__imm12_r)) {
                                         if ((1U & (~ 
-                                                   (vlSymsp->TOP__riscv_soc__u_core__u_core__u_exec.__PVT__imm12_r 
+                                                   (vlSelfRef.__PVT__u_csr__DOT__imm12_r 
                                                     >> 1U)))) {
                                             if ((1U 
-                                                 & vlSymsp->TOP__riscv_soc__u_core__u_core__u_exec.__PVT__imm12_r)) {
+                                                 & vlSelfRef.__PVT__u_csr__DOT__imm12_r)) {
                                                 if (
                                                     ((IData)(vlSelfRef.__PVT__u_csr__DOT__set_r) 
                                                      & (IData)(vlSelfRef.__PVT__u_csr__DOT__clr_r))) {
@@ -1664,8 +1670,8 @@ void Vriscv_soc_riscv_core___nba_comb__TOP__riscv_soc__u_core__u_core__3(Vriscv_
                                             }
                                         }
                                     } else if ((2U 
-                                                & vlSymsp->TOP__riscv_soc__u_core__u_core__u_exec.__PVT__imm12_r)) {
-                                        if ((1U & vlSymsp->TOP__riscv_soc__u_core__u_core__u_exec.__PVT__imm12_r)) {
+                                                & vlSelfRef.__PVT__u_csr__DOT__imm12_r)) {
+                                        if ((1U & vlSelfRef.__PVT__u_csr__DOT__imm12_r)) {
                                             vlSelfRef.__PVT__u_csr__DOT__data_r 
                                                 = (0x0000ffffU 
                                                    & vlSelfRef.__PVT__u_csr__DOT__data_r);
@@ -1711,7 +1717,7 @@ void Vriscv_soc_riscv_core___nba_comb__TOP__riscv_soc__u_core__u_core__3(Vriscv_
                                             }
                                         }
                                     } else if ((1U 
-                                                & vlSymsp->TOP__riscv_soc__u_core__u_core__u_exec.__PVT__imm12_r)) {
+                                                & vlSelfRef.__PVT__u_csr__DOT__imm12_r)) {
                                         vlSelfRef.__PVT__u_csr__DOT__result_r = 0x40141100U;
                                     } else {
                                         if (((IData)(vlSelfRef.__PVT__u_csr__DOT__set_r) 
@@ -1735,23 +1741,23 @@ void Vriscv_soc_riscv_core___nba_comb__TOP__riscv_soc__u_core__u_core__3(Vriscv_
                         }
                     }
                 }
-            } else if ((0x00000100U & vlSymsp->TOP__riscv_soc__u_core__u_core__u_exec.__PVT__imm12_r)) {
-                if ((0x00000080U & vlSymsp->TOP__riscv_soc__u_core__u_core__u_exec.__PVT__imm12_r)) {
-                    if ((1U & (~ (vlSymsp->TOP__riscv_soc__u_core__u_core__u_exec.__PVT__imm12_r 
+            } else if ((0x00000100U & vlSelfRef.__PVT__u_csr__DOT__imm12_r)) {
+                if ((0x00000080U & vlSelfRef.__PVT__u_csr__DOT__imm12_r)) {
+                    if ((1U & (~ (vlSelfRef.__PVT__u_csr__DOT__imm12_r 
                                   >> 6U)))) {
-                        if ((1U & (~ (vlSymsp->TOP__riscv_soc__u_core__u_core__u_exec.__PVT__imm12_r 
+                        if ((1U & (~ (vlSelfRef.__PVT__u_csr__DOT__imm12_r 
                                       >> 5U)))) {
-                            if ((1U & (~ (vlSymsp->TOP__riscv_soc__u_core__u_core__u_exec.__PVT__imm12_r 
+                            if ((1U & (~ (vlSelfRef.__PVT__u_csr__DOT__imm12_r 
                                           >> 4U)))) {
-                                if ((1U & (~ (vlSymsp->TOP__riscv_soc__u_core__u_core__u_exec.__PVT__imm12_r 
+                                if ((1U & (~ (vlSelfRef.__PVT__u_csr__DOT__imm12_r 
                                               >> 3U)))) {
-                                    if ((1U & (~ (vlSymsp->TOP__riscv_soc__u_core__u_core__u_exec.__PVT__imm12_r 
+                                    if ((1U & (~ (vlSelfRef.__PVT__u_csr__DOT__imm12_r 
                                                   >> 2U)))) {
                                         if ((1U & (~ 
-                                                   (vlSymsp->TOP__riscv_soc__u_core__u_core__u_exec.__PVT__imm12_r 
+                                                   (vlSelfRef.__PVT__u_csr__DOT__imm12_r 
                                                     >> 1U)))) {
                                             if ((1U 
-                                                 & (~ vlSymsp->TOP__riscv_soc__u_core__u_core__u_exec.__PVT__imm12_r))) {
+                                                 & (~ vlSelfRef.__PVT__u_csr__DOT__imm12_r))) {
                                                 if (
                                                     ((IData)(vlSelfRef.__PVT__u_csr__DOT__set_r) 
                                                      & (IData)(vlSelfRef.__PVT__u_csr__DOT__clr_r))) {
@@ -1777,17 +1783,17 @@ void Vriscv_soc_riscv_core___nba_comb__TOP__riscv_soc__u_core__u_core__3(Vriscv_
                             }
                         }
                     }
-                } else if ((0x00000040U & vlSymsp->TOP__riscv_soc__u_core__u_core__u_exec.__PVT__imm12_r)) {
-                    if ((1U & (~ (vlSymsp->TOP__riscv_soc__u_core__u_core__u_exec.__PVT__imm12_r 
+                } else if ((0x00000040U & vlSelfRef.__PVT__u_csr__DOT__imm12_r)) {
+                    if ((1U & (~ (vlSelfRef.__PVT__u_csr__DOT__imm12_r 
                                   >> 5U)))) {
-                        if ((1U & (~ (vlSymsp->TOP__riscv_soc__u_core__u_core__u_exec.__PVT__imm12_r 
+                        if ((1U & (~ (vlSelfRef.__PVT__u_csr__DOT__imm12_r 
                                       >> 4U)))) {
-                            if ((1U & (~ (vlSymsp->TOP__riscv_soc__u_core__u_core__u_exec.__PVT__imm12_r 
+                            if ((1U & (~ (vlSelfRef.__PVT__u_csr__DOT__imm12_r 
                                           >> 3U)))) {
-                                if ((4U & vlSymsp->TOP__riscv_soc__u_core__u_core__u_exec.__PVT__imm12_r)) {
-                                    if ((1U & (~ (vlSymsp->TOP__riscv_soc__u_core__u_core__u_exec.__PVT__imm12_r 
+                                if ((4U & vlSelfRef.__PVT__u_csr__DOT__imm12_r)) {
+                                    if ((1U & (~ (vlSelfRef.__PVT__u_csr__DOT__imm12_r 
                                                   >> 1U)))) {
-                                        if ((1U & (~ vlSymsp->TOP__riscv_soc__u_core__u_core__u_exec.__PVT__imm12_r))) {
+                                        if ((1U & (~ vlSelfRef.__PVT__u_csr__DOT__imm12_r))) {
                                             vlSelfRef.__PVT__u_csr__DOT__data_r 
                                                 = (0x00000222U 
                                                    & vlSelfRef.__PVT__u_csr__DOT__data_r);
@@ -1811,8 +1817,8 @@ void Vriscv_soc_riscv_core___nba_comb__TOP__riscv_soc__u_core__u_core__3(Vriscv_
                                             }
                                         }
                                     }
-                                } else if ((2U & vlSymsp->TOP__riscv_soc__u_core__u_core__u_exec.__PVT__imm12_r)) {
-                                    if ((1U & vlSymsp->TOP__riscv_soc__u_core__u_core__u_exec.__PVT__imm12_r)) {
+                                } else if ((2U & vlSelfRef.__PVT__u_csr__DOT__imm12_r)) {
+                                    if ((1U & vlSelfRef.__PVT__u_csr__DOT__imm12_r)) {
                                         if (((IData)(vlSelfRef.__PVT__u_csr__DOT__set_r) 
                                              & (IData)(vlSelfRef.__PVT__u_csr__DOT__clr_r))) {
                                             vlSelfRef.__PVT__u_csr__DOT__csr_stval_r 
@@ -1849,7 +1855,7 @@ void Vriscv_soc_riscv_core___nba_comb__TOP__riscv_soc__u_core__u_core__3(Vriscv_
                                                    & (~ vlSelfRef.__PVT__u_csr__DOT__data_r));
                                         }
                                     }
-                                } else if ((1U & vlSymsp->TOP__riscv_soc__u_core__u_core__u_exec.__PVT__imm12_r)) {
+                                } else if ((1U & vlSelfRef.__PVT__u_csr__DOT__imm12_r)) {
                                     if (((IData)(vlSelfRef.__PVT__u_csr__DOT__set_r) 
                                          & (IData)(vlSelfRef.__PVT__u_csr__DOT__clr_r))) {
                                         vlSelfRef.__PVT__u_csr__DOT__csr_sepc_r 
@@ -1885,16 +1891,16 @@ void Vriscv_soc_riscv_core___nba_comb__TOP__riscv_soc__u_core__u_core__3(Vriscv_
                             }
                         }
                     }
-                } else if ((1U & (~ (vlSymsp->TOP__riscv_soc__u_core__u_core__u_exec.__PVT__imm12_r 
+                } else if ((1U & (~ (vlSelfRef.__PVT__u_csr__DOT__imm12_r 
                                      >> 5U)))) {
-                    if ((1U & (~ (vlSymsp->TOP__riscv_soc__u_core__u_core__u_exec.__PVT__imm12_r 
+                    if ((1U & (~ (vlSelfRef.__PVT__u_csr__DOT__imm12_r 
                                   >> 4U)))) {
-                        if ((1U & (~ (vlSymsp->TOP__riscv_soc__u_core__u_core__u_exec.__PVT__imm12_r 
+                        if ((1U & (~ (vlSelfRef.__PVT__u_csr__DOT__imm12_r 
                                       >> 3U)))) {
-                            if ((4U & vlSymsp->TOP__riscv_soc__u_core__u_core__u_exec.__PVT__imm12_r)) {
-                                if ((1U & (~ (vlSymsp->TOP__riscv_soc__u_core__u_core__u_exec.__PVT__imm12_r 
+                            if ((4U & vlSelfRef.__PVT__u_csr__DOT__imm12_r)) {
+                                if ((1U & (~ (vlSelfRef.__PVT__u_csr__DOT__imm12_r 
                                               >> 1U)))) {
-                                    if ((1U & vlSymsp->TOP__riscv_soc__u_core__u_core__u_exec.__PVT__imm12_r)) {
+                                    if ((1U & vlSelfRef.__PVT__u_csr__DOT__imm12_r)) {
                                         if (((IData)(vlSelfRef.__PVT__u_csr__DOT__set_r) 
                                              & (IData)(vlSelfRef.__PVT__u_csr__DOT__clr_r))) {
                                             vlSelfRef.__PVT__u_csr__DOT__csr_stvec_r 
@@ -1932,9 +1938,9 @@ void Vriscv_soc_riscv_core___nba_comb__TOP__riscv_soc__u_core__u_core__3(Vriscv_
                                         }
                                     }
                                 }
-                            } else if ((1U & (~ (vlSymsp->TOP__riscv_soc__u_core__u_core__u_exec.__PVT__imm12_r 
+                            } else if ((1U & (~ (vlSelfRef.__PVT__u_csr__DOT__imm12_r 
                                                  >> 1U)))) {
-                                if ((1U & (~ vlSymsp->TOP__riscv_soc__u_core__u_core__u_exec.__PVT__imm12_r))) {
+                                if ((1U & (~ vlSelfRef.__PVT__u_csr__DOT__imm12_r))) {
                                     vlSelfRef.__PVT__u_csr__DOT__data_r 
                                         = (0x00040133U 
                                            & vlSelfRef.__PVT__u_csr__DOT__data_r);
@@ -2051,7 +2057,7 @@ void Vriscv_soc_riscv_core___nba_comb__TOP__riscv_soc__u_core__u_core__4(Vriscv_
     auto& vlSelfRef = std::ref(*vlSelf).get();
     // Body
     vlSelfRef.__PVT__u_fetch__DOT__icache_busy_w = 
-        ((~ (IData)(vlSymsp->TOP__riscv_soc__u_core.__PVT__icache_valid_w)) 
+        ((~ (IData)(vlSymsp->TOP__riscv_soc__u_core__u_icache.__PVT__req_valid_o)) 
          & (IData)(vlSelfRef.__PVT__u_fetch__DOT__icache_fetch_q));
 }
 
@@ -2060,13 +2066,13 @@ void Vriscv_soc_riscv_core___nba_comb__TOP__riscv_soc__u_core__u_core__5(Vriscv_
     Vriscv_soc__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
     auto& vlSelfRef = std::ref(*vlSelf).get();
     // Locals
-    CData/*0:0*/ __VdfgRegularize_hebeb780c_0_35;
-    __VdfgRegularize_hebeb780c_0_35 = 0;
+    CData/*0:0*/ __VdfgRegularize_hebeb780c_0_36;
+    __VdfgRegularize_hebeb780c_0_36 = 0;
     // Body
     vlSelfRef.__PVT__fetch_valid_w = ((~ (IData)(vlSelfRef.__PVT__u_fetch__DOT__branch_w)) 
                                       & ((IData)(vlSelfRef.__PVT__u_fetch__DOT__fetch_page_fault_q) 
                                          | ((IData)(vlSelfRef.__PVT__u_fetch__DOT__skid_valid_q) 
-                                            | (IData)(vlSymsp->TOP__riscv_soc__u_core.__PVT__icache_valid_w))));
+                                            | (IData)(vlSymsp->TOP__riscv_soc__u_core__u_icache.__PVT__req_valid_o))));
     vlSelfRef.__PVT__mmu_ifetch_rd_w = ((IData)(vlSelfRef.__PVT__u_fetch__DOT__active_q) 
                                         & ((~ (IData)(vlSelfRef.__PVT__u_fetch__DOT__icache_busy_w)) 
                                            & (IData)(vlSelfRef.__PVT__fetch_accept_w)));
@@ -2078,8 +2084,8 @@ void Vriscv_soc_riscv_core___nba_comb__TOP__riscv_soc__u_core__u_core__5(Vriscv_
                                                       >> 0x0000000cU))));
     vlSelfRef.__PVT__u_mmu__DOT__itlb_miss_w = ((IData)(vlSelfRef.__PVT__mmu_ifetch_rd_w) 
                                                 & ((~ (IData)(vlSelfRef.__PVT__u_mmu__DOT__itlb_hit_w)) 
-                                                   & (IData)(vlSelfRef.__PVT__u_mmu__DOT__vm_enable_w)));
-    __VdfgRegularize_hebeb780c_0_35 = ((IData)(vlSelfRef.__PVT__u_mmu__DOT__vm_enable_w) 
+                                                   & (IData)(vlSelfRef.__PVT__u_csr__DOT__mmu_enable_w)));
+    __VdfgRegularize_hebeb780c_0_36 = ((IData)(vlSelfRef.__PVT__u_csr__DOT__mmu_enable_w) 
                                        & (IData)(vlSelfRef.__PVT__u_mmu__DOT__itlb_hit_w));
     vlSelfRef.__PVT__mmu_fetch_fault_w = (((1U == (IData)(vlSelfRef.__PVT__u_csr__DOT__csr_mpriv_q))
                                             ? ((~ (vlSelfRef.__PVT__u_mmu__DOT__itlb_entry_q 
@@ -2094,10 +2100,10 @@ void Vriscv_soc_riscv_core___nba_comb__TOP__riscv_soc__u_core__u_core__5(Vriscv_
                                                   (3U 
                                                    & (vlSelfRef.__PVT__u_mmu__DOT__itlb_entry_q 
                                                       >> 3U))))) 
-                                          & (IData)(__VdfgRegularize_hebeb780c_0_35));
-    vlSelfRef.__PVT__mmu_ifetch_accept_w = ((((~ (IData)(vlSelfRef.__PVT__u_mmu__DOT__vm_enable_w)) 
-                                              | (IData)(__VdfgRegularize_hebeb780c_0_35)) 
-                                             & (IData)(vlSymsp->TOP__riscv_soc__u_core.__PVT__icache_accept_w)) 
+                                          & (IData)(__VdfgRegularize_hebeb780c_0_36));
+    vlSelfRef.__PVT__mmu_ifetch_accept_w = ((((~ (IData)(vlSelfRef.__PVT__u_csr__DOT__mmu_enable_w)) 
+                                              | (IData)(__VdfgRegularize_hebeb780c_0_36)) 
+                                             & (IData)(vlSymsp->TOP__riscv_soc__u_core__u_icache.__PVT__req_accept_o)) 
                                             | (IData)(vlSelfRef.__PVT__mmu_fetch_fault_w));
     vlSelfRef.__PVT__u_fetch__DOT__stall_w = (1U & 
                                               ((~ ((IData)(vlSelfRef.__PVT__fetch_accept_w) 

@@ -18,8 +18,8 @@ void Vriscv_soc_icache_data_ram___nba_sequent__TOP__riscv_soc__u_core__u_icache_
     // Body
     __VdlySet__ram__v0 = 0U;
     if (((~ (IData)(vlSymsp->TOP__riscv_soc__u_core__u_icache.__PVT__replace_way_q)) 
-         & (IData)(vlSymsp->TOP__riscv_soc.__PVT__axi4_i_rvalid_w))) {
-        __VdlyVal__ram__v0 = vlSymsp->TOP__riscv_soc.inport_rdata_o;
+         & (IData)(vlSymsp->TOP__riscv_soc.__PVT__u_soc__DOT__u_arb__DOT__inport2_rvalid_o))) {
+        __VdlyVal__ram__v0 = vlSymsp->TOP__riscv_soc.__PVT__u_soc__DOT__u_arb__DOT__outport_rdata_i;
         __VdlyDim0__ram__v0 = vlSymsp->TOP__riscv_soc__u_core__u_icache.__PVT__data_addr_r;
         __VdlySet__ram__v0 = 1U;
     }
@@ -43,8 +43,8 @@ void Vriscv_soc_icache_data_ram___nba_sequent__TOP__riscv_soc__u_core__u_icache_
     // Body
     __VdlySet__ram__v0 = 0U;
     if (((IData)(vlSymsp->TOP__riscv_soc__u_core__u_icache.__PVT__replace_way_q) 
-         & (IData)(vlSymsp->TOP__riscv_soc.__PVT__axi4_i_rvalid_w))) {
-        __VdlyVal__ram__v0 = vlSymsp->TOP__riscv_soc.inport_rdata_o;
+         & (IData)(vlSymsp->TOP__riscv_soc.__PVT__u_soc__DOT__u_arb__DOT__inport2_rvalid_o))) {
+        __VdlyVal__ram__v0 = vlSymsp->TOP__riscv_soc.__PVT__u_soc__DOT__u_arb__DOT__outport_rdata_i;
         __VdlyDim0__ram__v0 = vlSymsp->TOP__riscv_soc__u_core__u_icache.__PVT__data_addr_r;
         __VdlySet__ram__v0 = 1U;
     }

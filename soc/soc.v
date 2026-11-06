@@ -308,6 +308,32 @@ wire  [  7:0]  axi_arb_out_arlen_w;
 wire  [  3:0]  axi_retime_awid_w;
 wire  [  1:0]  axi_tap_output4_rresp_w;
 wire  [  1:0]  axi_tap_output1_rresp_w;
+wire           axi_tap_output5_awvalid_w;
+wire  [ 31:0]  axi_tap_output5_awaddr_w;
+wire           axi_tap_output5_wvalid_w;
+wire  [ 31:0]  axi_tap_output5_wdata_w;
+wire  [  3:0]  axi_tap_output5_wstrb_w;
+wire           axi_tap_output5_bready_w;
+wire           axi_tap_output5_arvalid_w;
+wire  [ 31:0]  axi_tap_output5_araddr_w;
+wire           axi_tap_output5_rready_w;
+wire           axi_tap_output5_awready_w;
+wire           axi_tap_output5_wready_w;
+wire           axi_tap_output5_bvalid_w;
+wire  [  1:0]  axi_tap_output5_bresp_w;
+wire           axi_tap_output5_arready_w;
+wire           axi_tap_output5_rvalid_w;
+wire  [ 31:0]  axi_tap_output5_rdata_w;
+wire  [  1:0]  axi_tap_output5_rresp_w;
+
+assign axi_tap_output5_awready_w = 1'b0;
+assign axi_tap_output5_wready_w  = 1'b0;
+assign axi_tap_output5_bvalid_w  = 1'b0;
+assign axi_tap_output5_bresp_w   = 2'b0;
+assign axi_tap_output5_arready_w = 1'b0;
+assign axi_tap_output5_rvalid_w  = 1'b0;
+assign axi_tap_output5_rdata_w   = 32'b0;
+assign axi_tap_output5_rresp_w   = 2'b0;
 wire  [  3:0]  axi_tap_output0_wstrb_w;
 wire           axi_tap_output2_bvalid_w;
 wire           axi_tap_output4_bready_w;
@@ -477,6 +503,14 @@ axi4_lite_tap u_axi_tap
     ,.outport_peripheral4_rvalid_i(axi_tap_output4_rvalid_w)
     ,.outport_peripheral4_rdata_i(axi_tap_output4_rdata_w)
     ,.outport_peripheral4_rresp_i(axi_tap_output4_rresp_w)
+    ,.outport_peripheral5_awready_i(axi_tap_output5_awready_w)
+    ,.outport_peripheral5_wready_i(axi_tap_output5_wready_w)
+    ,.outport_peripheral5_bvalid_i(axi_tap_output5_bvalid_w)
+    ,.outport_peripheral5_bresp_i(axi_tap_output5_bresp_w)
+    ,.outport_peripheral5_arready_i(axi_tap_output5_arready_w)
+    ,.outport_peripheral5_rvalid_i(axi_tap_output5_rvalid_w)
+    ,.outport_peripheral5_rdata_i(axi_tap_output5_rdata_w)
+    ,.outport_peripheral5_rresp_i(axi_tap_output5_rresp_w)
 
     // Outputs
     ,.inport_awready_o(axi_arb_out_awready_w)
@@ -551,6 +585,15 @@ axi4_lite_tap u_axi_tap
     ,.outport_peripheral4_arvalid_o(axi_tap_output4_arvalid_w)
     ,.outport_peripheral4_araddr_o(axi_tap_output4_araddr_w)
     ,.outport_peripheral4_rready_o(axi_tap_output4_rready_w)
+    ,.outport_peripheral5_awvalid_o(axi_tap_output5_awvalid_w)
+    ,.outport_peripheral5_awaddr_o(axi_tap_output5_awaddr_w)
+    ,.outport_peripheral5_wvalid_o(axi_tap_output5_wvalid_w)
+    ,.outport_peripheral5_wdata_o(axi_tap_output5_wdata_w)
+    ,.outport_peripheral5_wstrb_o(axi_tap_output5_wstrb_w)
+    ,.outport_peripheral5_bready_o(axi_tap_output5_bready_w)
+    ,.outport_peripheral5_arvalid_o(axi_tap_output5_arvalid_w)
+    ,.outport_peripheral5_araddr_o(axi_tap_output5_araddr_w)
+    ,.outport_peripheral5_rready_o(axi_tap_output5_rready_w)
 );
 
 

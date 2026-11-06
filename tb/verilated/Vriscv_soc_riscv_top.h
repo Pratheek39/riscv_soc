@@ -70,14 +70,11 @@ class alignas(VL_CACHE_LINE_BYTES) Vriscv_soc_riscv_top final {
         CData/*7:0*/ __PVT__axi_d_arlen_o;
         CData/*1:0*/ __PVT__axi_d_arburst_o;
         CData/*0:0*/ __PVT__axi_d_rready_o;
-        CData/*0:0*/ __PVT__dport_bridge_accept_w;
-        CData/*0:0*/ __PVT__icache_rd_w;
-        CData/*0:0*/ __PVT__dport_bridge_error_w;
-        CData/*0:0*/ __PVT__dport_bridge_rd_w;
-        CData/*0:0*/ __PVT__icache_accept_w;
-        CData/*0:0*/ __PVT__icache_valid_w;
-        CData/*0:0*/ __PVT__dport_bridge_ack_w;
-        CData/*3:0*/ __PVT__dport_bridge_wr_w;
+        CData/*0:0*/ __PVT__u_dport_bridge__DOT__mem_rd_i;
+        CData/*3:0*/ __PVT__u_dport_bridge__DOT__mem_wr_i;
+        CData/*0:0*/ __PVT__u_dport_bridge__DOT__mem_accept_o;
+        CData/*0:0*/ __PVT__u_dport_bridge__DOT__mem_ack_o;
+        CData/*0:0*/ __PVT__u_dport_bridge__DOT__mem_error_o;
         CData/*0:0*/ __PVT__u_dport_bridge__DOT__write_complete_w;
         CData/*0:0*/ __PVT__u_dport_bridge__DOT__read_complete_w;
         CData/*0:0*/ __PVT__u_dport_bridge__DOT__request_pending_q;
@@ -85,11 +82,11 @@ class alignas(VL_CACHE_LINE_BYTES) Vriscv_soc_riscv_top final {
         CData/*0:0*/ __PVT__u_dport_bridge__DOT__req_push_w;
         CData/*0:0*/ __PVT__u_dport_bridge__DOT__res_push_w;
         CData/*0:0*/ __PVT__u_dport_bridge__DOT__awvalid_inhibit_q;
-    };
-    struct {
         CData/*0:0*/ __PVT__u_dport_bridge__DOT__wvalid_inhibit_q;
         CData/*1:0*/ __PVT__u_dport_bridge__DOT__u_resp__DOT__rd_ptr_q;
         CData/*1:0*/ __PVT__u_dport_bridge__DOT__u_resp__DOT__wr_ptr_q;
+    };
+    struct {
         CData/*2:0*/ __PVT__u_dport_bridge__DOT__u_resp__DOT__count_q;
         CData/*1:0*/ __PVT__u_dport_bridge__DOT__u_req__DOT__rd_ptr_q;
         CData/*1:0*/ __PVT__u_dport_bridge__DOT__u_req__DOT__wr_ptr_q;
@@ -107,7 +104,6 @@ class alignas(VL_CACHE_LINE_BYTES) Vriscv_soc_riscv_top final {
         IData/*31:0*/ __PVT__axi_d_awaddr_o;
         IData/*31:0*/ __PVT__axi_d_wdata_o;
         IData/*31:0*/ __PVT__axi_d_araddr_o;
-        IData/*31:0*/ __PVT__icache_pc_w;
         VlUnpacked<SData/*10:0*/, 4> __PVT__u_dport_bridge__DOT__u_resp__DOT__ram_q;
         VlUnpacked<VlWide<3>/*68:0*/, 4> __PVT__u_dport_bridge__DOT__u_req__DOT__ram_q;
     };

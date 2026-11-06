@@ -73,10 +73,10 @@ bool Vriscv_soc___024root___eval_ico(Vriscv_soc___024root* vlSelf, CData/*0:0*/ 
                     // Inlined CFunc: _ico_sequent__TOP__1
                     VL_ASSIGN_SII(1, vlSelfRef.inport_arready_o, 
                                   ((IData)(vlSymsp->TOP__riscv_soc.__PVT__u_soc__DOT__u_arb__DOT__read_grant_w) 
-                                   & (IData)(vlSymsp->TOP__riscv_soc.__PVT__u_soc__DOT__axi_arb_out_arready_w)));
+                                   & (IData)(vlSymsp->TOP__riscv_soc.__PVT__u_soc__DOT__u_arb__DOT__outport_arready_i)));
                     VL_ASSIGN_SII(1, vlSelfRef.inport_wready_o, 
                                   ((IData)(vlSymsp->TOP__riscv_soc.__PVT__u_soc__DOT__u_arb__DOT__write_grant_w) 
-                                   & (IData)(vlSymsp->TOP__riscv_soc.__PVT__u_soc__DOT__axi_arb_out_wready_w)));
+                                   & (IData)(vlSymsp->TOP__riscv_soc.__PVT__u_soc__DOT__u_arb__DOT__outport_wready_i)));
                     VL_ASSIGN_SII(1, vlSelfRef.inport_awready_o, 
                                   ((IData)(vlSymsp->TOP__riscv_soc.__PVT__u_soc__DOT__u_arb__DOT__write_grant_w) 
                                    & (IData)(vlSymsp->TOP__riscv_soc.__VdfgRegularize_hebeb780c_0_14)));
@@ -235,16 +235,14 @@ void Vriscv_soc_icache___nba_comb__TOP__riscv_soc__u_core__u_icache__1(Vriscv_so
 void Vriscv_soc_riscv_decode___nba_comb__TOP__riscv_soc__u_core__u_core__u_decode__1(Vriscv_soc_riscv_decode* vlSelf);
 void Vriscv_soc_riscv_exec___nba_comb__TOP__riscv_soc__u_core__u_core__u_exec__0(Vriscv_soc_riscv_exec* vlSelf);
 void Vriscv_soc_riscv_soc___nba_comb__TOP__riscv_soc__0(Vriscv_soc_riscv_soc* vlSelf);
-void Vriscv_soc_riscv_top___nba_comb__TOP__riscv_soc__u_core__1(Vriscv_soc_riscv_top* vlSelf);
 void Vriscv_soc_riscv_core___nba_comb__TOP__riscv_soc__u_core__u_core__2(Vriscv_soc_riscv_core* vlSelf);
 void Vriscv_soc_riscv_decode___nba_comb__TOP__riscv_soc__u_core__u_core__u_decode__2(Vriscv_soc_riscv_decode* vlSelf);
-void Vriscv_soc_riscv_top___nba_comb__TOP__riscv_soc__u_core__2(Vriscv_soc_riscv_top* vlSelf);
-void Vriscv_soc_riscv_core___nba_comb__TOP__riscv_soc__u_core__u_core__3(Vriscv_soc_riscv_core* vlSelf);
 void Vriscv_soc_icache___nba_comb__TOP__riscv_soc__u_core__u_icache__2(Vriscv_soc_icache* vlSelf);
-void Vriscv_soc_riscv_top___nba_comb__TOP__riscv_soc__u_core__3(Vriscv_soc_riscv_top* vlSelf);
+void Vriscv_soc_riscv_core___nba_comb__TOP__riscv_soc__u_core__u_core__3(Vriscv_soc_riscv_core* vlSelf);
+void Vriscv_soc_icache___nba_comb__TOP__riscv_soc__u_core__u_icache__3(Vriscv_soc_icache* vlSelf);
 void Vriscv_soc_riscv_core___nba_comb__TOP__riscv_soc__u_core__u_core__4(Vriscv_soc_riscv_core* vlSelf);
 void Vriscv_soc_riscv_core___nba_comb__TOP__riscv_soc__u_core__u_core__5(Vriscv_soc_riscv_core* vlSelf);
-void Vriscv_soc_riscv_top___nba_comb__TOP__riscv_soc__u_core__4(Vriscv_soc_riscv_top* vlSelf);
+void Vriscv_soc_icache___nba_comb__TOP__riscv_soc__u_core__u_icache__4(Vriscv_soc_icache* vlSelf);
 
 void Vriscv_soc___024root___eval_body__nba(Vriscv_soc___024root* vlSelf) {
     VL_DEBUG_IF(VL_DBG_MSGF("+    Vriscv_soc___024root___eval_body__nba\n"); );
@@ -311,14 +309,14 @@ void Vriscv_soc___024root___eval_body__nba(Vriscv_soc___024root* vlSelf) {
             VL_ASSIGN_SII(1, vlSelfRef.uart_rxd_o, vlSymsp->TOP__riscv_soc.__PVT__u_soc__DOT__u_uart__DOT__txd_q);
             VL_ASSIGN_SII(1, vlSelfRef.spi_cs_o, vlSymsp->TOP__riscv_soc.__PVT__u_soc__DOT__u_spi__DOT__spi_ssr_value_q);
             VL_ASSIGN_SII(1, vlSelfRef.spi_mosi_o, vlSymsp->TOP__riscv_soc.__PVT__u_soc__DOT__u_spi__DOT__spi_mosi_q);
-            VL_ASSIGN_SUI(2, vlSelfRef.inport_bresp_o, vlSymsp->TOP__riscv_soc.inport_bresp_o);
+            VL_ASSIGN_SUI(2, vlSelfRef.inport_bresp_o, vlSymsp->TOP__riscv_soc.__PVT__u_soc__DOT__u_arb__DOT__outport_bresp_i);
             VL_ASSIGN_SUI(32, vlSelfRef.gpio_output_enable_o, vlSymsp->TOP__riscv_soc.__PVT__u_soc__DOT__u_gpio__DOT__gpio_direction_output_q);
             VL_ASSIGN_SII(1, vlSelfRef.inport_bvalid_o, 
                           ((IData)(vlSymsp->TOP__riscv_soc.__PVT__u_soc__DOT__u_arb__DOT__wr_resp_target_r) 
-                           & (IData)(vlSymsp->TOP__riscv_soc.__PVT__u_soc__DOT__axi_arb_out_bvalid_w)));
+                           & (IData)(vlSymsp->TOP__riscv_soc.__PVT__u_soc__DOT__u_arb__DOT__outport_bvalid_i)));
             VL_ASSIGN_SII(1, vlSelfRef.inport_rvalid_o, 
                           ((IData)(vlSymsp->TOP__riscv_soc.__PVT__u_soc__DOT__u_arb__DOT__rd_resp_target_r) 
-                           & (IData)(vlSymsp->TOP__riscv_soc.__PVT__u_soc__DOT__axi_arb_out_rvalid_w)));
+                           & (IData)(vlSymsp->TOP__riscv_soc.__PVT__u_soc__DOT__u_arb__DOT__outport_rvalid_i)));
         }
     }
     if ((5ULL & vlSelfRef.__VnbaTriggered[0U])) {
@@ -351,8 +349,8 @@ void Vriscv_soc___024root___eval_body__nba(Vriscv_soc___024root* vlSelf) {
         Vriscv_soc_riscv_top___nba_sequent__TOP__riscv_soc__u_core__2((&vlSymsp->TOP__riscv_soc__u_core));
         {
             // Inlined CFunc: _nba_sequent__TOP__1
-            VL_ASSIGN_SUI(2, vlSelfRef.inport_rresp_o, vlSymsp->TOP__riscv_soc.inport_rresp_o);
-            VL_ASSIGN_SUI(32, vlSelfRef.inport_rdata_o, vlSymsp->TOP__riscv_soc.inport_rdata_o);
+            VL_ASSIGN_SUI(2, vlSelfRef.inport_rresp_o, vlSymsp->TOP__riscv_soc.__PVT__u_soc__DOT__u_arb__DOT__outport_rresp_i);
+            VL_ASSIGN_SUI(32, vlSelfRef.inport_rdata_o, vlSymsp->TOP__riscv_soc.__PVT__u_soc__DOT__u_arb__DOT__outport_rdata_i);
         }
     }
     if ((5ULL & vlSelfRef.__VnbaTriggered[0U])) {
@@ -373,33 +371,32 @@ void Vriscv_soc___024root___eval_body__nba(Vriscv_soc___024root* vlSelf) {
         Vriscv_soc_riscv_decode___nba_comb__TOP__riscv_soc__u_core__u_core__u_decode__1((&vlSymsp->TOP__riscv_soc__u_core__u_core__u_decode));
         Vriscv_soc_riscv_exec___nba_comb__TOP__riscv_soc__u_core__u_core__u_exec__0((&vlSymsp->TOP__riscv_soc__u_core__u_core__u_exec));
         Vriscv_soc_riscv_soc___nba_comb__TOP__riscv_soc__0((&vlSymsp->TOP__riscv_soc));
-        Vriscv_soc_riscv_top___nba_comb__TOP__riscv_soc__u_core__1((&vlSymsp->TOP__riscv_soc__u_core));
         Vriscv_soc_riscv_core___nba_comb__TOP__riscv_soc__u_core__u_core__2((&vlSymsp->TOP__riscv_soc__u_core__u_core));
         {
             // Inlined CFunc: _ico_sequent__TOP__1
             VL_ASSIGN_SII(1, vlSelfRef.inport_arready_o, 
                           ((IData)(vlSymsp->TOP__riscv_soc.__PVT__u_soc__DOT__u_arb__DOT__read_grant_w) 
-                           & (IData)(vlSymsp->TOP__riscv_soc.__PVT__u_soc__DOT__axi_arb_out_arready_w)));
+                           & (IData)(vlSymsp->TOP__riscv_soc.__PVT__u_soc__DOT__u_arb__DOT__outport_arready_i)));
             VL_ASSIGN_SII(1, vlSelfRef.inport_wready_o, 
                           ((IData)(vlSymsp->TOP__riscv_soc.__PVT__u_soc__DOT__u_arb__DOT__write_grant_w) 
-                           & (IData)(vlSymsp->TOP__riscv_soc.__PVT__u_soc__DOT__axi_arb_out_wready_w)));
+                           & (IData)(vlSymsp->TOP__riscv_soc.__PVT__u_soc__DOT__u_arb__DOT__outport_wready_i)));
             VL_ASSIGN_SII(1, vlSelfRef.inport_awready_o, 
                           ((IData)(vlSymsp->TOP__riscv_soc.__PVT__u_soc__DOT__u_arb__DOT__write_grant_w) 
                            & (IData)(vlSymsp->TOP__riscv_soc.__VdfgRegularize_hebeb780c_0_14)));
         }
+        Vriscv_soc_riscv_top___ico_sequent__TOP__riscv_soc__u_core__0((&vlSymsp->TOP__riscv_soc__u_core));
         Vriscv_soc_riscv_decode___nba_comb__TOP__riscv_soc__u_core__u_core__u_decode__2((&vlSymsp->TOP__riscv_soc__u_core__u_core__u_decode));
-        Vriscv_soc_riscv_top___nba_comb__TOP__riscv_soc__u_core__2((&vlSymsp->TOP__riscv_soc__u_core));
-        Vriscv_soc_riscv_core___nba_comb__TOP__riscv_soc__u_core__u_core__3((&vlSymsp->TOP__riscv_soc__u_core__u_core));
         Vriscv_soc_icache___nba_comb__TOP__riscv_soc__u_core__u_icache__2((&vlSymsp->TOP__riscv_soc__u_core__u_icache));
+        Vriscv_soc_riscv_core___nba_comb__TOP__riscv_soc__u_core__u_core__3((&vlSymsp->TOP__riscv_soc__u_core__u_core));
     }
     if ((5ULL & vlSelfRef.__VnbaTriggered[0U])) {
-        Vriscv_soc_riscv_top___nba_comb__TOP__riscv_soc__u_core__3((&vlSymsp->TOP__riscv_soc__u_core));
+        Vriscv_soc_icache___nba_comb__TOP__riscv_soc__u_core__u_icache__3((&vlSymsp->TOP__riscv_soc__u_core__u_icache));
         Vriscv_soc_riscv_core___nba_comb__TOP__riscv_soc__u_core__u_core__4((&vlSymsp->TOP__riscv_soc__u_core__u_core));
     }
     if ((7ULL & vlSelfRef.__VnbaTriggered[0U])) {
         Vriscv_soc_riscv_core___nba_comb__TOP__riscv_soc__u_core__u_core__5((&vlSymsp->TOP__riscv_soc__u_core__u_core));
         vlSelfRef.__Vm_traceActivity[9U] = 1U;
-        Vriscv_soc_riscv_top___nba_comb__TOP__riscv_soc__u_core__4((&vlSymsp->TOP__riscv_soc__u_core));
+        Vriscv_soc_icache___nba_comb__TOP__riscv_soc__u_core__u_icache__4((&vlSymsp->TOP__riscv_soc__u_core__u_icache));
     }
 }
 
