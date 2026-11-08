@@ -92,7 +92,6 @@ public:
         m_mem->axi_out(mem_in);
         m_mem->enable_delays(false);
 
-        verilator_trace_enable("verilator.vcd", m_dut);
     }
     //-----------------------------------------------------------------
     // Trace
@@ -101,6 +100,8 @@ public:
     {
         if (!waves_enabled())
             return;
+
+        verilator_trace_enable("verilator.vcd", m_dut);
 
         // Add signals to trace file
         #define TRACE_SIGNAL(a) sc_trace(fp,a,#a);

@@ -47,3 +47,37 @@ the RTL CPU directly, so the optional ISA-simulator callback is not invoked
 on this path. The remaining failure is therefore in accelerator MMIO
 transaction/startup behavior and requires RTL bus tracing before claiming
 end-to-end completion.
+
+## Part 4: ISA library entry point and AXI response routing
+
+Fixed two issues that prevented the integrated test from exercising the
+accelerator correctly:
+
+- Updated `core/isa_sim/makefile` to exclude `main.cpp` from
+  `libisa_sim.a`. The archive now provides the ISA simulator API without
+  also supplying the standalone simulator `main()`.
+- Updated `soc/accel_matmul.v` to issue AXI reads and writes with ID `4'hc`.
+  The AXI arbiter uses ID bits `[3:2]` to route responses, and `4'hc`
+  selects accelerator input 3. ID zero routed accelerator responses to the
+  unused debug input.
+
+### Validation
+
+- Clean-rebuilt the ISA simulator library, Verilated RTL, and SystemC
+  testbench.
+- Verified `core/isa_sim/libisa_sim.a` contains no standalone `main` symbol.
+- Ran `ENABLE_WAVES=no make -C sw run-matmul`.
+- The test completed successfully:
+  `Output C` was `58 24 / -83 10` and reported
+  `PASS: matrix multiplication`.
+
+## Part 5: SystemC/Verilator trace initialization
+
+Updated `tb/main.cpp` and `tb/testbench.h` so SystemC elaboration completes
+before Verilated trace registration. The Verilated trace hook is now invoked
+from `add_trace()` after `sc_start(SC_ZERO_TIME)`, rather than from the
+testbench constructor.
+
+This fixes the startup error:
+`Vriscv_soc::trace() is called before sc_core::sc_start()`.
+The regular traced run now completes and reports `PASS: matrix multiplication`.

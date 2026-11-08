@@ -141,6 +141,7 @@ class alignas(VL_CACHE_LINE_BYTES) Vriscv_soc_riscv_soc final {
         CData/*0:0*/ __PVT__u_soc__DOT__u_arb__DOT__inport1_bvalid_o;
         CData/*0:0*/ __PVT__u_soc__DOT__u_arb__DOT__inport2_rvalid_o;
         CData/*0:0*/ __PVT__u_soc__DOT__u_arb__DOT__outport_awvalid_o;
+        CData/*3:0*/ __PVT__u_soc__DOT__u_arb__DOT__outport_awid_o;
         CData/*0:0*/ __PVT__u_soc__DOT__u_arb__DOT__outport_wvalid_o;
         CData/*0:0*/ __PVT__u_soc__DOT__u_arb__DOT__outport_wlast_o;
         CData/*0:0*/ __PVT__u_soc__DOT__u_arb__DOT__outport_arvalid_o;
@@ -148,9 +149,9 @@ class alignas(VL_CACHE_LINE_BYTES) Vriscv_soc_riscv_soc final {
         CData/*0:0*/ __PVT__u_soc__DOT__u_arb__DOT__read_hold_q;
         CData/*3:0*/ __PVT__u_soc__DOT__u_arb__DOT__read_grant_w;
         CData/*3:0*/ __PVT__u_soc__DOT__u_arb__DOT__rd_resp_target_r;
-        CData/*0:0*/ __PVT__u_soc__DOT__u_arb__DOT__write_hold_q;
     };
     struct {
+        CData/*0:0*/ __PVT__u_soc__DOT__u_arb__DOT__write_hold_q;
         CData/*0:0*/ __PVT__u_soc__DOT__u_arb__DOT__write_dataphase_q;
         CData/*3:0*/ __PVT__u_soc__DOT__u_arb__DOT__write_grant_w;
         CData/*0:0*/ __PVT__u_soc__DOT__u_arb__DOT__write_hold_r;
@@ -214,9 +215,9 @@ class alignas(VL_CACHE_LINE_BYTES) Vriscv_soc_riscv_soc final {
         CData/*0:0*/ __PVT__u_soc__DOT__u_axi_tap__DOT__outport_peripheral3_awready_i;
         CData/*0:0*/ __PVT__u_soc__DOT__u_axi_tap__DOT__outport_peripheral4_awready_i;
         CData/*0:0*/ __PVT__u_soc__DOT__u_axi_tap__DOT__outport_awvalid_o;
-        CData/*0:0*/ __PVT__u_soc__DOT__u_axi_tap__DOT__outport_wvalid_o;
     };
     struct {
+        CData/*0:0*/ __PVT__u_soc__DOT__u_axi_tap__DOT__outport_wvalid_o;
         CData/*0:0*/ __PVT__u_soc__DOT__u_axi_tap__DOT__outport_arvalid_o;
         CData/*0:0*/ __PVT__u_soc__DOT__u_axi_tap__DOT__outport_peripheral0_arvalid_o;
         CData/*0:0*/ __PVT__u_soc__DOT__u_axi_tap__DOT__outport_peripheral1_arvalid_o;
@@ -280,9 +281,9 @@ class alignas(VL_CACHE_LINE_BYTES) Vriscv_soc_riscv_soc final {
         CData/*0:0*/ __PVT__u_soc__DOT__u_uart__DOT__rxd_ms_q;
         CData/*0:0*/ __PVT__u_soc__DOT__u_uart__DOT__tx_complete_q;
         CData/*0:0*/ __PVT__u_soc__DOT__u_uart__DOT__intr_q;
-        CData/*0:0*/ __PVT__u_soc__DOT__u_intc__DOT__read_en_w;
     };
     struct {
+        CData/*0:0*/ __PVT__u_soc__DOT__u_intc__DOT__read_en_w;
         CData/*0:0*/ __PVT__u_soc__DOT__u_intc__DOT__write_en_w;
         CData/*0:0*/ __PVT__u_soc__DOT__u_intc__DOT__irq_isr_wr_q;
         CData/*0:0*/ __PVT__u_soc__DOT__u_intc__DOT__irq_ipr_wr_q;
@@ -346,9 +347,9 @@ class alignas(VL_CACHE_LINE_BYTES) Vriscv_soc_riscv_soc final {
         IData/*31:0*/ __PVT__u_soc__DOT__u_gpio__DOT__input_last_q;
         IData/*31:0*/ __PVT__u_soc__DOT__u_gpio__DOT__interrupt_level_r;
         IData/*31:0*/ __PVT__u_soc__DOT__u_accel__DOT__cfg_awaddr_i;
-        IData/*31:0*/ __PVT__u_soc__DOT__u_accel__DOT__cfg_wdata_i;
     };
     struct {
+        IData/*31:0*/ __PVT__u_soc__DOT__u_accel__DOT__cfg_wdata_i;
         IData/*31:0*/ __PVT__u_soc__DOT__u_accel__DOT__cfg_araddr_i;
         IData/*31:0*/ __PVT__u_soc__DOT__u_accel__DOT__m_rdata_i;
         IData/*31:0*/ __PVT__u_soc__DOT__u_accel__DOT__status_o;

@@ -149,6 +149,9 @@ int sc_main(int argc, char* argv[])
     tb->CLK0_NAME(CLK0_NAME);
     tb->RST0_NAME(clk0_rst.rst);
 
+    // Complete SystemC elaboration before registering Verilated trace signals.
+    sc_start(SC_ZERO_TIME);
+
     // Waves
     if (trace)
         tb->add_trace(sc_create_vcd_trace_file(vcd_name), "");

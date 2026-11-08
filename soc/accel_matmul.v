@@ -105,13 +105,13 @@ assign m_arvalid_o = (state_q == READ_A) || (state_q == READ_B);
 assign m_araddr_o = (state_q == READ_A) ?
                     (a_addr_q + ({28'b0,index_q} << 2)) :
                     (b_addr_q + ({28'b0,index_q} << 2));
-assign m_arid_o = 0;
+assign m_arid_o = 4'hc;
 assign m_arlen_o = 0;
 assign m_arburst_o = 2'b01;
 assign m_rready_o = (state_q == WAIT_A) || (state_q == WAIT_B);
 assign m_awvalid_o = (state_q == STORE);
 assign m_awaddr_o = c_addr_q + ({28'b0,index_q} << 2);
-assign m_awid_o = 0;
+assign m_awid_o = 4'hc;
 assign m_awlen_o = 0;
 assign m_awburst_o = 2'b01;
 assign m_wvalid_o = (state_q == STORE);

@@ -378,8 +378,7 @@ void Vriscv_soc___024root__trace_chg_0_sub_0(Vriscv_soc___024root* vlSelf, Veril
         bufp->chgBit(oldp+93,(vlSymsp->TOP__riscv_soc.__PVT__u_soc__DOT__u_axi_tap__DOT__outport_peripheral3_arvalid_o));
         bufp->chgBit(oldp+94,(vlSymsp->TOP__riscv_soc.__PVT__u_soc__DOT__u_arb__DOT__outport_arready_i));
         bufp->chgBit(oldp+95,(vlSymsp->TOP__riscv_soc.__PVT__u_soc__DOT__u_arb__DOT__outport_awvalid_o));
-        bufp->chgCData(oldp+96,(((2U & (IData)(vlSymsp->TOP__riscv_soc.__PVT__u_soc__DOT__u_arb__DOT__write_grant_w))
-                                  ? 4U : 0U)),4);
+        bufp->chgCData(oldp+96,(vlSymsp->TOP__riscv_soc.__PVT__u_soc__DOT__u_arb__DOT__outport_awid_o),4);
         bufp->chgBit(oldp+97,(vlSymsp->TOP__riscv_soc.__PVT__u_soc__DOT__u_axi_tap__DOT__outport_wvalid_o));
         bufp->chgCData(oldp+98,(((2U & (IData)(vlSymsp->TOP__riscv_soc.__PVT__u_soc__DOT__u_arb__DOT__read_grant_w))
                                   ? 0U : ((4U & (IData)(vlSymsp->TOP__riscv_soc.__PVT__u_soc__DOT__u_arb__DOT__read_grant_w))
@@ -462,10 +461,7 @@ void Vriscv_soc___024root__trace_chg_0_sub_0(Vriscv_soc___024root* vlSelf, Veril
         bufp->chgQData(oldp+131,((((QData)((IData)(vlSymsp->TOP__riscv_soc.__PVT__u_soc__DOT__u_accel__DOT__cfg_awaddr_i)) 
                                    << 0x0000000eU) 
                                   | (QData)((IData)(
-                                                    ((((2U 
-                                                        & (IData)(vlSymsp->TOP__riscv_soc.__PVT__u_soc__DOT__u_arb__DOT__write_grant_w))
-                                                        ? 4U
-                                                        : 0U) 
+                                                    (((IData)(vlSymsp->TOP__riscv_soc.__PVT__u_soc__DOT__u_arb__DOT__outport_awid_o) 
                                                       << 0x0000000aU) 
                                                      | ((2U 
                                                          & (IData)(vlSymsp->TOP__riscv_soc.__PVT__u_soc__DOT__u_arb__DOT__write_grant_w))
