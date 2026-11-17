@@ -1,33 +1,43 @@
-// Verilated -*- C++ -*-
+// Verilated -*- SystemC -*-
 // DESCRIPTION: Verilator output: Design internal header
 // See Vriscv_soc.h for the primary calling header
 
-#ifndef VERILATED_VRISCV_SOC_RISCV_REGFILE_H_
-#define VERILATED_VRISCV_SOC_RISCV_REGFILE_H_  // guard
+#ifndef _VRISCV_SOC_RISCV_REGFILE_H_
+#define _VRISCV_SOC_RISCV_REGFILE_H_  // guard
 
-#include "verilated.h"
+#include "systemc.h"
+#include "verilated_sc.h"
+#include "verilated_heavy.h"
+#include "Vriscv_soc__Dpi.h"
 
+//==========
 
 class Vriscv_soc__Syms;
+class Vriscv_soc_VerilatedVcd;
 
-class alignas(VL_CACHE_LINE_BYTES) Vriscv_soc_riscv_regfile final {
+
+//----------
+
+VL_MODULE(Vriscv_soc_riscv_regfile) {
   public:
-
-    // DESIGN SPECIFIC STATE
-    CData/*0:0*/ __PVT__clk_i;
-    CData/*0:0*/ __PVT__rst_i;
-    CData/*4:0*/ __PVT__rd0_i;
-    CData/*4:0*/ __PVT__rd1_i;
-    CData/*4:0*/ __PVT__rd2_i;
-    CData/*4:0*/ __PVT__rd3_i;
-    CData/*4:0*/ __PVT__ra_i;
-    CData/*4:0*/ __PVT__rb_i;
-    IData/*31:0*/ __PVT__rd0_value_i;
-    IData/*31:0*/ __PVT__rd1_value_i;
-    IData/*31:0*/ __PVT__rd2_value_i;
-    IData/*31:0*/ __PVT__rd3_value_i;
-    IData/*31:0*/ __PVT__ra_value_o;
-    IData/*31:0*/ __PVT__rb_value_o;
+    
+    // PORTS
+    VL_IN8(__PVT__clk_i,0,0);
+    VL_IN8(__PVT__rst_i,0,0);
+    VL_IN8(__PVT__rd0_i,4,0);
+    VL_IN8(__PVT__rd1_i,4,0);
+    VL_IN8(__PVT__rd2_i,4,0);
+    VL_IN8(__PVT__rd3_i,4,0);
+    VL_IN8(__PVT__ra_i,4,0);
+    VL_IN8(__PVT__rb_i,4,0);
+    VL_IN(__PVT__rd0_value_i,31,0);
+    VL_IN(__PVT__rd1_value_i,31,0);
+    VL_IN(__PVT__rd2_value_i,31,0);
+    VL_IN(__PVT__rd3_value_i,31,0);
+    VL_OUT(__PVT__ra_value_o,31,0);
+    VL_OUT(__PVT__rb_value_o,31,0);
+    
+    // LOCAL SIGNALS
     IData/*31:0*/ __PVT__reg_r1_q;
     IData/*31:0*/ __PVT__reg_r2_q;
     IData/*31:0*/ __PVT__reg_r3_q;
@@ -59,23 +69,35 @@ class alignas(VL_CACHE_LINE_BYTES) Vriscv_soc_riscv_regfile final {
     IData/*31:0*/ __PVT__reg_r29_q;
     IData/*31:0*/ __PVT__reg_r30_q;
     IData/*31:0*/ __PVT__reg_r31_q;
-
+    IData/*31:0*/ __PVT__ra_value_r;
+    IData/*31:0*/ __PVT__rb_value_r;
+    
     // INTERNAL VARIABLES
-    Vriscv_soc__Syms* vlSymsp;
-    const char* vlNamep;
-
+  private:
+    Vriscv_soc__Syms* __VlSymsp;  // Symbol table
+  public:
+    
     // CONSTRUCTORS
-    Vriscv_soc_riscv_regfile();
+  private:
+    VL_UNCOPYABLE(Vriscv_soc_riscv_regfile);  ///< Copying not allowed
+  public:
+    VL_CTOR(Vriscv_soc_riscv_regfile);
     ~Vriscv_soc_riscv_regfile();
-    void ctor(Vriscv_soc__Syms* symsp, const char* namep);
-    void dtor();
-    VL_UNCOPYABLE(Vriscv_soc_riscv_regfile);
-
+    
     // INTERNAL METHODS
-    void __Vconfigure(bool first);
+    void __Vconfigure(Vriscv_soc__Syms* symsp, bool first);
+  private:
+    void _ctor_var_reset() VL_ATTR_COLD;
+  public:
+    static void _sequent__TOP__riscv_soc__u_core__u_core__u_decode__u_regfile__2(Vriscv_soc__Syms* __restrict vlSymsp);
+    static void _settle__TOP__riscv_soc__u_core__u_core__u_decode__u_regfile__1(Vriscv_soc__Syms* __restrict vlSymsp);
     uint32_t get_register(uint32_t r);
     bool set_register(uint32_t r, uint32_t value);
-};
+  private:
+    static void traceInit(void* userp, VerilatedVcd* tracep, uint32_t code) VL_ATTR_COLD;
+} VL_ATTR_ALIGNED(VL_CACHE_LINE_BYTES);
+
+//----------
 
 
 #endif  // guard

@@ -17,20 +17,23 @@
 #define ACCEL_STATUS_DONE  0x00000002u
 #define ACCEL_STATUS_ERROR 0x00000004u
 
-#define MATRIX_M 2u
-#define MATRIX_N 2u
+#define MATRIX_M 4u
+#define MATRIX_N 4u
 #define MATRIX_K 3u
 #define ACCEL_TIMEOUT 1000000u
 
 static int32_t matrix_a[MATRIX_M * MATRIX_K] = {
     1, -2, 3,
-    4,  5, -6
+    4,  5, -6,
+    3,0,0,
+    0,2,1
+
 };
 
 static int32_t matrix_b[MATRIX_K * MATRIX_N] = {
-     7,  8,
-    -9, 10,
-    11, 12
+     7,  8, 4 , 0,
+    -9, 10, 9 , 0,
+    11, 12 , -1 , 2
 };
 
 static int32_t matrix_c[MATRIX_M * MATRIX_N];

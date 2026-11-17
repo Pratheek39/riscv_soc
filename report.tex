@@ -1,0 +1,56 @@
+\documentclass[10pt]{article}
+\usepackage[margin=0.9in]{geometry}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{hyperref}
+\setlist{nosep,leftmargin=*}
+\setlength{\parskip}{4pt}
+\setlength{\parindent}{0pt}
+
+\title{\vspace{-1.5em}Matrix-Multiply Accelerator Integration in a RISC-V SoC\vspace{-0.5em}}
+\author{Progress Report}
+\date{\vspace{-1em}\today}
+
+\begin{document}
+\maketitle
+\vspace{-1em}
+
+\section*{Objective}
+Attach a hardware matrix-multiply accelerator ($C = A \times B$, 32-bit signed
+operands and accumulators) to an existing RISC-V SoC. The CPU configures it
+through memory-mapped registers, and it accesses main memory on its own to
+read $A$ and $B$ and write $C$.
+
+\section*{Work Completed}
+We designed a matrix-multiply accelerator in Verilog and connected it to
+the SoC's on-chip bus (AXI). The accelerator appears to the processor as a
+small set of memory-mapped registers. Software writes in where matrices
+$A$, $B$ and $C$ are stored in memory and their dimensions, then sets a
+start bit. The accelerator then works on its own: it reads $A$ and $B$
+from main memory, computes the product on a $4\times4$ array of
+multiply-accumulate units, writes $C$ back to memory, and sets a
+``done'' flag. To make this possible, the SoC's address decoder was
+extended so the accelerator's registers have their own address range, and
+the bus arbiter was configured to let the accelerator share main memory
+with the processor.
+
+To verify the design, we wrote a bare-metal C program that runs on the
+RISC-V processor. It configures the accelerator, waits for it to finish
+and compares the result with a software-computed reference. The whole
+system (processor, bus, memory and accelerator) was run in a cycle-accurate
+simulation built with Verilator and SystemC. Getting this working required
+fixes to how bus responses are routed back to the accelerator and to the
+simulation environment. The simulated system now computes a
+$2\times3$ by $3\times2$ matrix product correctly and the test passes.
+
+\section*{Work To Be Done}
+\begin{itemize}
+  \item Support larger matrices (tiling and burst transfers beyond the
+  current $4\times4$ limit).
+  \item Test on FPGA hardware.
+  \item Measure and report performance: cycle counts, speedup over a
+  software-only matrix multiply on the CPU, and resource and energy
+  efficiency.
+\end{itemize}
+
+\end{document}

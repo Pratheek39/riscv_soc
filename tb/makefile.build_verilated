@@ -52,7 +52,11 @@ SRC_LIST      = $(foreach src,$(SRC_DIR),$(wildcard $(src)/*.cpp))
 SRC_LIST     += $(VERILATOR_SRC)/verilated.cpp
 SRC_LIST     += $(VERILATOR_SRC)/verilated_vcd_c.cpp
 SRC_LIST     += $(VERILATOR_SRC)/verilated_vcd_sc.cpp
+# Verilator 5+ always needs the thread runtime; 4.x only builds it with VL_THREADED
+VERILATOR_MAJOR := $(shell verilator --version 2>/dev/null | sed -E 's/^Verilator ([0-9]+).*/\1/')
+ifeq ($(shell test "$(VERILATOR_MAJOR)" -ge 5 2>/dev/null && echo yes),yes)
 SRC_LIST     += $(VERILATOR_SRC)/verilated_threads.cpp
+endif
 
 OBJ          ?= $(foreach src,$(SRC_LIST),$(call src2obj,$(src)))
 

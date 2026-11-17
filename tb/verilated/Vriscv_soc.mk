@@ -4,23 +4,19 @@
 # Execute this makefile from the object directory:
 #    make -f Vriscv_soc.mk
 
-default: libVriscv_soc
+default: Vriscv_soc__ALL.a
 
 ### Constants...
-# Perl executable (from $PERL, defaults to 'perl' if not set)
+# Perl executable (from $PERL)
 PERL = perl
-# Python3 executable (from $PYTHON3, defaults to 'python3' if not set)
-PYTHON3 = python3
 # Path to Verilator kit (from $VERILATOR_ROOT)
-VERILATOR_ROOT = /opt/homebrew/Cellar/verilator/5.052/share/verilator
+VERILATOR_ROOT = /usr/share/verilator
 # SystemC include directory with systemc.h (from $SYSTEMC_INCLUDE)
-SYSTEMC_INCLUDE ?= /opt/homebrew/opt/systemc/include
+SYSTEMC_INCLUDE ?= /usr/include
 # SystemC library directory with libsystemc.a (from $SYSTEMC_LIBDIR)
-SYSTEMC_LIBDIR ?= /opt/homebrew/opt/systemc/lib
+SYSTEMC_LIBDIR ?= /usr/lib/x86_64-linux-gnu
 
 ### Switches...
-# C++ code coverage  0/1 (from --prof-c)
-VM_PROFC = 0
 # SystemC output mode?  0/1 (from --sc)
 VM_SC = 1
 # Legacy or SystemC output mode?  0/1 (from --sc)
@@ -46,7 +42,7 @@ VM_USER_CLASSES = \
 
 # User .cpp directories (from .cpp's on Verilator command line)
 VM_USER_DIR = \
-  .. \
+
 
 ### Default rules...
 # Include list of all generated classes
@@ -54,8 +50,4 @@ include Vriscv_soc_classes.mk
 # Include global rules
 include $(VERILATOR_ROOT)/include/verilated.mk
 
-### Library rules (default lib mode)
-libVriscv_soc.a: $(VK_OBJS) $(VK_USER_OBJS) $(VM_HIER_LIBS)
-libverilated.a: $(VK_GLOBAL_OBJS)
-libVriscv_soc: libVriscv_soc.a libverilated.a $(VM_PREFIX)__ALL.a
 # Verilated -*- Makefile -*-

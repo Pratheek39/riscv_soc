@@ -11,6 +11,7 @@ module accel_matmul
     ,input [1:0] m_bresp_i, input [3:0] m_bid_i
     ,input m_arready_i, input m_rvalid_i, input [31:0] m_rdata_i
     ,input [1:0] m_rresp_i, input [3:0] m_rid_i, input m_rlast_i
+    
     ,output cfg_awready_o, output cfg_wready_o, output cfg_bvalid_o
     ,output [1:0] cfg_bresp_o, output cfg_arready_o, output cfg_rvalid_o
     ,output [31:0] cfg_rdata_o, output [1:0] cfg_rresp_o

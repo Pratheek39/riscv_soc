@@ -1,25 +1,43 @@
-// Verilated -*- C++ -*-
+// Verilated -*- SystemC -*-
 // DESCRIPTION: Verilator output: Design implementation internals
 // See Vriscv_soc.h for the primary calling header
 
-#include "Vriscv_soc__pch.h"
+#include "Vriscv_soc_icache_tag_ram.h"
+#include "Vriscv_soc__Syms.h"
 
-void Vriscv_soc_icache_tag_ram___ctor_var_reset(Vriscv_soc_icache_tag_ram* vlSelf);
+#include "verilated_dpi.h"
 
-Vriscv_soc_icache_tag_ram::Vriscv_soc_icache_tag_ram() = default;
-Vriscv_soc_icache_tag_ram::~Vriscv_soc_icache_tag_ram() = default;
+//==========
 
-void Vriscv_soc_icache_tag_ram::ctor(Vriscv_soc__Syms* symsp, const char* namep) {
-    vlSymsp = symsp;
-    vlNamep = strdup(Verilated::catName(vlSymsp->name(), namep));
+VL_CTOR_IMP(Vriscv_soc_icache_tag_ram) {
+    // Reset internal values
     // Reset structure values
-    Vriscv_soc_icache_tag_ram___ctor_var_reset(this);
+    _ctor_var_reset();
 }
 
-void Vriscv_soc_icache_tag_ram::__Vconfigure(bool first) {
-    (void)first;  // Prevent unused variable warning
+void Vriscv_soc_icache_tag_ram::__Vconfigure(Vriscv_soc__Syms* vlSymsp, bool first) {
+    if (false && first) {}  // Prevent unused
+    this->__VlSymsp = vlSymsp;
+    if (false && this->__VlSymsp) {}  // Prevent unused
 }
 
-void Vriscv_soc_icache_tag_ram::dtor() {
-    VL_DO_DANGLING(std::free(const_cast<char*>(vlNamep)), vlNamep);
+Vriscv_soc_icache_tag_ram::~Vriscv_soc_icache_tag_ram() {
+}
+
+void Vriscv_soc_icache_tag_ram::_ctor_var_reset() {
+    VL_DEBUG_IF(VL_DBG_MSGF("+            Vriscv_soc_icache_tag_ram::_ctor_var_reset\n"); );
+    // Body
+    __PVT__clk_i = VL_RAND_RESET_I(1);
+    __PVT__rst_i = VL_RAND_RESET_I(1);
+    __PVT__addr_i = VL_RAND_RESET_I(8);
+    __PVT__data_i = VL_RAND_RESET_I(20);
+    __PVT__wr_i = VL_RAND_RESET_I(1);
+    __PVT__data_o = VL_RAND_RESET_I(20);
+    { int __Vi0=0; for (; __Vi0<256; ++__Vi0) {
+            ram[__Vi0] = VL_RAND_RESET_I(20);
+    }}
+    __PVT__ram_read_q = VL_RAND_RESET_I(20);
+    __Vdlyvdim0__ram__v0 = 0;
+    __Vdlyvval__ram__v0 = VL_RAND_RESET_I(20);
+    __Vdlyvset__ram__v0 = 0;
 }
