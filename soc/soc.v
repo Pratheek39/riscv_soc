@@ -43,6 +43,8 @@
 //                          Generated File
 //-----------------------------------------------------------------
 
+`include "accel_matmul_defs.v"
+
 module soc
 (
     // Inputs
@@ -615,7 +617,7 @@ axi4_lite_tap u_axi_tap
     ,.outport_peripheral5_rready_o(axi_tap_output5_rready_w)
 );
 
-accel_matmul u_accel
+accel_matmul #(.DIM(`ACCEL_DIM), .MAX_K(`ACCEL_MAX_K)) u_accel
 (
      .clk_i(clk_i)
     ,.rst_i(rst_i)

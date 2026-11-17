@@ -65,8 +65,13 @@ OBJ          ?= $(foreach src,$(SRC),$(call src2obj,$(src)))
 ###############################################################################
 # Rules
 ###############################################################################
+# Testbench objects include the Verilated model headers; the exe links the
+# Verilated model and ISA sim libraries, so RTL changes must relink it.
+VERILATED_HDRS = $(wildcard ./verilated/*.h)
+LINK_LIBS      = ./lib/libsyscverilated.a ../core/isa_sim/libisa_sim.a
+
 define template_c
-$(call src2obj,$(1)): $(1) | $(OBJ_DIR)
+$(call src2obj,$(1)): $(1) $(VERILATED_HDRS) | $(OBJ_DIR)
 	g++ $(CFLAGS) -c $$< -o $$@
 endef
 
@@ -77,7 +82,7 @@ $(OBJ_DIR) $(EXE_DIR):
 
 $(foreach src,$(SRC),$(eval $(call template_c,$(src))))
 
-$(EXE_DIR)$(TARGET): $(OBJ) | $(EXE_DIR) 
+$(EXE_DIR)$(TARGET): $(OBJ) $(LINK_LIBS) | $(EXE_DIR)
 	g++ $(LDFLAGS) $(OBJ) $(LIBS) -o $@
 
 clean:

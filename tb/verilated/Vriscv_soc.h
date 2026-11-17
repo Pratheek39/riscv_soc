@@ -114,11 +114,11 @@ SC_MODULE(Vriscv_soc) {
     CData/*3:0*/ __Vcellinp__riscv_soc__inport_wstrb_i;
     CData/*0:0*/ __Vcellinp__riscv_soc__inport_wvalid_i;
     CData/*0:0*/ __Vcellinp__riscv_soc__inport_awvalid_i;
-    CData/*0:0*/ __VinpClk__TOP____Vcellinp__riscv_soc__rst_i;
     CData/*0:0*/ __VinpClk__TOP____Vcellinp__riscv_soc__rst_cpu_i;
+    CData/*0:0*/ __VinpClk__TOP____Vcellinp__riscv_soc__rst_i;
     CData/*0:0*/ __Vclklast__TOP____Vcellinp__riscv_soc__clk_i;
-    CData/*0:0*/ __Vclklast__TOP____VinpClk__TOP____Vcellinp__riscv_soc__rst_i;
     CData/*0:0*/ __Vclklast__TOP____VinpClk__TOP____Vcellinp__riscv_soc__rst_cpu_i;
+    CData/*0:0*/ __Vclklast__TOP____VinpClk__TOP____Vcellinp__riscv_soc__rst_i;
     CData/*0:0*/ __Vchglast__TOP____Vcellinp__riscv_soc__rst_cpu_i;
     CData/*0:0*/ __Vchglast__TOP____Vcellinp__riscv_soc__rst_i;
     IData/*31:0*/ __Vcellinp__riscv_soc__mem_rdata_i;
@@ -127,7 +127,7 @@ SC_MODULE(Vriscv_soc) {
     IData/*31:0*/ __Vcellinp__riscv_soc__inport_wdata_i;
     IData/*31:0*/ __Vcellinp__riscv_soc__inport_awaddr_i;
     IData/*31:0*/ __Vcellinp__riscv_soc__reset_vector_i;
-    CData/*0:0*/ __Vm_traceActivity[7];
+    CData/*0:0*/ __Vm_traceActivity[6];
     
     // INTERNAL VARIABLES
     // Internals; generally not touched by application code
@@ -174,7 +174,6 @@ SC_MODULE(Vriscv_soc) {
     static void _eval_initial(Vriscv_soc__Syms* __restrict vlSymsp) VL_ATTR_COLD;
     static void _eval_settle(Vriscv_soc__Syms* __restrict vlSymsp) VL_ATTR_COLD;
     static void _sequent__TOP__4(Vriscv_soc__Syms* __restrict vlSymsp);
-    static void _sequent__TOP__6(Vriscv_soc__Syms* __restrict vlSymsp);
     static void _settle__TOP__1(Vriscv_soc__Syms* __restrict vlSymsp) VL_ATTR_COLD;
     static void _settle__TOP__2(Vriscv_soc__Syms* __restrict vlSymsp);
   private:

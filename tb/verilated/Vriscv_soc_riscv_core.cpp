@@ -2646,18 +2646,30 @@ VL_INLINE_OPT void Vriscv_soc_riscv_core::_multiclk__TOP__riscv_soc__u_core__u_c
     VL_DEBUG_IF(VL_DBG_MSGF("+          Vriscv_soc_riscv_core::_multiclk__TOP__riscv_soc__u_core__u_core__9\n"); );
     Vriscv_soc* const __restrict vlTOPp VL_ATTR_UNUSED = vlSymsp->TOPp;
     // Body
-    vlSymsp->TOP__riscv_soc__u_core__u_core.__PVT__arb_mmu_ack_w 
-        = ((7U == (7U & ((IData)(vlSymsp->TOP__riscv_soc__u_core.__PVT__dport_bridge_resp_tag_w) 
-                         >> 7U))) & (IData)(vlSymsp->TOP__riscv_soc__u_core.__PVT__dport_bridge_ack_w));
-    vlSymsp->TOP__riscv_soc__u_core__u_core.__PVT__arb_cpu_ack_w 
-        = ((7U != (7U & ((IData)(vlSymsp->TOP__riscv_soc__u_core.__PVT__dport_bridge_resp_tag_w) 
-                         >> 7U))) & (IData)(vlSymsp->TOP__riscv_soc__u_core.__PVT__dport_bridge_ack_w));
     vlSymsp->TOP__riscv_soc__u_core__u_core.__PVT__arb_mmu_error_w 
         = ((7U == (7U & ((IData)(vlSymsp->TOP__riscv_soc__u_core.__PVT__dport_bridge_resp_tag_w) 
                          >> 7U))) & (IData)(vlSymsp->TOP__riscv_soc__u_core.__PVT__dport_bridge_error_w));
     vlSymsp->TOP__riscv_soc__u_core__u_core.__PVT__arb_cpu_error_w 
         = ((7U != (7U & ((IData)(vlSymsp->TOP__riscv_soc__u_core.__PVT__dport_bridge_resp_tag_w) 
                          >> 7U))) & (IData)(vlSymsp->TOP__riscv_soc__u_core.__PVT__dport_bridge_error_w));
+    vlSymsp->TOP__riscv_soc__u_core__u_core.__PVT__arb_mmu_ack_w 
+        = ((7U == (7U & ((IData)(vlSymsp->TOP__riscv_soc__u_core.__PVT__dport_bridge_resp_tag_w) 
+                         >> 7U))) & (IData)(vlSymsp->TOP__riscv_soc__u_core.__PVT__dport_bridge_ack_w));
+    vlSymsp->TOP__riscv_soc__u_core__u_core.__PVT__arb_cpu_ack_w 
+        = ((7U != (7U & ((IData)(vlSymsp->TOP__riscv_soc__u_core.__PVT__dport_bridge_resp_tag_w) 
+                         >> 7U))) & (IData)(vlSymsp->TOP__riscv_soc__u_core.__PVT__dport_bridge_ack_w));
+    vlSymsp->TOP__riscv_soc__u_core__u_core.__PVT__u_csr__DOT__exc_src_w 
+        = ((0xffffffdfU & vlSymsp->TOP__riscv_soc__u_core__u_core.__PVT__u_csr__DOT__exc_src_w) 
+           | (((IData)(vlSymsp->TOP__riscv_soc__u_core__u_core.__PVT__arb_cpu_ack_w) 
+               & ((0U != (7U & ((IData)(vlSymsp->TOP__riscv_soc__u_core.__PVT__dport_bridge_resp_tag_w) 
+                                >> 7U))) & (IData)(vlSymsp->TOP__riscv_soc__u_core__u_core.__PVT__arb_cpu_error_w))) 
+              << 5U));
+    vlSymsp->TOP__riscv_soc__u_core__u_core.__PVT__u_csr__DOT__exc_src_w 
+        = ((0xffffff7fU & vlSymsp->TOP__riscv_soc__u_core__u_core.__PVT__u_csr__DOT__exc_src_w) 
+           | (((IData)(vlSymsp->TOP__riscv_soc__u_core__u_core.__PVT__arb_cpu_ack_w) 
+               & ((0U == (7U & ((IData)(vlSymsp->TOP__riscv_soc__u_core.__PVT__dport_bridge_resp_tag_w) 
+                                >> 7U))) & (IData)(vlSymsp->TOP__riscv_soc__u_core__u_core.__PVT__arb_cpu_error_w))) 
+              << 7U));
     vlSymsp->TOP__riscv_soc__u_core__u_core.__PVT__u_lsu__DOT__wb_result_r = 0U;
     vlSymsp->TOP__riscv_soc__u_core__u_core.__PVT__u_lsu__DOT__wb_idx_r 
         = (0x1fU & (IData)(vlSymsp->TOP__riscv_soc__u_core.__PVT__dport_bridge_resp_tag_w));
@@ -2719,16 +2731,4 @@ VL_INLINE_OPT void Vriscv_soc_riscv_core::_multiclk__TOP__riscv_soc__u_core__u_c
     } else {
         vlSymsp->TOP__riscv_soc__u_core__u_core.__PVT__u_lsu__DOT__wb_idx_r = 0U;
     }
-    vlSymsp->TOP__riscv_soc__u_core__u_core.__PVT__u_csr__DOT__exc_src_w 
-        = ((0xffffffdfU & vlSymsp->TOP__riscv_soc__u_core__u_core.__PVT__u_csr__DOT__exc_src_w) 
-           | (((IData)(vlSymsp->TOP__riscv_soc__u_core__u_core.__PVT__arb_cpu_ack_w) 
-               & ((0U != (7U & ((IData)(vlSymsp->TOP__riscv_soc__u_core.__PVT__dport_bridge_resp_tag_w) 
-                                >> 7U))) & (IData)(vlSymsp->TOP__riscv_soc__u_core__u_core.__PVT__arb_cpu_error_w))) 
-              << 5U));
-    vlSymsp->TOP__riscv_soc__u_core__u_core.__PVT__u_csr__DOT__exc_src_w 
-        = ((0xffffff7fU & vlSymsp->TOP__riscv_soc__u_core__u_core.__PVT__u_csr__DOT__exc_src_w) 
-           | (((IData)(vlSymsp->TOP__riscv_soc__u_core__u_core.__PVT__arb_cpu_ack_w) 
-               & ((0U == (7U & ((IData)(vlSymsp->TOP__riscv_soc__u_core.__PVT__dport_bridge_resp_tag_w) 
-                                >> 7U))) & (IData)(vlSymsp->TOP__riscv_soc__u_core__u_core.__PVT__arb_cpu_error_w))) 
-              << 7U));
 }

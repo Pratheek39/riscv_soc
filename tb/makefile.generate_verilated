@@ -22,6 +22,13 @@ VERILATOR_OPTS   ?= --pins-sc-uint
 
 TARGETS          ?= $(OUTPUT_DIR)/V$(NAME)
 
+# accel_matmul array size; a stamp file forces re-verilation when it changes
+ACCEL_DIM        ?= 4
+ACCEL_MAX_K      ?= $(ACCEL_DIM)
+ACCEL_DEFINES     = +define+ACCEL_DIM=$(ACCEL_DIM) +define+ACCEL_MAX_K=$(ACCEL_MAX_K)
+ACCEL_STAMP       = $(OUTPUT_DIR)/.accel_cfg
+ACCEL_CFG_STR     = DIM=$(ACCEL_DIM) MAX_K=$(ACCEL_MAX_K)
+
 ###############################################################################
 # Rules
 ###############################################################################
@@ -30,8 +37,17 @@ all: $(TARGETS)
 $(OUTPUT_DIR):
 	mkdir -p $@
 
-$(OUTPUT_DIR)/V$(NAME): $(RTL_SOURCES) | $(OUTPUT_DIR)
-	verilator --sc -Wno-IGNOREDRETURN -Wno-fatal $(RTL_SOURCES) --top-module $(NAME) --Mdir $(OUTPUT_DIR) -I./$(SRC_V_DIR) $(patsubst %,-I%,$(RTL_INCLUDE)) $(VERILATOR_OPTS) $(VERILATE_PARAMS)
+$(ACCEL_STAMP): FORCE | $(OUTPUT_DIR)
+	@if [ "$$(cat $@ 2>/dev/null)" != "$(ACCEL_CFG_STR)" ]; then echo "$(ACCEL_CFG_STR)" > $@; fi
+
+$(OUTPUT_DIR)/V$(NAME): $(RTL_SOURCES) $(ACCEL_STAMP) | $(OUTPUT_DIR)
+	@# Verilator never deletes outputs from a previous run; stale split files
+	@# (e.g. *__1.cpp from a larger DIM) would otherwise be linked in twice.
+	rm -f $(OUTPUT_DIR)/V$(NAME)*
+	verilator --sc -Wno-IGNOREDRETURN -Wno-fatal $(RTL_SOURCES) --top-module $(NAME) --Mdir $(OUTPUT_DIR) -I./$(SRC_V_DIR) $(patsubst %,-I%,$(RTL_INCLUDE)) $(VERILATOR_OPTS) $(VERILATE_PARAMS) $(ACCEL_DEFINES)
+
+.PHONY: FORCE
+FORCE:
 
 clean:
 	rm -rf $(TARGETS) $(OUTPUT_DIR)

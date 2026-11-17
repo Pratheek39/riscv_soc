@@ -266,15 +266,15 @@ VL_INLINE_OPT void Vriscv_soc_riscv_top::_sequent__TOP__riscv_soc__u_core__5(Vri
     VL_DEBUG_IF(VL_DBG_MSGF("+        Vriscv_soc_riscv_top::_sequent__TOP__riscv_soc__u_core__5\n"); );
     Vriscv_soc* const __restrict vlTOPp VL_ATTR_UNUSED = vlSymsp->TOPp;
     // Body
+    vlSymsp->TOP__riscv_soc__u_core.__PVT__dport_bridge_error_w 
+        = ((IData)(vlSymsp->TOP__riscv_soc.__PVT__axi4_d_bvalid_w)
+            ? (0U != (IData)(vlSymsp->TOP__riscv_soc.__PVT__u_soc__DOT__u_axi_tap__DOT__outport_bresp_r))
+            : (0U != (IData)(vlSymsp->TOP__riscv_soc.__PVT__u_soc__DOT__u_axi_tap__DOT__outport_rresp_r)));
     vlSymsp->TOP__riscv_soc__u_core.__PVT__dport_bridge_ack_w 
         = ((IData)(vlSymsp->TOP__riscv_soc.__PVT__axi4_d_bvalid_w) 
            | ((IData)(vlSymsp->TOP__riscv_soc.__PVT__u_soc__DOT__u_axi_tap__DOT__outport_rvalid_r) 
               & ((IData)(vlSymsp->TOP__riscv_soc.__PVT__u_soc__DOT__u_arb__DOT__rd_resp_target_r) 
                  >> 1U)));
-    vlSymsp->TOP__riscv_soc__u_core.__PVT__dport_bridge_error_w 
-        = ((IData)(vlSymsp->TOP__riscv_soc.__PVT__axi4_d_bvalid_w)
-            ? (0U != (IData)(vlSymsp->TOP__riscv_soc.__PVT__u_soc__DOT__u_axi_tap__DOT__outport_bresp_r))
-            : (0U != (IData)(vlSymsp->TOP__riscv_soc.__PVT__u_soc__DOT__u_axi_tap__DOT__outport_rresp_r)));
 }
 
 VL_INLINE_OPT void Vriscv_soc_riscv_top::_multiclk__TOP__riscv_soc__u_core__6(Vriscv_soc__Syms* __restrict vlSymsp) {

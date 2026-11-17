@@ -155,10 +155,10 @@ void Vriscv_soc::_eval_initial(Vriscv_soc__Syms* __restrict vlSymsp) {
     // Body
     vlTOPp->__Vclklast__TOP____Vcellinp__riscv_soc__clk_i 
         = vlTOPp->__Vcellinp__riscv_soc__clk_i;
-    vlTOPp->__Vclklast__TOP____VinpClk__TOP____Vcellinp__riscv_soc__rst_i 
-        = vlTOPp->__VinpClk__TOP____Vcellinp__riscv_soc__rst_i;
     vlTOPp->__Vclklast__TOP____VinpClk__TOP____Vcellinp__riscv_soc__rst_cpu_i 
         = vlTOPp->__VinpClk__TOP____Vcellinp__riscv_soc__rst_cpu_i;
+    vlTOPp->__Vclklast__TOP____VinpClk__TOP____Vcellinp__riscv_soc__rst_i 
+        = vlTOPp->__VinpClk__TOP____Vcellinp__riscv_soc__rst_i;
 }
 
 void Vriscv_soc::final() {
@@ -173,7 +173,6 @@ void Vriscv_soc::_eval_settle(Vriscv_soc__Syms* __restrict vlSymsp) {
     Vriscv_soc* const __restrict vlTOPp VL_ATTR_UNUSED = vlSymsp->TOPp;
     // Body
     vlSymsp->TOP__riscv_soc._settle__TOP__riscv_soc__1(vlSymsp);
-    vlTOPp->__Vm_traceActivity[6U] = 1U;
     vlTOPp->__Vm_traceActivity[5U] = 1U;
     vlTOPp->__Vm_traceActivity[4U] = 1U;
     vlTOPp->__Vm_traceActivity[3U] = 1U;
@@ -229,11 +228,11 @@ void Vriscv_soc::_ctor_var_reset() {
     __Vcellinp__riscv_soc__reset_vector_i = VL_RAND_RESET_I(32);
     __Vcellinp__riscv_soc__rst_i = VL_RAND_RESET_I(1);
     __Vcellinp__riscv_soc__clk_i = VL_RAND_RESET_I(1);
-    __VinpClk__TOP____Vcellinp__riscv_soc__rst_i = VL_RAND_RESET_I(1);
     __VinpClk__TOP____Vcellinp__riscv_soc__rst_cpu_i = VL_RAND_RESET_I(1);
+    __VinpClk__TOP____Vcellinp__riscv_soc__rst_i = VL_RAND_RESET_I(1);
     __Vchglast__TOP____Vcellinp__riscv_soc__rst_cpu_i = VL_RAND_RESET_I(1);
     __Vchglast__TOP____Vcellinp__riscv_soc__rst_i = VL_RAND_RESET_I(1);
-    { int __Vi0=0; for (; __Vi0<7; ++__Vi0) {
+    { int __Vi0=0; for (; __Vi0<6; ++__Vi0) {
             __Vm_traceActivity[__Vi0] = VL_RAND_RESET_I(1);
     }}
 }
