@@ -25,9 +25,13 @@ TARGETS          ?= $(OUTPUT_DIR)/V$(NAME)
 # accel_matmul array size; a stamp file forces re-verilation when it changes
 ACCEL_DIM        ?= 4
 ACCEL_MAX_K      ?= $(ACCEL_DIM)
-ACCEL_DEFINES     = +define+ACCEL_DIM=$(ACCEL_DIM) +define+ACCEL_MAX_K=$(ACCEL_MAX_K)
+ACCEL_MAX_BURST  ?= 16
+ACCEL_MAX_OUTSTANDING ?= 4
+ACCEL_DEFINES     = +define+ACCEL_DIM=$(ACCEL_DIM) +define+ACCEL_MAX_K=$(ACCEL_MAX_K) \
+                    +define+ACCEL_MAX_BURST=$(ACCEL_MAX_BURST) \
+                    +define+ACCEL_MAX_OUTSTANDING=$(ACCEL_MAX_OUTSTANDING)
 ACCEL_STAMP       = $(OUTPUT_DIR)/.accel_cfg
-ACCEL_CFG_STR     = DIM=$(ACCEL_DIM) MAX_K=$(ACCEL_MAX_K)
+ACCEL_CFG_STR     = DIM=$(ACCEL_DIM) MAX_K=$(ACCEL_MAX_K) BURST=$(ACCEL_MAX_BURST) OUTSTANDING=$(ACCEL_MAX_OUTSTANDING)
 
 ###############################################################################
 # Rules

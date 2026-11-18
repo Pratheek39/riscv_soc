@@ -66,9 +66,9 @@ void Vriscv_soc::_settle__TOP__1(Vriscv_soc__Syms* __restrict vlSymsp) {
     Vriscv_soc* const __restrict vlTOPp VL_ATTR_UNUSED = vlSymsp->TOPp;
     // Body
     VL_ASSIGN_ISI(1,vlTOPp->__Vcellinp__riscv_soc__spi_miso_i, vlTOPp->spi_miso_i);
+    VL_ASSIGN_ISI(1,vlTOPp->__Vcellinp__riscv_soc__inport_wvalid_i, vlTOPp->inport_wvalid_i);
     VL_ASSIGN_ISU(4,vlTOPp->__Vcellinp__riscv_soc__inport_wstrb_i, vlTOPp->inport_wstrb_i);
     VL_ASSIGN_ISU(32,vlTOPp->__Vcellinp__riscv_soc__inport_wdata_i, vlTOPp->inport_wdata_i);
-    VL_ASSIGN_ISI(1,vlTOPp->__Vcellinp__riscv_soc__inport_wvalid_i, vlTOPp->inport_wvalid_i);
     VL_ASSIGN_ISI(1,vlTOPp->__Vcellinp__riscv_soc__inport_bready_i, vlTOPp->inport_bready_i);
     VL_ASSIGN_ISI(1,vlTOPp->__Vcellinp__riscv_soc__inport_rready_i, vlTOPp->inport_rready_i);
     VL_ASSIGN_ISU(32,vlTOPp->__Vcellinp__riscv_soc__inport_awaddr_i, vlTOPp->inport_awaddr_i);
@@ -97,16 +97,6 @@ void Vriscv_soc::_settle__TOP__1(Vriscv_soc__Syms* __restrict vlSymsp) {
     VL_ASSIGN_SII(1,vlTOPp->spi_cs_o, vlSymsp->TOP__riscv_soc.__PVT__u_soc__DOT__u_spi__DOT__spi_ssr_value_q);
     VL_ASSIGN_SII(1,vlTOPp->spi_mosi_o, vlSymsp->TOP__riscv_soc.__PVT__u_soc__DOT__u_spi__DOT__spi_mosi_q);
     VL_ASSIGN_SII(1,vlTOPp->spi_clk_o, vlSymsp->TOP__riscv_soc.__PVT__u_soc__DOT__u_spi__DOT__spi_clk_q);
-    VL_ASSIGN_SUI(32,vlTOPp->accel_status_o, (((0U 
-                                                != vlSymsp->TOP__riscv_soc.__PVT__u_soc__DOT__u_accel__DOT__error_q) 
-                                               << 2U) 
-                                              | (((8U 
-                                                   == (IData)(vlSymsp->TOP__riscv_soc.__PVT__u_soc__DOT__u_accel__DOT__state_q)) 
-                                                  << 1U) 
-                                                 | ((0U 
-                                                     != (IData)(vlSymsp->TOP__riscv_soc.__PVT__u_soc__DOT__u_accel__DOT__state_q)) 
-                                                    & (8U 
-                                                       != (IData)(vlSymsp->TOP__riscv_soc.__PVT__u_soc__DOT__u_accel__DOT__state_q))))));
     VL_ASSIGN_SUI(32,vlTOPp->gpio_output_enable_o, vlSymsp->TOP__riscv_soc.__PVT__u_soc__DOT__u_gpio__DOT__gpio_direction_output_q);
     VL_ASSIGN_ISU(32,vlTOPp->__Vcellinp__riscv_soc__gpio_input_i, vlTOPp->gpio_input_i);
     VL_ASSIGN_ISI(1,vlTOPp->__Vcellinp__riscv_soc__rst_i, vlTOPp->rst_i);
@@ -140,6 +130,13 @@ void Vriscv_soc::_settle__TOP__1(Vriscv_soc__Syms* __restrict vlSymsp) {
     VL_ASSIGN_SUI(32,vlTOPp->mem_araddr_o, (IData)(
                                                    (vlSymsp->TOP__riscv_soc.__PVT__u_soc__DOT__u_retime__DOT__read_req_out_w 
                                                     >> 0xeU)));
+    VL_ASSIGN_SUI(32,vlTOPp->accel_status_o, (((0U 
+                                                != vlSymsp->TOP__riscv_soc.__PVT__u_soc__DOT__u_accel__DOT__error_q) 
+                                               << 2U) 
+                                              | (((4U 
+                                                   == (IData)(vlSymsp->TOP__riscv_soc.__PVT__u_soc__DOT__u_accel__DOT__state_q)) 
+                                                  << 1U) 
+                                                 | (IData)(vlSymsp->TOP__riscv_soc.__PVT__u_soc__DOT__u_accel__DOT__busy_w))));
     VL_ASSIGN_SUI(2,vlTOPp->inport_bresp_o, vlSymsp->TOP__riscv_soc.__PVT__u_soc__DOT__u_axi_tap__DOT__outport_bresp_r);
     VL_ASSIGN_SII(1,vlTOPp->inport_bvalid_o, ((IData)(vlSymsp->TOP__riscv_soc.__PVT__u_soc__DOT__u_axi_tap__DOT__outport_bvalid_r) 
                                               & (IData)(vlSymsp->TOP__riscv_soc.__PVT__u_soc__DOT__u_arb__DOT__wr_resp_target_r)));

@@ -10,6 +10,14 @@
 `define ACCEL_MAX_K `ACCEL_DIM
 `endif
 
+// AXI master: max beats per burst (1..256) and max read bursts in flight
+`ifndef ACCEL_MAX_BURST
+`define ACCEL_MAX_BURST 16
+`endif
+`ifndef ACCEL_MAX_OUTSTANDING
+`define ACCEL_MAX_OUTSTANDING 4
+`endif
+
 `define ACCEL_CTRL       8'h00
 `define ACCEL_STATUS     8'h04
 `define ACCEL_A_ADDR     8'h08
@@ -22,6 +30,9 @@
 `define ACCEL_MAC_CYC    8'h24
 `define ACCEL_ERR        8'h28
 `define ACCEL_CFG        8'h2c   // RO: [15:0] = DIM, [31:16] = MAX_K
+// 0x30 - 0x3c reserved for tiling (strides, tile count)
+`define ACCEL_LOAD_CYC   8'h40   // RO: cycles spent loading A and B
+`define ACCEL_STORE_CYC  8'h44   // RO: cycles spent storing C
 
 `define ACCEL_CTRL_START 0
 `define ACCEL_STATUS_BUSY  0

@@ -26,6 +26,9 @@ CORE       ?= rv32imsu
 # Systolic array size of accel_matmul (DIM x DIM) and max K
 ACCEL_DIM   ?= 4
 ACCEL_MAX_K ?= $(ACCEL_DIM)
+# AXI master: max beats per burst and max read bursts in flight
+ACCEL_MAX_BURST       ?= 16
+ACCEL_MAX_OUTSTANDING ?= 4
 
 export VERILATOR_SRC
 export SYSTEMC_HOME
@@ -41,7 +44,8 @@ all: build
 
 build:
 	make -C ../core/isa_sim lib
-	make -f makefile.generate_verilated CORE=$(CORE) ACCEL_DIM=$(ACCEL_DIM) ACCEL_MAX_K=$(ACCEL_MAX_K)
+	make -f makefile.generate_verilated CORE=$(CORE) ACCEL_DIM=$(ACCEL_DIM) ACCEL_MAX_K=$(ACCEL_MAX_K) \
+		ACCEL_MAX_BURST=$(ACCEL_MAX_BURST) ACCEL_MAX_OUTSTANDING=$(ACCEL_MAX_OUTSTANDING)
 	make -f makefile.build_verilated
 	make -f makefile.build_sysc_tb
 

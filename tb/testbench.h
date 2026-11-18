@@ -90,7 +90,10 @@ public:
         m_mem->rst_in(rst);
         m_mem->axi_in(mem_out);
         m_mem->axi_out(mem_in);
-        m_mem->enable_delays(false);
+        // MEM_DELAYS=1 randomly stalls the memory's ready/valid signals,
+        // to stress-test AXI handshaking (e.g. the accelerator's bursts)
+        const char *mem_delays = getenv("MEM_DELAYS");
+        m_mem->enable_delays(mem_delays && !strcmp(mem_delays, "1"));
 
     }
     //-----------------------------------------------------------------

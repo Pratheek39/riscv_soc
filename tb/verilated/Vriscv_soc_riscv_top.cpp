@@ -49,10 +49,10 @@ VL_INLINE_OPT void Vriscv_soc_riscv_top::_sequent__TOP__riscv_soc__u_core__3(Vri
         = vlSymsp->TOP__riscv_soc__u_core.__PVT__u_dport_bridge__DOT__u_req__DOT__count_q;
     __Vdly__u_dport_bridge__DOT__u_resp__DOT__count_q 
         = vlSymsp->TOP__riscv_soc__u_core.__PVT__u_dport_bridge__DOT__u_resp__DOT__count_q;
-    __Vdly__u_dport_bridge__DOT__u_resp__DOT__rd_ptr_q 
-        = vlSymsp->TOP__riscv_soc__u_core.__PVT__u_dport_bridge__DOT__u_resp__DOT__rd_ptr_q;
     __Vdly__u_dport_bridge__DOT__u_resp__DOT__wr_ptr_q 
         = vlSymsp->TOP__riscv_soc__u_core.__PVT__u_dport_bridge__DOT__u_resp__DOT__wr_ptr_q;
+    __Vdly__u_dport_bridge__DOT__u_resp__DOT__rd_ptr_q 
+        = vlSymsp->TOP__riscv_soc__u_core.__PVT__u_dport_bridge__DOT__u_resp__DOT__rd_ptr_q;
     __Vdlyvset__u_dport_bridge__DOT__u_resp__DOT__ram_q__v0 = 0U;
     __Vdly__u_dport_bridge__DOT__u_req__DOT__rd_ptr_q 
         = vlSymsp->TOP__riscv_soc__u_core.__PVT__u_dport_bridge__DOT__u_req__DOT__rd_ptr_q;

@@ -15,6 +15,8 @@
 #define ACCEL_MAC_CYC    0x24u
 #define ACCEL_ERR        0x28u
 #define ACCEL_CFG        0x2cu   /* [15:0] = DIM, [31:16] = MAX_K */
+#define ACCEL_LOAD_CYC   0x40u   /* cycles spent loading A and B */
+#define ACCEL_STORE_CYC  0x44u   /* cycles spent storing C */
 
 #define ACCEL_CTRL_START   0x00000001u
 #define ACCEL_STATUS_BUSY  0x00000001u
@@ -34,6 +36,25 @@ static int32_t matrix_a[TEST_MAX_DIM * TEST_MAX_DIM];
 static int32_t matrix_b[TEST_MAX_DIM * TEST_MAX_DIM];
 static int32_t matrix_c[TEST_MAX_DIM * TEST_MAX_DIM];
 static int32_t expected_c[TEST_MAX_DIM * TEST_MAX_DIM];
+
+/* 4 pages of memory, page aligned, for the 4 KB boundary test. Each matrix is
+ * placed 8 bytes before a page boundary so its rows straddle the boundary,
+ * which forces the accelerator to split its AXI bursts there. */
+#define PAGE_WORDS (4096u / 4u)
+static int32_t boundary_region[4 * PAGE_WORDS] __attribute__((aligned(4096)));
+
+/* Buffers used by the current test case: normally matrix_a/b/c above,
+ * switched to boundary_region by the 4 KB boundary test. */
+static int32_t *case_a = matrix_a;
+static int32_t *case_b = matrix_b;
+static int32_t *case_c = matrix_c;
+
+static void use_buffers(int32_t *a, int32_t *b, int32_t *c)
+{
+    case_a = a;
+    case_b = b;
+    case_c = c;
+}
 
 /* Original hand-written 4x3 * 3x4 case */
 static const int32_t fixed_a[4 * 3] = {
@@ -93,7 +114,7 @@ static void calculate_reference(uint32_t m, uint32_t n, uint32_t k)
         {
             int32_t sum = 0;
             for (uint32_t index = 0; index < k; ++index)
-                sum += matrix_a[row * k + index] * matrix_b[index * n + col];
+                sum += case_a[row * k + index] * case_b[index * n + col];
             expected_c[row * n + col] = sum;
         }
 }
@@ -102,14 +123,14 @@ static int check_result(uint32_t m, uint32_t n)
 {
     for (uint32_t index = 0; index < m * n; ++index)
     {
-        if (matrix_c[index] != expected_c[index])
+        if (case_c[index] != expected_c[index])
         {
             sim_puts("  FAIL: C[");
             sim_put_dec((int32_t)index);
             sim_puts("] expected ");
             sim_put_dec(expected_c[index]);
             sim_puts(" got ");
-            sim_put_dec(matrix_c[index]);
+            sim_put_dec(case_c[index]);
             sim_putc('\n');
             return 0;
         }
@@ -120,9 +141,9 @@ static int check_result(uint32_t m, uint32_t n)
 /* Start the accelerator and wait. Returns the final STATUS value. */
 static uint32_t accel_run(uint32_t m, uint32_t n, uint32_t k)
 {
-    accel_write(ACCEL_A_ADDR, (uint32_t)(uintptr_t)matrix_a);
-    accel_write(ACCEL_B_ADDR, (uint32_t)(uintptr_t)matrix_b);
-    accel_write(ACCEL_C_ADDR, (uint32_t)(uintptr_t)matrix_c);
+    accel_write(ACCEL_A_ADDR, (uint32_t)(uintptr_t)case_a);
+    accel_write(ACCEL_B_ADDR, (uint32_t)(uintptr_t)case_b);
+    accel_write(ACCEL_C_ADDR, (uint32_t)(uintptr_t)case_c);
     accel_write(ACCEL_M, m);
     accel_write(ACCEL_N, n);
     accel_write(ACCEL_K, k);
@@ -152,15 +173,15 @@ static int run_case(uint32_t m, uint32_t n, uint32_t k, int fixed)
 
     if (fixed)
     {
-        for (uint32_t i = 0; i < m * k; ++i) matrix_a[i] = fixed_a[i];
-        for (uint32_t i = 0; i < k * n; ++i) matrix_b[i] = fixed_b[i];
+        for (uint32_t i = 0; i < m * k; ++i) case_a[i] = fixed_a[i];
+        for (uint32_t i = 0; i < k * n; ++i) case_b[i] = fixed_b[i];
     }
     else
     {
-        for (uint32_t i = 0; i < m * k; ++i) matrix_a[i] = next_rand();
-        for (uint32_t i = 0; i < k * n; ++i) matrix_b[i] = next_rand();
+        for (uint32_t i = 0; i < m * k; ++i) case_a[i] = next_rand();
+        for (uint32_t i = 0; i < k * n; ++i) case_b[i] = next_rand();
     }
-    for (uint32_t i = 0; i < m * n; ++i) matrix_c[i] = 0x7eadbeef;
+    for (uint32_t i = 0; i < m * n; ++i) case_c[i] = 0x7eadbeef;
 
     calculate_reference(m, n, k);
     uint32_t status = accel_run(m, n, k);
@@ -180,20 +201,26 @@ static int run_case(uint32_t m, uint32_t n, uint32_t k, int fixed)
         return 0;
     }
 
-    uint32_t cyc = accel_read(ACCEL_CYC);
-    uint32_t mac = accel_read(ACCEL_MAC_CYC);
+    uint32_t cyc       = accel_read(ACCEL_CYC);
+    uint32_t mac       = accel_read(ACCEL_MAC_CYC);
+    uint32_t load_cyc  = accel_read(ACCEL_LOAD_CYC);
+    uint32_t store_cyc = accel_read(ACCEL_STORE_CYC);
 
     if (!check_result(m, n))
     {
         print_matrix("  Expected C", expected_c, m, n);
-        print_matrix("  Output C", matrix_c, m, n);
+        print_matrix("  Output C", case_c, m, n);
         return 0;
     }
 
     sim_puts("PASS cyc=");
     sim_put_dec((int32_t)cyc);
-    sim_puts(" mac_cyc=");
+    sim_puts(" load=");
+    sim_put_dec((int32_t)load_cyc);
+    sim_puts(" mac=");
     sim_put_dec((int32_t)mac);
+    sim_puts(" store=");
+    sim_put_dec((int32_t)store_cyc);
     sim_putc('\n');
     return 1;
 }
@@ -237,6 +264,14 @@ int main(void)
     ok &= run_case(1, dim, clamp(3, max_k), 0);
     ok &= run_case(dim, 1, clamp(3, max_k), 0);
     ok &= run_case(clamp(dim - 1, dim), clamp(dim - 2, dim), clamp(3, max_k), 0);
+
+    /* 4 KB boundary: every matrix starts 2 words before a page boundary */
+    sim_puts("[4KB boundary] ");
+    use_buffers(&boundary_region[1 * PAGE_WORDS - 2],
+                &boundary_region[2 * PAGE_WORDS - 2],
+                &boundary_region[3 * PAGE_WORDS - 2]);
+    ok &= run_case(dim, dim, max_k, 0);
+    use_buffers(matrix_a, matrix_b, matrix_c);
 
     /* Negative test: M larger than the array must be rejected */
     sim_puts("case M=DIM+1 (expect error): ");

@@ -86,9 +86,9 @@ VL_INLINE_OPT void Vriscv_soc::_combo__TOP__3(Vriscv_soc__Syms* __restrict vlSym
     Vriscv_soc* const __restrict vlTOPp VL_ATTR_UNUSED = vlSymsp->TOPp;
     // Body
     VL_ASSIGN_ISI(1,vlTOPp->__Vcellinp__riscv_soc__spi_miso_i, vlTOPp->spi_miso_i);
+    VL_ASSIGN_ISI(1,vlTOPp->__Vcellinp__riscv_soc__inport_wvalid_i, vlTOPp->inport_wvalid_i);
     VL_ASSIGN_ISU(4,vlTOPp->__Vcellinp__riscv_soc__inport_wstrb_i, vlTOPp->inport_wstrb_i);
     VL_ASSIGN_ISU(32,vlTOPp->__Vcellinp__riscv_soc__inport_wdata_i, vlTOPp->inport_wdata_i);
-    VL_ASSIGN_ISI(1,vlTOPp->__Vcellinp__riscv_soc__inport_wvalid_i, vlTOPp->inport_wvalid_i);
     VL_ASSIGN_ISI(1,vlTOPp->__Vcellinp__riscv_soc__inport_bready_i, vlTOPp->inport_bready_i);
     VL_ASSIGN_ISI(1,vlTOPp->__Vcellinp__riscv_soc__inport_rready_i, vlTOPp->inport_rready_i);
     VL_ASSIGN_ISU(32,vlTOPp->__Vcellinp__riscv_soc__inport_awaddr_i, vlTOPp->inport_awaddr_i);
@@ -110,16 +110,6 @@ VL_INLINE_OPT void Vriscv_soc::_sequent__TOP__4(Vriscv_soc__Syms* __restrict vlS
     VL_ASSIGN_SII(1,vlTOPp->spi_mosi_o, vlSymsp->TOP__riscv_soc.__PVT__u_soc__DOT__u_spi__DOT__spi_mosi_q);
     VL_ASSIGN_SII(1,vlTOPp->spi_clk_o, vlSymsp->TOP__riscv_soc.__PVT__u_soc__DOT__u_spi__DOT__spi_clk_q);
     VL_ASSIGN_SII(1,vlTOPp->mem_arvalid_o, (0U != (IData)(vlSymsp->TOP__riscv_soc.__PVT__u_soc__DOT__u_retime__DOT__u_read_req__DOT__count_q)));
-    VL_ASSIGN_SUI(32,vlTOPp->accel_status_o, (((0U 
-                                                != vlSymsp->TOP__riscv_soc.__PVT__u_soc__DOT__u_accel__DOT__error_q) 
-                                               << 2U) 
-                                              | (((8U 
-                                                   == (IData)(vlSymsp->TOP__riscv_soc.__PVT__u_soc__DOT__u_accel__DOT__state_q)) 
-                                                  << 1U) 
-                                                 | ((0U 
-                                                     != (IData)(vlSymsp->TOP__riscv_soc.__PVT__u_soc__DOT__u_accel__DOT__state_q)) 
-                                                    & (8U 
-                                                       != (IData)(vlSymsp->TOP__riscv_soc.__PVT__u_soc__DOT__u_accel__DOT__state_q))))));
     VL_ASSIGN_SII(1,vlTOPp->mem_bready_o, (2U != (IData)(vlSymsp->TOP__riscv_soc.__PVT__u_soc__DOT__u_retime__DOT__u_write_resp__DOT__count_q)));
     VL_ASSIGN_SII(1,vlTOPp->mem_rready_o, (2U != (IData)(vlSymsp->TOP__riscv_soc.__PVT__u_soc__DOT__u_retime__DOT__u_read_resp__DOT__count_q)));
     VL_ASSIGN_SII(1,vlTOPp->mem_wlast_o, (1U & (IData)(
@@ -149,6 +139,13 @@ VL_INLINE_OPT void Vriscv_soc::_sequent__TOP__4(Vriscv_soc__Syms* __restrict vlS
     VL_ASSIGN_SUI(32,vlTOPp->mem_araddr_o, (IData)(
                                                    (vlSymsp->TOP__riscv_soc.__PVT__u_soc__DOT__u_retime__DOT__read_req_out_w 
                                                     >> 0xeU)));
+    VL_ASSIGN_SUI(32,vlTOPp->accel_status_o, (((0U 
+                                                != vlSymsp->TOP__riscv_soc.__PVT__u_soc__DOT__u_accel__DOT__error_q) 
+                                               << 2U) 
+                                              | (((4U 
+                                                   == (IData)(vlSymsp->TOP__riscv_soc.__PVT__u_soc__DOT__u_accel__DOT__state_q)) 
+                                                  << 1U) 
+                                                 | (IData)(vlSymsp->TOP__riscv_soc.__PVT__u_soc__DOT__u_accel__DOT__busy_w))));
     VL_ASSIGN_SUI(32,vlTOPp->gpio_output_enable_o, vlSymsp->TOP__riscv_soc.__PVT__u_soc__DOT__u_gpio__DOT__gpio_direction_output_q);
     VL_ASSIGN_SUI(2,vlTOPp->inport_bresp_o, vlSymsp->TOP__riscv_soc.__PVT__u_soc__DOT__u_axi_tap__DOT__outport_bresp_r);
     VL_ASSIGN_SII(1,vlTOPp->inport_bvalid_o, ((IData)(vlSymsp->TOP__riscv_soc.__PVT__u_soc__DOT__u_axi_tap__DOT__outport_bvalid_r) 
@@ -195,6 +192,7 @@ void Vriscv_soc::_eval(Vriscv_soc__Syms* __restrict vlSymsp) {
         vlSymsp->TOP__riscv_soc__u_core__u_icache__u_tag1._sequent__TOP__riscv_soc__u_core__u_icache__u_tag1__2(vlSymsp);
         vlSymsp->TOP__riscv_soc__u_core__u_icache__u_data0._sequent__TOP__riscv_soc__u_core__u_icache__u_data0__1(vlSymsp);
         vlSymsp->TOP__riscv_soc__u_core__u_icache__u_data1._sequent__TOP__riscv_soc__u_core__u_icache__u_data1__2(vlSymsp);
+        vlSymsp->TOP__riscv_soc._sequent__TOP__riscv_soc__4(vlSymsp);
     }
     if ((((IData)(vlTOPp->__Vcellinp__riscv_soc__clk_i) 
           & (~ (IData)(vlTOPp->__Vclklast__TOP____Vcellinp__riscv_soc__clk_i))) 
@@ -222,13 +220,13 @@ void Vriscv_soc::_eval(Vriscv_soc__Syms* __restrict vlSymsp) {
           & (~ (IData)(vlTOPp->__Vclklast__TOP____Vcellinp__riscv_soc__clk_i))) 
          | ((IData)(vlTOPp->__VinpClk__TOP____Vcellinp__riscv_soc__rst_i) 
             & (~ (IData)(vlTOPp->__Vclklast__TOP____VinpClk__TOP____Vcellinp__riscv_soc__rst_i))))) {
-        vlSymsp->TOP__riscv_soc._sequent__TOP__riscv_soc__4(vlSymsp);
+        vlSymsp->TOP__riscv_soc._sequent__TOP__riscv_soc__5(vlSymsp);
         vlTOPp->__Vm_traceActivity[4U] = 1U;
         vlTOPp->_sequent__TOP__4(vlSymsp);
         vlSymsp->TOP__riscv_soc__u_core._sequent__TOP__riscv_soc__u_core__5(vlSymsp);
     }
     vlTOPp->_combo__TOP__5(vlSymsp);
-    vlSymsp->TOP__riscv_soc._combo__TOP__riscv_soc__5(vlSymsp);
+    vlSymsp->TOP__riscv_soc._combo__TOP__riscv_soc__6(vlSymsp);
     if (((((IData)(vlTOPp->__Vcellinp__riscv_soc__clk_i) 
            & (~ (IData)(vlTOPp->__Vclklast__TOP____Vcellinp__riscv_soc__clk_i))) 
           | ((IData)(vlTOPp->__VinpClk__TOP____Vcellinp__riscv_soc__rst_cpu_i) 
@@ -239,7 +237,7 @@ void Vriscv_soc::_eval(Vriscv_soc__Syms* __restrict vlSymsp) {
         vlTOPp->__Vm_traceActivity[5U] = 1U;
         vlSymsp->TOP__riscv_soc__u_core__u_core._multiclk__TOP__riscv_soc__u_core__u_core__9(vlSymsp);
         vlSymsp->TOP__riscv_soc__u_core._multiclk__TOP__riscv_soc__u_core__6(vlSymsp);
-        vlSymsp->TOP__riscv_soc._multiclk__TOP__riscv_soc__6(vlSymsp);
+        vlSymsp->TOP__riscv_soc._multiclk__TOP__riscv_soc__7(vlSymsp);
         vlSymsp->TOP__riscv_soc__u_core__u_core__u_decode._multiclk__TOP__riscv_soc__u_core__u_core__u_decode__8(vlSymsp);
         vlSymsp->TOP__riscv_soc__u_core__u_core._settle__TOP__riscv_soc__u_core__u_core__3(vlSymsp);
         vlSymsp->TOP__riscv_soc__u_core__u_core__u_exec._settle__TOP__riscv_soc__u_core__u_core__u_exec__2(vlSymsp);
@@ -247,7 +245,7 @@ void Vriscv_soc::_eval(Vriscv_soc__Syms* __restrict vlSymsp) {
         vlSymsp->TOP__riscv_soc__u_core__u_core._settle__TOP__riscv_soc__u_core__u_core__4(vlSymsp);
         vlSymsp->TOP__riscv_soc__u_core__u_icache._settle__TOP__riscv_soc__u_core__u_icache__2(vlSymsp);
     }
-    vlSymsp->TOP__riscv_soc._combo__TOP__riscv_soc__7(vlSymsp);
+    vlSymsp->TOP__riscv_soc._combo__TOP__riscv_soc__8(vlSymsp);
     vlTOPp->_settle__TOP__2(vlSymsp);
     vlSymsp->TOP__riscv_soc__u_core._settle__TOP__riscv_soc__u_core__2(vlSymsp);
     // Final

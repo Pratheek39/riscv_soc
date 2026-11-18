@@ -117,9 +117,9 @@ VL_MODULE(Vriscv_soc_riscv_soc) {
         CData/*0:0*/ __PVT__u_soc__DOT__axi_retime_wvalid_w;
         CData/*0:0*/ __PVT__u_soc__DOT__axi_tap_output5_arvalid_w;
         CData/*0:0*/ __PVT__u_soc__DOT__axi_tap_output5_awready_w;
+        CData/*0:0*/ __PVT__u_soc__DOT__accel_awvalid_w;
+        CData/*0:0*/ __PVT__u_soc__DOT__accel_wvalid_w;
         CData/*0:0*/ __PVT__u_soc__DOT__accel_arvalid_w;
-        CData/*0:0*/ __PVT__u_soc__DOT__accel_arready_w;
-        CData/*0:0*/ __PVT__u_soc__DOT__accel_rvalid_w;
         CData/*0:0*/ __PVT__u_soc__DOT__u_intc__DOT__read_en_w;
         CData/*0:0*/ __PVT__u_soc__DOT__u_intc__DOT__write_en_w;
         CData/*0:0*/ __PVT__u_soc__DOT__u_intc__DOT__irq_isr_wr_q;
@@ -206,22 +206,37 @@ VL_MODULE(Vriscv_soc_riscv_soc) {
         CData/*0:0*/ __PVT__u_soc__DOT__u_axi_tap__DOT__write_accept_w;
         CData/*0:0*/ __PVT__u_soc__DOT__u_axi_tap__DOT__outport_bvalid_r;
         CData/*1:0*/ __PVT__u_soc__DOT__u_axi_tap__DOT__outport_bresp_r;
-        CData/*3:0*/ __PVT__u_soc__DOT__u_accel__DOT__state_q;
-        CData/*0:0*/ __PVT__u_soc__DOT__u_accel__DOT__bvalid_q;
-        CData/*0:0*/ __PVT__u_soc__DOT__u_accel__DOT__rvalid_q;
-        CData/*0:0*/ __PVT__u_soc__DOT__u_accel__DOT__read_en_w;
-        CData/*0:0*/ __PVT__u_soc__DOT__u_accel__DOT__write_en_w;
-        CData/*0:0*/ __PVT__u_soc__DOT__u_accel__DOT__start_w;
+        CData/*2:0*/ __PVT__u_soc__DOT__u_accel__DOT__state_q;
+        CData/*0:0*/ __PVT__u_soc__DOT__u_accel__DOT__cfg_bvalid_q;
+        CData/*0:0*/ __PVT__u_soc__DOT__u_accel__DOT__cfg_rvalid_q;
+        CData/*0:0*/ __PVT__u_soc__DOT__u_accel__DOT__cfg_read_w;
+        CData/*0:0*/ __PVT__u_soc__DOT__u_accel__DOT__cfg_write_w;
+        CData/*0:0*/ __PVT__u_soc__DOT__u_accel__DOT__start_request_w;
         CData/*0:0*/ __PVT__u_soc__DOT__u_accel__DOT__addresses_ok_w;
-        CData/*0:0*/ __PVT__u_soc__DOT__u_accel__DOT__start_ok_w;
-        CData/*0:0*/ __PVT__u_soc__DOT__u_accel__DOT__a_col_last_w;
-        CData/*0:0*/ __PVT__u_soc__DOT__u_accel__DOT__b_col_last_w;
-        CData/*0:0*/ __PVT__u_soc__DOT__u_accel__DOT__b_row_last_w;
+        CData/*0:0*/ __PVT__u_soc__DOT__u_accel__DOT__job_start_w;
+        CData/*0:0*/ __PVT__u_soc__DOT__u_accel__DOT__busy_w;
+        CData/*0:0*/ __PVT__u_soc__DOT__u_accel__DOT__rd_issue_matrix_q;
+        CData/*0:0*/ __PVT__u_soc__DOT__u_accel__DOT__rd_issue_done_q;
     };
     struct {
-        CData/*0:0*/ __PVT__u_soc__DOT__u_accel__DOT__c_row_last_w;
-        CData/*0:0*/ __PVT__u_soc__DOT__u_accel__DOT__compute_last_w;
-        CData/*0:0*/ __PVT__u_soc__DOT__u_accel__DOT__pe_clear_w;
+        CData/*7:0*/ __PVT__u_soc__DOT__u_accel__DOT__rd_bursts_in_flight_q;
+        CData/*0:0*/ __PVT__u_soc__DOT__u_accel__DOT__rd_burst_ends_row_w;
+        CData/*0:0*/ __PVT__u_soc__DOT__u_accel__DOT__rd_burst_ends_matrix_w;
+        CData/*0:0*/ __PVT__u_soc__DOT__u_accel__DOT__rd_burst_sent_w;
+        CData/*0:0*/ __PVT__u_soc__DOT__u_accel__DOT__rd_recv_matrix_q;
+        CData/*0:0*/ __PVT__u_soc__DOT__u_accel__DOT__rd_recv_row_end_w;
+        CData/*0:0*/ __PVT__u_soc__DOT__u_accel__DOT__rd_recv_matrix_end_w;
+        CData/*0:0*/ __PVT__u_soc__DOT__u_accel__DOT__rd_beat_w;
+        CData/*0:0*/ __PVT__u_soc__DOT__u_accel__DOT__rd_burst_finished_w;
+        CData/*0:0*/ __PVT__u_soc__DOT__u_accel__DOT__compute_complete_w;
+        CData/*0:0*/ __PVT__u_soc__DOT__u_accel__DOT__wr_sending_data_q;
+        CData/*0:0*/ __PVT__u_soc__DOT__u_accel__DOT__wr_all_data_sent_q;
+        CData/*0:0*/ __PVT__u_soc__DOT__u_accel__DOT__wr_row_end_w;
+        CData/*0:0*/ __PVT__u_soc__DOT__u_accel__DOT__wr_last_element_w;
+        CData/*0:0*/ __PVT__u_soc__DOT__u_accel__DOT__wr_burst_started_w;
+        CData/*0:0*/ __PVT__u_soc__DOT__u_accel__DOT__wr_beat_w;
+        CData/*0:0*/ __PVT__u_soc__DOT__u_accel__DOT__wr_response_w;
+        CData/*0:0*/ __PVT__u_soc__DOT__u_accel__DOT__store_complete_w;
         CData/*3:0*/ __PVT__u_soc__DOT__u_arb__DOT__read_req_w;
         CData/*0:0*/ __PVT__u_soc__DOT__u_arb__DOT__read_hold_q;
         CData/*3:0*/ __PVT__u_soc__DOT__u_arb__DOT__read_grant_w;
@@ -268,6 +283,8 @@ VL_MODULE(Vriscv_soc_riscv_soc) {
         CData/*0:0*/ __PVT__u_soc__DOT__u_spi__DOT__spi_cr_loop_q;
         CData/*0:0*/ __PVT__u_soc__DOT__u_spi__DOT__spi_cr_spe_q;
         CData/*0:0*/ __PVT__u_soc__DOT__u_spi__DOT__spi_cr_master_q;
+    };
+    struct {
         CData/*0:0*/ __PVT__u_soc__DOT__u_spi__DOT__spi_cr_cpol_q;
         CData/*0:0*/ __PVT__u_soc__DOT__u_spi__DOT__spi_cr_cpha_q;
         CData/*0:0*/ __PVT__u_soc__DOT__u_spi__DOT__spi_cr_txfifo_rst_q;
@@ -283,8 +300,6 @@ VL_MODULE(Vriscv_soc_riscv_soc) {
         CData/*0:0*/ __PVT__u_soc__DOT__u_spi__DOT__rvalid_q;
         CData/*0:0*/ __PVT__u_soc__DOT__u_spi__DOT__bvalid_q;
         CData/*0:0*/ __PVT__u_soc__DOT__u_spi__DOT__spi_drr_rd_req_w;
-    };
-    struct {
         CData/*0:0*/ __PVT__u_soc__DOT__u_spi__DOT__tx_fifo_flush_w;
         CData/*0:0*/ __PVT__u_soc__DOT__u_spi__DOT__rx_fifo_flush_w;
         CData/*0:0*/ __PVT__u_soc__DOT__u_spi__DOT__tx_accept_w;
@@ -334,6 +349,8 @@ VL_MODULE(Vriscv_soc_riscv_soc) {
         CData/*0:0*/ __PVT__u_soc__DOT__u_gpio__DOT__gpio_output_wr_q;
         CData/*0:0*/ __PVT__u_soc__DOT__u_gpio__DOT__gpio_output_set_wr_q;
         CData/*0:0*/ __PVT__u_soc__DOT__u_gpio__DOT__gpio_output_clr_wr_q;
+    };
+    struct {
         CData/*0:0*/ __PVT__u_soc__DOT__u_gpio__DOT__gpio_int_mask_wr_q;
         CData/*0:0*/ __PVT__u_soc__DOT__u_gpio__DOT__gpio_int_set_wr_q;
         CData/*0:0*/ __PVT__u_soc__DOT__u_gpio__DOT__gpio_int_clr_wr_q;
@@ -346,12 +363,18 @@ VL_MODULE(Vriscv_soc_riscv_soc) {
         SData/*15:0*/ __PVT__u_soc__DOT__u_accel__DOT__m_q;
         SData/*15:0*/ __PVT__u_soc__DOT__u_accel__DOT__n_q;
         SData/*15:0*/ __PVT__u_soc__DOT__u_accel__DOT__k_q;
-        SData/*15:0*/ __PVT__u_soc__DOT__u_accel__DOT__row_q;
-        SData/*15:0*/ __PVT__u_soc__DOT__u_accel__DOT__col_q;
-        SData/*15:0*/ __PVT__u_soc__DOT__u_accel__DOT__compute_q;
-    };
-    struct {
-        SData/*15:0*/ __PVT__u_soc__DOT__u_accel__DOT__pe_sel_w;
+        SData/*15:0*/ __PVT__u_soc__DOT__u_accel__DOT__compute_step_q;
+        SData/*15:0*/ __PVT__u_soc__DOT__u_accel__DOT__rd_issue_row_q;
+        SData/*15:0*/ __PVT__u_soc__DOT__u_accel__DOT__rd_issue_col_q;
+        SData/*15:0*/ __PVT__u_soc__DOT__u_accel__DOT__rd_issue_row_words_w;
+        SData/*8:0*/ __PVT__u_soc__DOT__u_accel__DOT__rd_burst_len_w;
+        SData/*15:0*/ __PVT__u_soc__DOT__u_accel__DOT__rd_recv_row_q;
+        SData/*15:0*/ __PVT__u_soc__DOT__u_accel__DOT__rd_recv_col_q;
+        SData/*15:0*/ __PVT__u_soc__DOT__u_accel__DOT__wr_row_q;
+        SData/*15:0*/ __PVT__u_soc__DOT__u_accel__DOT__wr_col_q;
+        SData/*8:0*/ __PVT__u_soc__DOT__u_accel__DOT__wr_beats_left_q;
+        SData/*15:0*/ __PVT__u_soc__DOT__u_accel__DOT__wr_responses_pending_q;
+        SData/*8:0*/ __PVT__u_soc__DOT__u_accel__DOT__wr_burst_len_w;
         IData/*31:0*/ __PVT__u_soc__DOT__u_intc__DOT__wr_data_q;
         IData/*31:0*/ __PVT__u_soc__DOT__u_intc__DOT__data_r;
         IData/*31:0*/ __PVT__u_soc__DOT__u_intc__DOT__rd_data_q;
@@ -371,14 +394,17 @@ VL_MODULE(Vriscv_soc_riscv_soc) {
         IData/*31:0*/ __PVT__u_soc__DOT__u_accel__DOT__a_addr_q;
         IData/*31:0*/ __PVT__u_soc__DOT__u_accel__DOT__b_addr_q;
         IData/*31:0*/ __PVT__u_soc__DOT__u_accel__DOT__c_addr_q;
+        IData/*31:0*/ __PVT__u_soc__DOT__u_accel__DOT__error_q;
         IData/*31:0*/ __PVT__u_soc__DOT__u_accel__DOT__cycle_q;
         IData/*31:0*/ __PVT__u_soc__DOT__u_accel__DOT__mac_cycle_q;
-        IData/*31:0*/ __PVT__u_soc__DOT__u_accel__DOT__error_q;
-        IData/*31:0*/ __PVT__u_soc__DOT__u_accel__DOT__addr_q;
-        IData/*31:0*/ __PVT__u_soc__DOT__u_accel__DOT__rd_data_q;
-        IData/*31:0*/ __PVT__u_soc__DOT__u_accel__DOT__data_r;
-        IData/*31:0*/ __PVT__u_soc__DOT__u_accel__DOT__q_idx;
-        IData/*31:0*/ __PVT__u_soc__DOT__u_accel__DOT__k_idx;
+        IData/*31:0*/ __PVT__u_soc__DOT__u_accel__DOT__load_cycle_q;
+        IData/*31:0*/ __PVT__u_soc__DOT__u_accel__DOT__store_cycle_q;
+        IData/*31:0*/ __PVT__u_soc__DOT__u_accel__DOT__cfg_rdata_q;
+        IData/*31:0*/ __PVT__u_soc__DOT__u_accel__DOT__cfg_read_value_r;
+        IData/*31:0*/ __PVT__u_soc__DOT__u_accel__DOT__feed_step;
+        IData/*31:0*/ __PVT__u_soc__DOT__u_accel__DOT__feed_k;
+        IData/*31:0*/ __PVT__u_soc__DOT__u_accel__DOT__rd_issue_addr_q;
+        IData/*31:0*/ __PVT__u_soc__DOT__u_accel__DOT__wr_addr_q;
         IData/*31:0*/ __PVT__u_soc__DOT__u_accel__DOT__g_row__BRA__0__KET____DOT__g_col__BRA__0__KET____DOT__u_pe__DOT__a_q;
         IData/*31:0*/ __PVT__u_soc__DOT__u_accel__DOT__g_row__BRA__0__KET____DOT__g_col__BRA__0__KET____DOT__u_pe__DOT__b_q;
         IData/*31:0*/ __PVT__u_soc__DOT__u_accel__DOT__g_row__BRA__0__KET____DOT__g_col__BRA__0__KET____DOT__u_pe__DOT__acc_q;
@@ -389,11 +415,10 @@ VL_MODULE(Vriscv_soc_riscv_soc) {
         IData/*31:0*/ __PVT__u_soc__DOT__u_accel__DOT__g_row__BRA__0__KET____DOT__g_col__BRA__2__KET____DOT__u_pe__DOT__b_q;
         IData/*31:0*/ __PVT__u_soc__DOT__u_accel__DOT__g_row__BRA__0__KET____DOT__g_col__BRA__2__KET____DOT__u_pe__DOT__acc_q;
         IData/*31:0*/ __PVT__u_soc__DOT__u_accel__DOT__g_row__BRA__0__KET____DOT__g_col__BRA__3__KET____DOT__u_pe__DOT__a_q;
+    };
+    struct {
         IData/*31:0*/ __PVT__u_soc__DOT__u_accel__DOT__g_row__BRA__0__KET____DOT__g_col__BRA__3__KET____DOT__u_pe__DOT__b_q;
         IData/*31:0*/ __PVT__u_soc__DOT__u_accel__DOT__g_row__BRA__0__KET____DOT__g_col__BRA__3__KET____DOT__u_pe__DOT__acc_q;
-        IData/*31:0*/ __PVT__u_soc__DOT__u_accel__DOT__g_row__BRA__0__KET____DOT__g_col__BRA__4__KET____DOT__u_pe__DOT__a_q;
-        IData/*31:0*/ __PVT__u_soc__DOT__u_accel__DOT__g_row__BRA__0__KET____DOT__g_col__BRA__4__KET____DOT__u_pe__DOT__b_q;
-        IData/*31:0*/ __PVT__u_soc__DOT__u_accel__DOT__g_row__BRA__0__KET____DOT__g_col__BRA__4__KET____DOT__u_pe__DOT__acc_q;
         IData/*31:0*/ __PVT__u_soc__DOT__u_accel__DOT__g_row__BRA__1__KET____DOT__g_col__BRA__0__KET____DOT__u_pe__DOT__a_q;
         IData/*31:0*/ __PVT__u_soc__DOT__u_accel__DOT__g_row__BRA__1__KET____DOT__g_col__BRA__0__KET____DOT__u_pe__DOT__b_q;
         IData/*31:0*/ __PVT__u_soc__DOT__u_accel__DOT__g_row__BRA__1__KET____DOT__g_col__BRA__0__KET____DOT__u_pe__DOT__acc_q;
@@ -406,26 +431,18 @@ VL_MODULE(Vriscv_soc_riscv_soc) {
         IData/*31:0*/ __PVT__u_soc__DOT__u_accel__DOT__g_row__BRA__1__KET____DOT__g_col__BRA__3__KET____DOT__u_pe__DOT__a_q;
         IData/*31:0*/ __PVT__u_soc__DOT__u_accel__DOT__g_row__BRA__1__KET____DOT__g_col__BRA__3__KET____DOT__u_pe__DOT__b_q;
         IData/*31:0*/ __PVT__u_soc__DOT__u_accel__DOT__g_row__BRA__1__KET____DOT__g_col__BRA__3__KET____DOT__u_pe__DOT__acc_q;
-        IData/*31:0*/ __PVT__u_soc__DOT__u_accel__DOT__g_row__BRA__1__KET____DOT__g_col__BRA__4__KET____DOT__u_pe__DOT__a_q;
-        IData/*31:0*/ __PVT__u_soc__DOT__u_accel__DOT__g_row__BRA__1__KET____DOT__g_col__BRA__4__KET____DOT__u_pe__DOT__b_q;
-        IData/*31:0*/ __PVT__u_soc__DOT__u_accel__DOT__g_row__BRA__1__KET____DOT__g_col__BRA__4__KET____DOT__u_pe__DOT__acc_q;
         IData/*31:0*/ __PVT__u_soc__DOT__u_accel__DOT__g_row__BRA__2__KET____DOT__g_col__BRA__0__KET____DOT__u_pe__DOT__a_q;
         IData/*31:0*/ __PVT__u_soc__DOT__u_accel__DOT__g_row__BRA__2__KET____DOT__g_col__BRA__0__KET____DOT__u_pe__DOT__b_q;
         IData/*31:0*/ __PVT__u_soc__DOT__u_accel__DOT__g_row__BRA__2__KET____DOT__g_col__BRA__0__KET____DOT__u_pe__DOT__acc_q;
         IData/*31:0*/ __PVT__u_soc__DOT__u_accel__DOT__g_row__BRA__2__KET____DOT__g_col__BRA__1__KET____DOT__u_pe__DOT__a_q;
         IData/*31:0*/ __PVT__u_soc__DOT__u_accel__DOT__g_row__BRA__2__KET____DOT__g_col__BRA__1__KET____DOT__u_pe__DOT__b_q;
         IData/*31:0*/ __PVT__u_soc__DOT__u_accel__DOT__g_row__BRA__2__KET____DOT__g_col__BRA__1__KET____DOT__u_pe__DOT__acc_q;
-    };
-    struct {
         IData/*31:0*/ __PVT__u_soc__DOT__u_accel__DOT__g_row__BRA__2__KET____DOT__g_col__BRA__2__KET____DOT__u_pe__DOT__a_q;
         IData/*31:0*/ __PVT__u_soc__DOT__u_accel__DOT__g_row__BRA__2__KET____DOT__g_col__BRA__2__KET____DOT__u_pe__DOT__b_q;
         IData/*31:0*/ __PVT__u_soc__DOT__u_accel__DOT__g_row__BRA__2__KET____DOT__g_col__BRA__2__KET____DOT__u_pe__DOT__acc_q;
         IData/*31:0*/ __PVT__u_soc__DOT__u_accel__DOT__g_row__BRA__2__KET____DOT__g_col__BRA__3__KET____DOT__u_pe__DOT__a_q;
         IData/*31:0*/ __PVT__u_soc__DOT__u_accel__DOT__g_row__BRA__2__KET____DOT__g_col__BRA__3__KET____DOT__u_pe__DOT__b_q;
         IData/*31:0*/ __PVT__u_soc__DOT__u_accel__DOT__g_row__BRA__2__KET____DOT__g_col__BRA__3__KET____DOT__u_pe__DOT__acc_q;
-        IData/*31:0*/ __PVT__u_soc__DOT__u_accel__DOT__g_row__BRA__2__KET____DOT__g_col__BRA__4__KET____DOT__u_pe__DOT__a_q;
-        IData/*31:0*/ __PVT__u_soc__DOT__u_accel__DOT__g_row__BRA__2__KET____DOT__g_col__BRA__4__KET____DOT__u_pe__DOT__b_q;
-        IData/*31:0*/ __PVT__u_soc__DOT__u_accel__DOT__g_row__BRA__2__KET____DOT__g_col__BRA__4__KET____DOT__u_pe__DOT__acc_q;
         IData/*31:0*/ __PVT__u_soc__DOT__u_accel__DOT__g_row__BRA__3__KET____DOT__g_col__BRA__0__KET____DOT__u_pe__DOT__a_q;
         IData/*31:0*/ __PVT__u_soc__DOT__u_accel__DOT__g_row__BRA__3__KET____DOT__g_col__BRA__0__KET____DOT__u_pe__DOT__b_q;
         IData/*31:0*/ __PVT__u_soc__DOT__u_accel__DOT__g_row__BRA__3__KET____DOT__g_col__BRA__0__KET____DOT__u_pe__DOT__acc_q;
@@ -438,24 +455,6 @@ VL_MODULE(Vriscv_soc_riscv_soc) {
         IData/*31:0*/ __PVT__u_soc__DOT__u_accel__DOT__g_row__BRA__3__KET____DOT__g_col__BRA__3__KET____DOT__u_pe__DOT__a_q;
         IData/*31:0*/ __PVT__u_soc__DOT__u_accel__DOT__g_row__BRA__3__KET____DOT__g_col__BRA__3__KET____DOT__u_pe__DOT__b_q;
         IData/*31:0*/ __PVT__u_soc__DOT__u_accel__DOT__g_row__BRA__3__KET____DOT__g_col__BRA__3__KET____DOT__u_pe__DOT__acc_q;
-        IData/*31:0*/ __PVT__u_soc__DOT__u_accel__DOT__g_row__BRA__3__KET____DOT__g_col__BRA__4__KET____DOT__u_pe__DOT__a_q;
-        IData/*31:0*/ __PVT__u_soc__DOT__u_accel__DOT__g_row__BRA__3__KET____DOT__g_col__BRA__4__KET____DOT__u_pe__DOT__b_q;
-        IData/*31:0*/ __PVT__u_soc__DOT__u_accel__DOT__g_row__BRA__3__KET____DOT__g_col__BRA__4__KET____DOT__u_pe__DOT__acc_q;
-        IData/*31:0*/ __PVT__u_soc__DOT__u_accel__DOT__g_row__BRA__4__KET____DOT__g_col__BRA__0__KET____DOT__u_pe__DOT__a_q;
-        IData/*31:0*/ __PVT__u_soc__DOT__u_accel__DOT__g_row__BRA__4__KET____DOT__g_col__BRA__0__KET____DOT__u_pe__DOT__b_q;
-        IData/*31:0*/ __PVT__u_soc__DOT__u_accel__DOT__g_row__BRA__4__KET____DOT__g_col__BRA__0__KET____DOT__u_pe__DOT__acc_q;
-        IData/*31:0*/ __PVT__u_soc__DOT__u_accel__DOT__g_row__BRA__4__KET____DOT__g_col__BRA__1__KET____DOT__u_pe__DOT__a_q;
-        IData/*31:0*/ __PVT__u_soc__DOT__u_accel__DOT__g_row__BRA__4__KET____DOT__g_col__BRA__1__KET____DOT__u_pe__DOT__b_q;
-        IData/*31:0*/ __PVT__u_soc__DOT__u_accel__DOT__g_row__BRA__4__KET____DOT__g_col__BRA__1__KET____DOT__u_pe__DOT__acc_q;
-        IData/*31:0*/ __PVT__u_soc__DOT__u_accel__DOT__g_row__BRA__4__KET____DOT__g_col__BRA__2__KET____DOT__u_pe__DOT__a_q;
-        IData/*31:0*/ __PVT__u_soc__DOT__u_accel__DOT__g_row__BRA__4__KET____DOT__g_col__BRA__2__KET____DOT__u_pe__DOT__b_q;
-        IData/*31:0*/ __PVT__u_soc__DOT__u_accel__DOT__g_row__BRA__4__KET____DOT__g_col__BRA__2__KET____DOT__u_pe__DOT__acc_q;
-        IData/*31:0*/ __PVT__u_soc__DOT__u_accel__DOT__g_row__BRA__4__KET____DOT__g_col__BRA__3__KET____DOT__u_pe__DOT__a_q;
-        IData/*31:0*/ __PVT__u_soc__DOT__u_accel__DOT__g_row__BRA__4__KET____DOT__g_col__BRA__3__KET____DOT__u_pe__DOT__b_q;
-        IData/*31:0*/ __PVT__u_soc__DOT__u_accel__DOT__g_row__BRA__4__KET____DOT__g_col__BRA__3__KET____DOT__u_pe__DOT__acc_q;
-        IData/*31:0*/ __PVT__u_soc__DOT__u_accel__DOT__g_row__BRA__4__KET____DOT__g_col__BRA__4__KET____DOT__u_pe__DOT__a_q;
-        IData/*31:0*/ __PVT__u_soc__DOT__u_accel__DOT__g_row__BRA__4__KET____DOT__g_col__BRA__4__KET____DOT__u_pe__DOT__b_q;
-        IData/*31:0*/ __PVT__u_soc__DOT__u_accel__DOT__g_row__BRA__4__KET____DOT__g_col__BRA__4__KET____DOT__u_pe__DOT__acc_q;
         IData/*31:0*/ __PVT__u_soc__DOT__u_arb__DOT__outport_araddr_r;
         IData/*31:0*/ __PVT__u_soc__DOT__u_arb__DOT__outport_awaddr_r;
         IData/*31:0*/ __PVT__u_soc__DOT__u_arb__DOT__outport_wdata_r;
@@ -481,16 +480,16 @@ VL_MODULE(Vriscv_soc_riscv_soc) {
         QData/*45:0*/ __PVT__u_soc__DOT__u_retime__DOT__write_cmd_req_out_w;
         QData/*36:0*/ __PVT__u_soc__DOT__u_retime__DOT__write_data_req_out_w;
         QData/*45:0*/ __PVT__u_soc__DOT__u_retime__DOT__read_req_out_w;
+        QData/*38:0*/ __PVT__u_soc__DOT__u_retime__DOT__read_resp_out_w;
     };
     struct {
-        QData/*38:0*/ __PVT__u_soc__DOT__u_retime__DOT__read_resp_out_w;
-        IData/*31:0*/ __PVT__u_soc__DOT__u_accel__DOT__a_mem[5][5];
-        IData/*31:0*/ __PVT__u_soc__DOT__u_accel__DOT__b_mem[5][5];
-        IData/*31:0*/ __PVT__u_soc__DOT__u_accel__DOT__a_feed[5];
-        IData/*31:0*/ __PVT__u_soc__DOT__u_accel__DOT__b_feed[5];
-        IData/*31:0*/ __PVT__u_soc__DOT__u_accel__DOT__pe_a_w[25];
-        IData/*31:0*/ __PVT__u_soc__DOT__u_accel__DOT__pe_b_w[25];
-        IData/*31:0*/ __PVT__u_soc__DOT__u_accel__DOT__pe_acc_w[25];
+        IData/*31:0*/ __PVT__u_soc__DOT__u_accel__DOT__a_mem[4][4];
+        IData/*31:0*/ __PVT__u_soc__DOT__u_accel__DOT__b_mem[4][4];
+        IData/*31:0*/ __PVT__u_soc__DOT__u_accel__DOT__a_feed[4];
+        IData/*31:0*/ __PVT__u_soc__DOT__u_accel__DOT__b_feed[4];
+        IData/*31:0*/ __PVT__u_soc__DOT__u_accel__DOT__pe_a_w[16];
+        IData/*31:0*/ __PVT__u_soc__DOT__u_accel__DOT__pe_b_w[16];
+        IData/*31:0*/ __PVT__u_soc__DOT__u_accel__DOT__pe_acc_w[16];
         CData/*7:0*/ __PVT__u_soc__DOT__u_spi__DOT__u_tx_fifo__DOT__ram_q[4];
         CData/*7:0*/ __PVT__u_soc__DOT__u_spi__DOT__u_rx_fifo__DOT__ram_q[4];
         QData/*45:0*/ __PVT__u_soc__DOT__u_retime__DOT__u_write_cmd_req__DOT__ram_q[2];
@@ -501,19 +500,25 @@ VL_MODULE(Vriscv_soc_riscv_soc) {
     };
     
     // LOCAL VARIABLES
-    CData/*3:0*/ __Vfunc_u_soc__DOT__u_arb__DOT__u_rd_arb__DOT__ffs__0__Vfuncout;
-    CData/*3:0*/ __Vfunc_u_soc__DOT__u_arb__DOT__u_rd_arb__DOT__ffs__0__request;
-    CData/*3:0*/ __Vfunc_u_soc__DOT__u_arb__DOT__u_rd_arb__DOT__ffs__1__Vfuncout;
-    CData/*3:0*/ __Vfunc_u_soc__DOT__u_arb__DOT__u_rd_arb__DOT__ffs__1__request;
-    CData/*3:0*/ __Vfunc_u_soc__DOT__u_arb__DOT__u_wr_arb__DOT__ffs__2__Vfuncout;
-    CData/*3:0*/ __Vfunc_u_soc__DOT__u_arb__DOT__u_wr_arb__DOT__ffs__2__request;
-    CData/*3:0*/ __Vfunc_u_soc__DOT__u_arb__DOT__u_wr_arb__DOT__ffs__3__Vfuncout;
-    CData/*3:0*/ __Vfunc_u_soc__DOT__u_arb__DOT__u_wr_arb__DOT__ffs__3__request;
+    CData/*3:0*/ __Vfunc_u_soc__DOT__u_arb__DOT__u_rd_arb__DOT__ffs__2__Vfuncout;
+    CData/*3:0*/ __Vfunc_u_soc__DOT__u_arb__DOT__u_rd_arb__DOT__ffs__2__request;
+    CData/*3:0*/ __Vfunc_u_soc__DOT__u_arb__DOT__u_rd_arb__DOT__ffs__3__Vfuncout;
+    CData/*3:0*/ __Vfunc_u_soc__DOT__u_arb__DOT__u_rd_arb__DOT__ffs__3__request;
+    CData/*3:0*/ __Vfunc_u_soc__DOT__u_arb__DOT__u_wr_arb__DOT__ffs__4__Vfuncout;
+    CData/*3:0*/ __Vfunc_u_soc__DOT__u_arb__DOT__u_wr_arb__DOT__ffs__4__request;
+    CData/*3:0*/ __Vfunc_u_soc__DOT__u_arb__DOT__u_wr_arb__DOT__ffs__5__Vfuncout;
+    CData/*3:0*/ __Vfunc_u_soc__DOT__u_arb__DOT__u_wr_arb__DOT__ffs__5__request;
     CData/*3:0*/ __Vtableidx1;
-    IData/*31:0*/ u_soc__DOT__u_accel__DOT____Vlvbound3;
-    IData/*31:0*/ u_soc__DOT__u_accel__DOT____Vlvbound4;
-    IData/*31:0*/ u_soc__DOT__u_accel__DOT____Vlvbound5;
-    IData/*31:0*/ u_soc__DOT__u_accel__DOT____Vlvbound6;
+    SData/*8:0*/ __Vfunc_u_soc__DOT__u_accel__DOT__burst_length__0__Vfuncout;
+    SData/*15:0*/ __Vfunc_u_soc__DOT__u_accel__DOT__burst_length__0__words_left_in_row;
+    SData/*15:0*/ __Vfunc_u_soc__DOT__u_accel__DOT__burst_length__0__words_to_4kb_boundary;
+    SData/*15:0*/ __Vfunc_u_soc__DOT__u_accel__DOT__burst_length__0__length;
+    SData/*8:0*/ __Vfunc_u_soc__DOT__u_accel__DOT__burst_length__1__Vfuncout;
+    SData/*15:0*/ __Vfunc_u_soc__DOT__u_accel__DOT__burst_length__1__words_left_in_row;
+    SData/*15:0*/ __Vfunc_u_soc__DOT__u_accel__DOT__burst_length__1__words_to_4kb_boundary;
+    SData/*15:0*/ __Vfunc_u_soc__DOT__u_accel__DOT__burst_length__1__length;
+    IData/*31:0*/ __Vfunc_u_soc__DOT__u_accel__DOT__burst_length__0__start_addr;
+    IData/*31:0*/ __Vfunc_u_soc__DOT__u_accel__DOT__burst_length__1__start_addr;
     static IData/*31:0*/ __Vtable1___PVT__u_soc__DOT__u_intc__DOT__ivr_vector_r[16];
     
     // INTERNAL VARIABLES
@@ -531,13 +536,14 @@ VL_MODULE(Vriscv_soc_riscv_soc) {
     // INTERNAL METHODS
     void __Vconfigure(Vriscv_soc__Syms* symsp, bool first);
     static void _combo__TOP__riscv_soc__3(Vriscv_soc__Syms* __restrict vlSymsp);
-    static void _combo__TOP__riscv_soc__5(Vriscv_soc__Syms* __restrict vlSymsp);
-    static void _combo__TOP__riscv_soc__7(Vriscv_soc__Syms* __restrict vlSymsp);
+    static void _combo__TOP__riscv_soc__6(Vriscv_soc__Syms* __restrict vlSymsp);
+    static void _combo__TOP__riscv_soc__8(Vriscv_soc__Syms* __restrict vlSymsp);
   private:
     void _ctor_var_reset() VL_ATTR_COLD;
   public:
-    static void _multiclk__TOP__riscv_soc__6(Vriscv_soc__Syms* __restrict vlSymsp);
+    static void _multiclk__TOP__riscv_soc__7(Vriscv_soc__Syms* __restrict vlSymsp);
     static void _sequent__TOP__riscv_soc__4(Vriscv_soc__Syms* __restrict vlSymsp);
+    static void _sequent__TOP__riscv_soc__5(Vriscv_soc__Syms* __restrict vlSymsp);
     static void _settle__TOP__riscv_soc__1(Vriscv_soc__Syms* __restrict vlSymsp) VL_ATTR_COLD;
     static void _settle__TOP__riscv_soc__2(Vriscv_soc__Syms* __restrict vlSymsp) VL_ATTR_COLD;
   private:
