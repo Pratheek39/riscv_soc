@@ -1,0 +1,12 @@
+# Simulation waveforms (regenerated on every run, can exceed GitHub's 100 MB limit)
+*.vcd
+
+# Testbench build outputs (regenerate with: cd tb && make)
+tb/verilated/
+tb/obj/
+tb/obj_verilated/
+tb/lib/
+tb/build/
+
+# Software build outputs (regenerate with: cd sw && make)
+sw/build/
