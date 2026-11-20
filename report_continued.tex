@@ -1,0 +1,82 @@
+\documentclass[10pt]{article}
+\usepackage[margin=0.9in]{geometry}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\setlist{nosep,leftmargin=*}
+\setlength{\parskip}{4pt}
+\setlength{\parindent}{0pt}
+
+\title{\vspace{-1.5em}Matrix-Multiply Accelerator Integration in a RISC-V SoC\vspace{-0.5em}}
+\author{Progress Report (continued)}
+\date{\vspace{-1em}\today}
+
+\begin{document}
+\maketitle
+\vspace{-1em}
+
+\section*{Accelerator Design}
+The first version of the accelerator computed products on a fixed $4\times4$ array and
+moved data over the bus one word at a time. Because each transaction waited for its reply
+before the next began, it could only handle matrices of at most $4\times4$, and most of
+the time was spent waiting for memory. The design was then reworked in three ways.
+
+The array size is now a build-time parameter, along with the depth of the input buffers.
+The same design can be built with arrays of different sizes, including sizes that are not
+powers of two, and the software reads the hardware configuration at run time, so one test
+program runs unchanged on every build.
+
+Moving one word per transaction was the main bottleneck, so the read and write paths were
+rebuilt to use AXI bursts, which transfer a whole row of data in one request. Several reads
+can be in flight at once, and bursts are split so that none crosses a 4\,KB boundary, as the
+bus protocol requires. This brought the accelerator much closer to moving one word per
+cycle.
+
+Hardware tiling then lets a single start command compute a product of any size. The result
+is divided into tiles, and the inner dimension is processed in chunks whose partial sums stay
+in the array, so they never go back to memory. Matrices can also be read as sub-matrices of
+larger ones through a row stride. When the inner dimension fits in one chunk, the accelerator
+reuses each row of $A$ across all the tiles that need it, which reduces the memory traffic of
+larger products.
+
+\section*{Hardware Testing and Verification}
+Verification follows the same approach at each stage. The processor computes every product
+with an ordinary triple loop over the same input matrices, and the accelerator computes it in
+hardware. The test program compares the two results element by element. The test covers a range of matrix shapes, edge cases and invalid inputs, and it was repeated
+across several build settings.
+
+The $4\times4$ version was verified first, and the tiled version was then verified in the same
+way, so that the tiling logic could be checked against the simpler design before any larger
+products were attempted. Both were checked in simulation before any hardware work.
+
+The design was then run on a RealDigital Boolean board, which carries a Xilinx XC7S50 FPGA. The
+board build used a $5\times5$ array. The board runs the same test program, and its output is
+cross-checked against the processor's own result on the board. The board output also matches a
+Verilator simulation of the same design, character for character. The design meets timing at
+the board's 25\,MHz clock, and it runs the test suite with products up to $64\times64$, with and
+without reuse.
+
+To improve performance, the maximum K chunk size (\texttt{MAX\_K}) was varied. A larger chunk
+reduces the number of chunks each tile must go through, and it increases the reuse of loaded
+data, so the cycle counts drop noticeably. The cost is the buffer size: each increase in
+\texttt{MAX\_K} adds flip-flops and multiplexer logic. On the board, raising the value from the
+initial setting to 64 reduced the cycle count of the larger tests while keeping timing and
+device usage within limits.
+
+\section*{Remaining Work and Limitations}
+The main limitation is memory. The Boolean board has no external RAM, so its main memory is the
+on-chip block RAM, about 128\,KB. This holds the program and all matrices, so the largest products
+that fit are in the tens, and products of $256\times256$ and above cannot run on this board. The
+memory decodes only its low address bits, so an address beyond its end silently wraps around and
+can overwrite the program. The test does not yet check that its buffers fit. Other limits include
+the bandwidth of the single shared bus, which keeps the accelerator memory-bound, the growth of
+the input buffers in logic as \texttt{MAX\_K} increases, and the 16-bit dimension registers.
+Completion is detected by polling rather than an interrupt, and a bus error during a job is not
+handled cleanly.
+
+The next steps are to run products of $256\times256$ and larger on the Arty A7 board, which has
+external DDR3 memory and an existing memory project in the repository. On the Boolean board, a
+bounds check should be added before any larger test. A software baseline timed with the
+processor's cycle counter is needed for a fair speed-up comparison, and the robustness items
+above should be completed.
+
+\end{document}

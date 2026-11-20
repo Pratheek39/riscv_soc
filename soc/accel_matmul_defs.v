@@ -7,7 +7,7 @@
 `define ACCEL_DIM 5
 `endif
 `ifndef ACCEL_MAX_K
-`define ACCEL_MAX_K `ACCEL_DIM
+`define ACCEL_MAX_K 64
 `endif
 
 // AXI master: max beats per burst (1..256) and max read bursts in flight
