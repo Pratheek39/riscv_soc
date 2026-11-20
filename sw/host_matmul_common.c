@@ -45,24 +45,20 @@ typedef struct
     const char *port;
     const char *a_file;
     const char *b_file;
-    int         cpu_every;       /* run the CPU on every Nth job (0 = never) */
     int         corrupt_once;    /* damage one checksum on purpose (test)    */
 } options;
 
 typedef struct
 {
-    /* accelerator, all jobs */
+    /* accelerator cycles (filled in the accelerator pass) */
     uint64_t accel_cycles;
     uint64_t load_cycles;
     uint64_t mac_cycles;
     uint64_t store_cycles;
     uint64_t read_words;
     uint64_t write_words;
-    /* CPU, only the jobs where it ran */
+    /* CPU cycles (filled in the CPU pass) */
     uint64_t cpu_cycles;
-    uint64_t accel_cycles_on_cpu_jobs;   /* accelerator cycles on those same jobs */
-    int      cpu_jobs;
-    uint64_t cpu_accel_mismatches;
     /* the cable */
     double   transfer_seconds;
     double   multiply_seconds;
@@ -438,11 +434,11 @@ static int zero_c_block(int fd, int rows, int cols)
 /*-----------------------------------------------------------------
  * 'M': multiply the loaded blocks; collect the board's measurements
  *-----------------------------------------------------------------*/
-static int multiply_block(int fd, int run_cpu, uint32_t result[PROTO_RESULT_WORDS], totals *sum)
+static int multiply_block(int fd, uint8_t flags, uint32_t result[PROTO_RESULT_WORDS], totals *sum)
 {
     double start = now_seconds();
 
-    uint8_t message[2] = { PROTO_CMD_MULTIPLY, (uint8_t)(run_cpu ? PROTO_MULTIPLY_CPU_CHECK : 0) };
+    uint8_t message[2] = { PROTO_CMD_MULTIPLY, flags };
     if (!write_all(fd, message, sizeof(message)))
         return 0;
 
@@ -610,8 +606,6 @@ static void print_usage(const char *program, const matmul_test *test)
            "  port              serial port of the board (default %s)\n"
            "  --a FILE          matrix A file (default %s)\n"
            "  --b FILE          matrix B file (default %s)\n"
-           "  --cpu-every K     time the CPU on every K-th block only, project the rest\n"
-           "                    (default 1 = every block; 0 = accelerator only)\n"
            "  --corrupt-once    damage one chunk on purpose to test the resend path\n",
            program, DEFAULT_PORT, test->a_file, test->b_file);
 }
@@ -621,7 +615,6 @@ static int parse_options(const matmul_test *test, int argc, char **argv, options
     opt->port = DEFAULT_PORT;
     opt->a_file = test->a_file;
     opt->b_file = test->b_file;
-    opt->cpu_every = 1;
     opt->corrupt_once = 0;
 
     for (int index = 1; index < argc; ++index)
@@ -631,8 +624,6 @@ static int parse_options(const matmul_test *test, int argc, char **argv, options
             opt->a_file = argv[++index];
         else if (!strcmp(arg, "--b") && index + 1 < argc)
             opt->b_file = argv[++index];
-        else if (!strcmp(arg, "--cpu-every") && index + 1 < argc)
-            opt->cpu_every = atoi(argv[++index]);
         else if (!strcmp(arg, "--corrupt-once"))
             opt->corrupt_once = 1;
         else if (!strcmp(arg, "-h") || !strcmp(arg, "--help"))
@@ -649,9 +640,69 @@ static int parse_options(const matmul_test *test, int argc, char **argv, options
             return 0;
         }
     }
-    if (opt->cpu_every < 0)
-        opt->cpu_every = 0;
     return 1;
+}
+/*-----------------------------------------------------------------
+ * One full pass over every block of C. For each block of C: zero it,
+ * then for each K slice load A and B, multiply (CPU or accelerator, as
+ * the flags say) and add the product in. Then read the finished C block
+ * back into c_out. The CPU pass and the accelerator pass both use this.
+ *-----------------------------------------------------------------*/
+static int run_pass(int fd, uint8_t multiply_flags, const int32_t *a, const int32_t *b,
+                    int32_t *c_out, int size, int element_bytes, totals *sum,
+                    int total_jobs, double pass_start)
+{
+    const int block = PROTO_MAX_BLOCK_DIM;
+    const int blocks_per_side = (size + block - 1) / block;
+    int jobs_done = 0;
+
+    for (int block_row = 0; block_row < blocks_per_side; ++block_row)
+        for (int block_col = 0; block_col < blocks_per_side; ++block_col)
+        {
+            int row0 = block_row * block, col0 = block_col * block;
+            int rows = size - row0 < block ? size - row0 : block;
+            int cols = size - col0 < block ? size - col0 : block;
+
+            if (!zero_c_block(fd, rows, cols))
+                return 0;
+
+            for (int block_k = 0; block_k < blocks_per_side; ++block_k)
+            {
+                int k0 = block_k * block;
+                int depth = size - k0 < block ? size - k0 : block;
+                uint32_t result[PROTO_RESULT_WORDS];
+
+                if (!(send_block(fd, PROTO_CMD_LOAD_A, a, size, row0, k0, rows, depth, element_bytes, sum) &&
+                      send_block(fd, PROTO_CMD_LOAD_B, b, size, k0, col0, depth, cols, element_bytes, sum) &&
+                      multiply_block(fd, multiply_flags, result, sum)))
+                    return 0;
+
+                sum->accel_cycles += result[PROTO_RESULT_ACCEL_CYCLES];
+                sum->load_cycles  += result[PROTO_RESULT_LOAD_CYCLES];
+                sum->mac_cycles   += result[PROTO_RESULT_MAC_CYCLES];
+                sum->store_cycles += result[PROTO_RESULT_STORE_CYCLES];
+                sum->read_words   += result[PROTO_RESULT_READ_WORDS];
+                sum->write_words  += result[PROTO_RESULT_WRITE_WORDS];
+                sum->cpu_cycles   += result[PROTO_RESULT_CPU_CYCLES];
+
+                jobs_done++;
+                show_progress(jobs_done, total_jobs, pass_start, sum, jobs_done == total_jobs);
+            }
+
+            if (!read_c_block(fd, c_out, size, row0, col0, rows, cols, sum))
+                return 0;
+        }
+
+    return 1;
+}
+
+static long count_differences(const int32_t *x, const int32_t *y, long count)
+{
+    long differences = 0;
+    for (long index = 0; index < count; ++index)
+        if (x[index] != y[index])
+            differences++;
+    return differences;
 }
 
 /*-----------------------------------------------------------------
@@ -674,9 +725,10 @@ int run_matmul_test(const matmul_test *test, int argc, char **argv)
     /* 1. Read A and B */
     int32_t *a = malloc(sizeof(int32_t) * count);
     int32_t *b = malloc(sizeof(int32_t) * count);
-    int32_t *c_board = malloc(sizeof(int32_t) * count);
+    int32_t *c_cpu = malloc(sizeof(int32_t) * count);
+    int32_t *c_accel = malloc(sizeof(int32_t) * count);
     int32_t *c_reference = malloc(sizeof(int32_t) * count);
-    if (!a || !b || !c_board || !c_reference)
+    if (!a || !b || !c_cpu || !c_accel || !c_reference)
     {
         fprintf(stderr, "ERROR: out of memory\n");
         return 1;
@@ -703,128 +755,93 @@ int run_matmul_test(const matmul_test *test, int argc, char **argv)
         return 1;
     printf("Board       : %s, matmul_server, accelerator %ux%u grid, MAX_K %u\n",
            opt.port, accel_dim, accel_dim, accel_max_k);
-    printf("Plan        : %d blocks of %dx%dx%d (CPU timed on %s)\n\n",
-           total_jobs, block, block, block,
-           opt.cpu_every == 0 ? "no blocks" :
-           opt.cpu_every == 1 ? "every block" : "a sample of blocks");
+    printf("Plan        : two passes over %d blocks of %dx%dx%d\n", total_jobs, block, block, block);
+    printf("              pass 1: the board's CPU multiplies every block\n");
+    printf("              pass 2: the board's accelerator multiplies every block\n\n");
 
     corrupt_pending = opt.corrupt_once;
 
-    /* 4. The blocked multiply */
-    totals sum;
-    memset(&sum, 0, sizeof(sum));
-    double run_start = now_seconds();
-    int jobs_done = 0;
-    int ok = 1;
+    /* 4. Pass 1: CPU only */
+    totals cpu_sum, accel_sum;
+    memset(&cpu_sum, 0, sizeof(cpu_sum));
+    memset(&accel_sum, 0, sizeof(accel_sum));
 
-    for (int block_row = 0; ok && block_row < blocks_per_side; ++block_row)
-        for (int block_col = 0; ok && block_col < blocks_per_side; ++block_col)
-        {
-            int row0 = block_row * block, col0 = block_col * block;
-            int rows = size - row0 < block ? size - row0 : block;
-            int cols = size - col0 < block ? size - col0 : block;
-
-            ok = zero_c_block(fd, rows, cols);
-
-            for (int block_k = 0; ok && block_k < blocks_per_side; ++block_k)
-            {
-                int k0 = block_k * block;
-                int depth = size - k0 < block ? size - k0 : block;
-                int run_cpu = opt.cpu_every > 0 && (jobs_done % opt.cpu_every) == 0;
-                uint32_t result[PROTO_RESULT_WORDS];
-
-                ok = send_block(fd, PROTO_CMD_LOAD_A, a, size, row0, k0, rows, depth, element_bytes, &sum) &&
-                     send_block(fd, PROTO_CMD_LOAD_B, b, size, k0, col0, depth, cols, element_bytes, &sum) &&
-                     multiply_block(fd, run_cpu, result, &sum);
-                if (!ok)
-                    break;
-
-                sum.accel_cycles += result[PROTO_RESULT_ACCEL_CYCLES];
-                sum.load_cycles  += result[PROTO_RESULT_LOAD_CYCLES];
-                sum.mac_cycles   += result[PROTO_RESULT_MAC_CYCLES];
-                sum.store_cycles += result[PROTO_RESULT_STORE_CYCLES];
-                sum.read_words   += result[PROTO_RESULT_READ_WORDS];
-                sum.write_words  += result[PROTO_RESULT_WRITE_WORDS];
-                if (run_cpu)
-                {
-                    sum.cpu_cycles += result[PROTO_RESULT_CPU_CYCLES];
-                    sum.accel_cycles_on_cpu_jobs += result[PROTO_RESULT_ACCEL_CYCLES];
-                    sum.cpu_accel_mismatches += result[PROTO_RESULT_MISMATCHES];
-                    sum.cpu_jobs++;
-                }
-
-                jobs_done++;
-                show_progress(jobs_done, total_jobs, run_start, &sum, jobs_done == total_jobs);
-            }
-
-            if (ok)
-                ok = read_c_block(fd, c_board, size, row0, col0, rows, cols, &sum);
-        }
-
-    double wall_seconds = now_seconds() - run_start;
-    close(fd);
+    printf("Pass 1 of 2: CPU multiply on the board\n");
+    double cpu_start = now_seconds();
+    int ok = run_pass(fd, PROTO_MULTIPLY_CPU_ONLY, a, b, c_cpu, size, element_bytes,
+                      &cpu_sum, total_jobs, cpu_start);
+    double cpu_wall = now_seconds() - cpu_start;
     printf("\n\n");
+
+    /* 5. Pass 2: accelerator only */
+    double accel_wall = 0;
+    if (ok)
+    {
+        printf("Pass 2 of 2: accelerator multiply on the board\n");
+        double accel_start = now_seconds();
+        ok = run_pass(fd, 0, a, b, c_accel, size, element_bytes,
+                      &accel_sum, total_jobs, accel_start);
+        accel_wall = now_seconds() - accel_start;
+        printf("\n\n");
+    }
+    close(fd);
 
     if (!ok)
     {
-        printf("RESULT: FAILED (communication stopped after %d of %d blocks)\n", jobs_done, total_jobs);
+        printf("RESULT: FAILED (communication stopped part way through)\n");
         return 1;
     }
 
-    /* 5. Check every value of C against the PC */
-    long wrong_values = 0;
-    for (long index = 0; index < count; ++index)
-        if (c_board[index] != c_reference[index])
-        {
-            if (wrong_values < 5)
-                printf("  C[%ld][%ld]: board %d, PC %d\n",
-                       index / size, index % size, c_board[index], c_reference[index]);
-            wrong_values++;
-        }
+    /* 6. Check both results against the PC and against each other */
+    long wrong_cpu = count_differences(c_cpu, c_reference, count);
+    long wrong_accel = count_differences(c_accel, c_reference, count);
+    long cpu_vs_accel = count_differences(c_cpu, c_accel, count);
 
-    /* 6. Report */
-    char wall_text[16], transfer_text[16];
-    format_duration(wall_seconds, wall_text, sizeof(wall_text));
-    format_duration(sum.transfer_seconds, transfer_text, sizeof(transfer_text));
+    /* 7. Report */
+    char cpu_wall_text[16], cpu_uart_text[16], accel_wall_text[16], accel_uart_text[16];
+    format_duration(cpu_wall, cpu_wall_text, sizeof(cpu_wall_text));
+    format_duration(cpu_sum.transfer_seconds, cpu_uart_text, sizeof(cpu_uart_text));
+    format_duration(accel_wall, accel_wall_text, sizeof(accel_wall_text));
+    format_duration(accel_sum.transfer_seconds, accel_uart_text, sizeof(accel_uart_text));
     double multiply_accumulates = (double)size * size * size;
+    double cpu_seconds = cpu_sum.cpu_cycles / BOARD_CLOCK_HZ;
+    double accel_seconds = accel_sum.accel_cycles / BOARD_CLOCK_HZ;
 
-    printf("Wall time        : %s total, of which %s moving data over the UART\n", wall_text, transfer_text);
-    printf("Data resent      : %d chunk%s\n", sum.resent_chunks, sum.resent_chunks == 1 ? "" : "s");
-    printf("\nAccelerator (all %d blocks)\n", total_jobs);
-    printf("  cycles         : %llu  (%.3f s at 25 MHz)\n",
-           (unsigned long long)sum.accel_cycles, sum.accel_cycles / BOARD_CLOCK_HZ);
+    printf("CPU pass (all %d blocks)\n", total_jobs);
+    printf("  wall time      : %s total, of which %s moving data over the UART\n", cpu_wall_text, cpu_uart_text);
+    printf("  CPU multiply   : %llu cycles  (%.3f s at 25 MHz)\n",
+           (unsigned long long)cpu_sum.cpu_cycles, cpu_seconds);
+    printf("  data resent    : %d chunk%s\n", cpu_sum.resent_chunks, cpu_sum.resent_chunks == 1 ? "" : "s");
+
+    printf("\nAccelerator pass (all %d blocks)\n", total_jobs);
+    printf("  wall time      : %s total, of which %s moving data over the UART\n", accel_wall_text, accel_uart_text);
+    printf("  accelerator    : %llu cycles  (%.3f s at 25 MHz)\n",
+           (unsigned long long)accel_sum.accel_cycles, accel_seconds);
     printf("  load/mac/store : %llu / %llu / %llu cycles\n",
-           (unsigned long long)sum.load_cycles, (unsigned long long)sum.mac_cycles,
-           (unsigned long long)sum.store_cycles);
-    printf("  words moved    : %llu read, %llu written\n",
-           (unsigned long long)sum.read_words, (unsigned long long)sum.write_words);
+           (unsigned long long)accel_sum.load_cycles, (unsigned long long)accel_sum.mac_cycles,
+           (unsigned long long)accel_sum.store_cycles);
     printf("  multiply-adds  : %.0f  (%.2f per cycle)\n",
-           multiply_accumulates, multiply_accumulates / (double)sum.accel_cycles);
+           multiply_accumulates, multiply_accumulates / (double)accel_sum.accel_cycles);
+    printf("  data resent    : %d chunk%s\n", accel_sum.resent_chunks, accel_sum.resent_chunks == 1 ? "" : "s");
 
-    int all_passed = (wrong_values == 0);
-    if (sum.cpu_jobs > 0)
-    {
-        int projected = sum.cpu_jobs < total_jobs;
-        double cpu_total = (double)sum.cpu_cycles * total_jobs / sum.cpu_jobs;
+    printf("\nComparison (same blocks, same UART transfers)\n");
+    printf("  end to end     : CPU path %s, accelerator path %s\n", cpu_wall_text, accel_wall_text);
+    printf("  end-to-end speed-up     : %.2fx\n", cpu_wall / accel_wall);
+    printf("  compute-only speed-up   : %.1fx  (CPU cycles / accelerator cycles)\n",
+           (double)cpu_sum.cpu_cycles / (double)accel_sum.accel_cycles);
 
-        printf("\nCPU (%d of %d blocks)\n", sum.cpu_jobs, total_jobs);
-        printf("  cycles         : %llu measured  (%.3f s at 25 MHz)\n",
-               (unsigned long long)sum.cpu_cycles, sum.cpu_cycles / BOARD_CLOCK_HZ);
-        if (projected)
-            printf("  all blocks     : %.0f cycles PROJECTED  (%.1f s)\n", cpu_total, cpu_total / BOARD_CLOCK_HZ);
-        printf("  CPU vs accel   : %llu values differ\n", (unsigned long long)sum.cpu_accel_mismatches);
-        printf("\nSpeed-up (compute only, same blocks): %.1fx  (CPU cycles / accelerator cycles)\n",
-               (double)sum.cpu_cycles / (double)sum.accel_cycles_on_cpu_jobs);
-        if (sum.cpu_accel_mismatches != 0)
-            all_passed = 0;
-    }
+    printf("\nResult check\n");
+    printf("  CPU pass vs PC reference         : %ld of %ld values differ\n", wrong_cpu, count);
+    printf("  accelerator pass vs PC reference : %ld of %ld values differ\n", wrong_accel, count);
+    printf("  CPU pass vs accelerator pass     : %ld of %ld values differ\n", cpu_vs_accel, count);
 
-    printf("\nResult check     : %ld of %ld values differ from the PC reference\n", wrong_values, count);
+    int all_passed = wrong_cpu == 0 && wrong_accel == 0 && cpu_vs_accel == 0;
     printf("RESULT: %s\n", all_passed ? "PASS" : "FAIL");
 
     free(a);
     free(b);
-    free(c_board);
+    free(c_cpu);
+    free(c_accel);
     free(c_reference);
     return all_passed ? 0 : 1;
 }

@@ -267,6 +267,20 @@ static uint32_t cpu_multiply_and_compare(uint32_t m, uint32_t n, uint32_t k)
     return mismatches;
 }
 
+/* CPU-only product: block_product = A x B on the CPU (no compare, no accelerator) */
+static void cpu_multiply_into_product(uint32_t m, uint32_t n, uint32_t k)
+{
+    for (uint32_t row = 0; row < m; ++row)
+        for (uint32_t col = 0; col < n; ++col)
+        {
+            uint32_t sum = 0;
+            for (uint32_t index = 0; index < k; ++index)
+                sum += (uint32_t)block_a[row * k + index] *
+                       (uint32_t)block_b[index * n + col];
+            block_product[row * n + col] = (int32_t)sum;
+        }
+}
+
 /*-----------------------------------------------------------------
  * 'M': product = A x B on the accelerator (and optionally on the CPU),
  *      then C_block += product
@@ -288,6 +302,25 @@ static void handle_multiply(void)
     if (m == 0 || n == 0 || k == 0 || b_rows != k || c_rows != m || c_cols != n)
     {
         send_error(PROTO_ERR_SHAPE_MISMATCH);
+        return;
+    }
+
+    /* CPU-only pass: the CPU does the multiply and the accelerator is not used.
+     * Reply has the same 8 words; the accelerator fields are zero. */
+    if (flags & PROTO_MULTIPLY_CPU_ONLY)
+    {
+        uint32_t start = hw_read_cycles();
+        cpu_multiply_into_product(m, n, k);
+        uint32_t cpu_cycles = hw_read_cycles() - start;
+
+        for (uint32_t index = 0; index < m * n; ++index)
+            block_c[index] = (int32_t)((uint32_t)block_c[index] + (uint32_t)block_product[index]);
+
+        send_byte(PROTO_REPLY_OK);
+        for (int field = 0; field < PROTO_RESULT_CPU_CYCLES; ++field)
+            send_u32(0);
+        send_u32(cpu_cycles);
+        send_u32(0);
         return;
     }
 

@@ -72,7 +72,8 @@
 #define PROTO_CHUNK_BYTES    1024u
 
 /* MULTIPLY flags */
-#define PROTO_MULTIPLY_CPU_CHECK  0x01u
+#define PROTO_MULTIPLY_CPU_CHECK  0x01u   /* also run the CPU and compare (unused by the host now) */
+#define PROTO_MULTIPLY_CPU_ONLY   0x02u   /* CPU does the multiply; accelerator is not used        */
 
 /* MULTIPLY result: PROTO_RESULT_WORDS u32 values, in this order */
 #define PROTO_RESULT_ACCEL_CYCLES   0   /* accelerator CYC: START to DONE      */
