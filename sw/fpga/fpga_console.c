@@ -4,17 +4,41 @@
  * exist on hardware. */
 #include <stdint.h>
 #include "sim_console.h"
+#include "fpga_uart.h"
 
 #define ULITE_BASE      0x92000000u
+#define ULITE_RX        (*(volatile uint32_t *)(ULITE_BASE + 0x0u))
 #define ULITE_TX        (*(volatile uint32_t *)(ULITE_BASE + 0x4u))
 #define ULITE_STATUS    (*(volatile uint32_t *)(ULITE_BASE + 0x8u))
-#define ULITE_TXFULL    (1u << 3)
+#define ULITE_RXVALID   (1u << 0)   /* a received byte is waiting in RX */
+#define ULITE_TXFULL    (1u << 3)   /* transmitter busy sending a byte  */
 
-void sim_putc(uint8_t c)
+/*-----------------------------------------------------------------
+ * Raw UART bytes (see fpga_uart.h)
+ *-----------------------------------------------------------------*/
+int uart_byte_waiting(void)
+{
+    return (ULITE_STATUS & ULITE_RXVALID) != 0;
+}
+
+uint8_t uart_read_byte(void)
+{
+    return (uint8_t)ULITE_RX;     /* reading RX also lowers "byte waiting" */
+}
+
+void uart_write_byte(uint8_t c)
 {
     while (ULITE_STATUS & ULITE_TXFULL)
         ;
     ULITE_TX = c;
+}
+
+/*-----------------------------------------------------------------
+ * sim_console API
+ *-----------------------------------------------------------------*/
+void sim_putc(uint8_t c)
+{
+    uart_write_byte(c);
 }
 
 void sim_puts(const char *s)

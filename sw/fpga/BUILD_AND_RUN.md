@@ -115,3 +115,58 @@ PASS: matrix multiplication
 After any change to `sw/test_matmul.c`, run the three steps in order:
 `make -C sw/fpga` (step 1), then `build_bitstream.tcl` (step 2), then `program_board.tcl` (step 3).
 Skipping step 1 leaves the old program in the bitstream.
+
+---
+
+# Big matrices: 256x256, 512x512, 1024x1024 (data from the PC)
+
+These don't fit in the board's 128 KB, so a PC program sends them to the board in
+64x64 blocks over the UART. The board multiplies every block on the accelerator
+**and** on its CPU, and the PC shows live progress and a report (cycles, time,
+speed-up), then checks every value of C. Details: `ACCEL_LARGE_MATRIX_DEMO.md`.
+
+## 1. Put the server program on the board
+
+```bash
+make -C sw/fpga APP=matmul_server                        # writes boolean_mem.hex
+vivado -mode batch -source fpga/boolean/build_bitstream.tcl
+vivado -mode batch -nolog -nojournal -source fpga/boolean/program_board.tcl
+```
+
+Optional check: `picocom -b 1000000 /dev/ttyUSB1` shows `matmul_server ready` after
+`btn[0]`. Close picocom before the next step (only one program can use the port).
+
+## 2. Build the PC programs and make the input files
+
+```bash
+make -C sw host                         # gcc on the PC -> sw/build_host/
+cd sw && python3 gen_matrices.py        # A_256.txt ... B_1024.txt (int8 values)
+```
+
+## 3. Run
+
+```bash
+cd sw
+./build_host/host_matmul_256  /dev/ttyUSB1
+./build_host/host_matmul_512  /dev/ttyUSB1
+./build_host/host_matmul_1024 /dev/ttyUSB1
+```
+
+Options: `--a FILE --b FILE` (other inputs), `--cpu-every K` (time the CPU on every
+K-th block only and project the total, to save time on 1024), `--corrupt-once`
+(damage one chunk on purpose to show the resend works).
+
+If transfers are very slow, lower the FTDI latency timer (the program tries to):
+`echo 1 | sudo tee /sys/bus/usb-serial/devices/ttyUSB1/latency_timer`
+
+## Test without a board
+
+```bash
+cd sw && ./build_host/host_fake_board          # prints "fake board on /dev/pts/N"
+./build_host/host_matmul_256 /dev/pts/N         # in a second terminal
+```
+The fake board runs the real protocol code with a software "accelerator"; its cycle
+counts and speed-up are made up. Use it only to check the communication.
+
+To go back to the normal test suite: `make -C sw/fpga` (APP=test_matmul), then
+rebuild and program the bitstream.

@@ -287,13 +287,63 @@ accel_write(ACCEL_LDA, 100 * 4);     // bytes
 | 5 | Phase 2: A-panel reuse (`reuse_a_panel_w`), switchable with CTRL.NO_REUSE | `soc/accel_matmul.v` | – |
 | 6 | New config checks (dims ≥ 1, aligned strides, stride ≥ row length); START while busy ignored; counters TILES / RD_WORDS / WR_WORDS | `soc/accel_matmul.v` | `verilator --lint-only -Wall` clean at DIM 1, 4, 5 |
 | 7 | Test rewritten around a `matmul_job` struct (sizes, strides, flags). New cases: multi-tile, edge tiles, K > MAX_K, dot/outer product, strided sub-matrix (checks the padding is never read and never overwritten), reuse on/off, 4 KB boundary with tiles, error cases, 16³/32³/64³ performance | `sw/test_matmul.c` | DIM=4: **all PASS** |
-| 8 | Configuration sweep (below) | – | see section 7 |
+| 8 | Configuration sweep: DIM 2/4/5/8/16, MAX_K 4/7/8/16/64, single-beat bursts, `MEM_DELAYS=1` | – | **all PASS** in 9 builds, no Verilator warnings (section 7) |
 
 ---
 
 ## 7. Results
 
-*(filled in from the test runs, see below)*
+### 7.1 Everything passes
+Every configuration below runs the full `sw/test_matmul.c` with **all cases PASS** and
+**no Verilator warnings**:
+
+| Build | Notes |
+|---|---|
+| `ACCEL_DIM=4` (MAX_K=4), `ACCEL_DIM=4 ACCEL_MAX_K=64` | default size, and the deep buffer |
+| `ACCEL_DIM=2`, `5`, `8`, `16`, `ACCEL_DIM=8 ACCEL_MAX_K=64` | 5 is not a power of two |
+| `ACCEL_MAX_BURST=1 ACCEL_MAX_OUTSTANDING=1` | single-beat bursts |
+| `MEM_DELAYS=1` with DIM=4; and with DIM=5, MAX_K=7, BURST=3, OUTSTANDING=2 | random memory stalls, odd sizes |
+
+Single-tile jobs cost **one extra cycle** compared with before (the new SETUP state):
+4×4×4 is 80 cycles (was 79), and 16³ on DIM=16 is 878 (was 877).
+
+### 7.2 Words moved match the formulas
+The hardware counts every word in `RD_WORDS` / `WR_WORDS`, so the table in section 4.1 can
+be checked exactly. For 64×64×64:
+
+| Build | A-panel reuse | `rd_words` measured | Formula |
+|---|---|---|---|
+| DIM=4, MAX_K=4 | not possible (K > MAX_K) | 131,072 | 64·64·16 + 64·64·16 |
+| DIM=4, MAX_K=64 | off | 131,072 | same as above |
+| DIM=4, MAX_K=64 | **on** | **69,632** | 64·64 + 64·64·16 |
+| DIM=8, MAX_K=64 | off | 65,536 | 64·64·8 + 64·64·8 |
+| DIM=8, MAX_K=64 | **on** | **36,864** | 64·64 + 64·64·8 |
+
+`wr_words` is always 4,096 (= 64·64), so C is written exactly once, even with 16 K chunks.
+
+### 7.3 Speed (64×64×64, total cycles `CYC`, no memory stalls)
+
+| Build | Cycles | Load / compute / store | What it shows |
+|---|---|---|---|
+| DIM=4, MAX_K=4 | 234,755 | 183,555 / 40,960 / 6,144 | baseline: 16 K chunks per tile, each with its own setup + drain |
+| DIM=4, MAX_K=64, no reuse | 181,760 | 157,440 / 17,920 / 6,144 | a deeper buffer means one chunk per tile, so less drain overhead |
+| DIM=4, MAX_K=64, **reuse** | **115,520** | 91,200 / 17,920 / 6,144 | A is read once: **1.57×** faster than no reuse |
+| DIM=8, MAX_K=64, **reuse** | **52,164** | 42,244 / 4,992 / 4,864 | bigger grid: fewer tiles and less B traffic |
+| DIM=16, MAX_K=16 | 42,884 | 35,460 / 2,944 / 4,416 | biggest grid, but no reuse (K > MAX_K) |
+| DIM=4, BURST=1, OUTSTANDING=1 | 709,632 | 655,360 / 40,960 / 9,216 | why bursts matter: 3× slower than with bursts |
+
+Smaller sizes (DIM=4, MAX_K=64): 16³ takes 2,420 cycles with reuse vs 3,248 without, and
+32³ takes 15,891 vs 23,619.
+
+### 7.4 What the numbers tell us
+- **Loading is still 75–85% of the time** in every configuration, and compute is only
+  10–15%. The accelerator is memory-bound, exactly as section 2.5 predicted.
+- **Reuse is the strongest lever.** Turning on A-panel reuse cut traffic by 47% and time by
+  36% without changing the grid at all. All it needed was a deeper `MAX_K` buffer.
+- **Buffer depth matters as much as grid size.** DIM=4 with MAX_K=64 (115k cycles) beats
+  DIM=4 with MAX_K=4 (235k) by 2×, and a deep buffer is much cheaper than more PEs.
+- **What's left is B traffic and serialisation.** B is still read ⌈M/DIM⌉ times, and
+  load, compute and store don't overlap. Those are Phases 3 and 4 in section 10.
 
 ---
 

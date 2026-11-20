@@ -43,5 +43,30 @@ run: $(TARGET)
 run-matmul: $(MATMUL_TARGET)
 	cd ../tb && ./build/test.x -f $(CURDIR)/$(MATMUL_TARGET)
 
+#------------------------------------------------------------------
+# PC programs for the big-matrix tests (built with the PC's own gcc)
+#   make host                          -> build_host/host_matmul_256 / _512 / _1024
+#                                         and build_host/host_fake_board
+#------------------------------------------------------------------
+HOST_CC     ?= gcc
+HOST_BUILD  := build_host
+HOST_CFLAGS := -O2 -Wall -Wextra -std=gnu11
+HOST_TESTS  := $(HOST_BUILD)/host_matmul_256 $(HOST_BUILD)/host_matmul_512 $(HOST_BUILD)/host_matmul_1024
+HOST_COMMON := host_matmul_common.c host_matmul_common.h matmul_protocol.h
+
+.PHONY: host
+host: $(HOST_TESTS) $(HOST_BUILD)/host_fake_board
+
+$(HOST_BUILD):
+	mkdir -p $@
+
+$(HOST_BUILD)/host_matmul_%: host_matmul_%.c $(HOST_COMMON) | $(HOST_BUILD)
+	$(HOST_CC) $(HOST_CFLAGS) -o $@ $< host_matmul_common.c
+
+# Pretend board for testing on the PC: the real board protocol code
+# (fpga/matmul_server.c) on top of fake hardware (host_fake_board.c)
+$(HOST_BUILD)/host_fake_board: host_fake_board.c fpga/matmul_server.c fpga/server_hw.h matmul_protocol.h | $(HOST_BUILD)
+	$(HOST_CC) $(HOST_CFLAGS) -I. -Ifpga -o $@ host_fake_board.c fpga/matmul_server.c
+
 clean:
-	rm -rf $(BUILD)
+	rm -rf $(BUILD) $(HOST_BUILD)
