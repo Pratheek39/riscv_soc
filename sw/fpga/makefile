@@ -18,7 +18,7 @@ ELF      := $(BUILD)/$(APP)_fpga.elf
 HEX      := ../../fpga/boolean/boolean_mem.hex
 GEN_MEM  := ../../fpga/boolean/gen_mem.py
 LDSCRIPT := link_fpga.ld
-DEPTH    := 32768
+DEPTH    := 65536
 
 CFLAGS   := $(ARCH) -nostdlib -ffreestanding -O2 -g -Wall -Wextra \
             -fno-stack-protector -ffunction-sections -fdata-sections -I..

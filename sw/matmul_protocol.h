@@ -65,7 +65,7 @@
 #define PROTO_INFO_MAGIC     0x31534d4du
 
 /* Largest block the board can hold (rows and columns). The board keeps four
- * blocks of 64 x 64 int32 = 16 KB each, i.e. 64 KB of its 128 KB RAM. */
+ * blocks of 100 x 100 int32 = 40 KB each, i.e. 160 KB of its 256 KB RAM. */
 #define PROTO_MAX_BLOCK_DIM  64u
 
 /* Data is moved in chunks of this many bytes, each confirmed by the other side */

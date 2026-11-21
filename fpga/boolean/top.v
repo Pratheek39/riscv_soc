@@ -75,7 +75,7 @@ wire        mem_rready_w;
 
 axi4_bram
 #(
-    .DEPTH_WORDS(32768),
+    .DEPTH_WORDS(65536),
     .INIT_FILE(MEM_INIT_FILE)
 )
 u_mem
