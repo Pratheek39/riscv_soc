@@ -1,11 +1,19 @@
-# Program the Boolean board over JTAG with the built bitstream.
+# Program the Boolean board over JTAG.
 # Run from the repo root (board plugged in and powered):
 #   vivado -mode batch -nolog -nojournal -source fpga/boolean/program_board.tcl
+#     (programs the default build: vivado_boolean/.../top.bit)
+#   vivado -mode batch -nolog -nojournal -source fpga/boolean/program_board.tcl \
+#          -tclargs fpga/boolean/bitstreams/top_8x8.bit
+#     (programs the bitstream given on the command line)
 
 set proj_dir [file normalize [file dirname [info script]]]
-set bit $proj_dir/vivado_boolean/boolean_soc.runs/impl_1/top.bit
+if {[llength $argv] > 0} {
+    set bit [file normalize [lindex $argv 0]]
+} else {
+    set bit $proj_dir/vivado_boolean/boolean_soc.runs/impl_1/top.bit
+}
 if {![file exists $bit]} {
-    puts "ERROR: $bit not found; run build_bitstream.tcl first"
+    puts "ERROR: $bit not found; build it first (build_bitstream.tcl or build_dim.tcl)"
     exit 1
 }
 

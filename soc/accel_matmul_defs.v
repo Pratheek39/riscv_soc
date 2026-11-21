@@ -2,6 +2,8 @@
 `define ACCEL_MATMUL_DEFS_V
 
 // Systolic array size (DIM x DIM PEs) and maximum supported K.
+// Operands are int16 (the PEs use the low 16 bits of each 32-bit input word);
+// each PE accumulates in 48 bits and the array writes the low 32 bits to C.
 // Override at build time, e.g. verilator +define+ACCEL_DIM=8
 `ifndef ACCEL_DIM
 `define ACCEL_DIM 5

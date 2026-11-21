@@ -45,13 +45,13 @@ run-matmul: $(MATMUL_TARGET)
 
 #------------------------------------------------------------------
 # PC programs for the big-matrix tests (built with the PC's own gcc)
-#   make host                          -> build_host/host_matmul_256 / _512 / _1024
+#   make host                          -> build_host/host_matmul_128 / _256 / _512 / _1024
 #                                         and build_host/host_fake_board
 #------------------------------------------------------------------
 HOST_CC     ?= gcc
 HOST_BUILD  := build_host
 HOST_CFLAGS := -O2 -Wall -Wextra -std=gnu11
-HOST_TESTS  := $(HOST_BUILD)/host_matmul_256 $(HOST_BUILD)/host_matmul_512 $(HOST_BUILD)/host_matmul_1024
+HOST_TESTS  := $(HOST_BUILD)/host_matmul_128 $(HOST_BUILD)/host_matmul_256 $(HOST_BUILD)/host_matmul_512 $(HOST_BUILD)/host_matmul_1024
 HOST_COMMON := host_matmul_common.c host_matmul_common.h matmul_protocol.h
 
 .PHONY: host

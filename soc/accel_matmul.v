@@ -170,15 +170,15 @@ reg [31:0] cfg_rdata_q;
 reg [31:0] cfg_read_value_r;
 
 // Input buffers (no reset: only entries loaded for the current chunk are read)
-reg signed [31:0] a_mem [0:DIM-1][0:MAX_K-1];   // A[row][k]
-reg signed [31:0] b_mem [0:MAX_K-1][0:DIM-1];   // B[k][col]
+reg signed [15:0] a_mem [0:DIM-1][0:MAX_K-1];   // A[row][k], int16 operands
+reg signed [15:0] b_mem [0:MAX_K-1][0:DIM-1];   // B[k][col], int16 operands
 
 // Array edge inputs and PE outputs (PE outputs flattened as [row*DIM + col])
-reg  signed [31:0] a_feed [0:DIM-1];
-reg  signed [31:0] b_feed [0:DIM-1];
-wire signed [31:0] pe_a_w   [0:DIM*DIM-1];
-wire signed [31:0] pe_b_w   [0:DIM*DIM-1];
-wire signed [31:0] pe_acc_w [0:DIM*DIM-1];
+reg  signed [15:0] a_feed [0:DIM-1];
+reg  signed [15:0] b_feed [0:DIM-1];
+wire signed [15:0] pe_a_w   [0:DIM*DIM-1];
+wire signed [15:0] pe_b_w   [0:DIM*DIM-1];
+wire signed [31:0] pe_acc_w [0:DIM*DIM-1];   // low 32 bits of each PE's 48-bit accumulator
 
 integer row, col, feed_step, feed_k;
 
@@ -474,9 +474,9 @@ always @(posedge clk_i)
 if (rd_beat_w)
 begin
     if (rd_recv_matrix_q == MATRIX_A)
-        a_mem[rd_recv_row_q[DIW-1:0]][rd_recv_col_q[KIW-1:0]] <= m_rdata_i;
+        a_mem[rd_recv_row_q[DIW-1:0]][rd_recv_col_q[KIW-1:0]] <= m_rdata_i[15:0];
     else
-        b_mem[rd_recv_row_q[KIW-1:0]][rd_recv_col_q[DIW-1:0]] <= m_rdata_i;
+        b_mem[rd_recv_row_q[KIW-1:0]][rd_recv_col_q[DIW-1:0]] <= m_rdata_i[15:0];
 end
 
 //-----------------------------------------------------------------------------
@@ -829,8 +829,8 @@ for (gr = 0; gr < DIM; gr = gr + 1) begin : g_row
     for (gc = 0; gc < DIM; gc = gc + 1) begin : g_col
         localparam [15:0] ROW_U = gr;
         localparam [15:0] COL_U = gc;
-        wire signed [31:0] a_in_w;
-        wire signed [31:0] b_in_w;
+        wire signed [15:0] a_in_w;
+        wire signed [15:0] b_in_w;
 
         // Left column takes A from the feed, others from the PE to the left
         if (gc == 0) begin : g_a_edge
@@ -884,14 +884,18 @@ module accel_pe
     ,input                clear_pipe_i
     ,input                en_i
     ,input                valid_i
-    ,input  signed [31:0] a_i
-    ,input  signed [31:0] b_i
-    ,output signed [31:0] a_o
-    ,output signed [31:0] b_o
-    ,output signed [31:0] acc_o
+    ,input  signed [15:0] a_i       // int16 operand
+    ,input  signed [15:0] b_i       // int16 operand
+    ,output signed [15:0] a_o
+    ,output signed [15:0] b_o
+    ,output signed [31:0] acc_o     // low 32 bits of the accumulator
 );
 
-reg signed [31:0] a_q, b_q, acc_q;
+// int16 x int16 always fits in 32 bits; the accumulator is 48 bits so the
+// running sum does not overflow for any K this array supports.
+reg  signed [15:0] a_q, b_q;
+reg  signed [47:0] acc_q;
+wire signed [31:0] product_w = a_i * b_i;
 
 always @(posedge clk_i or posedge rst_i)
 if (rst_i)
@@ -909,13 +913,13 @@ end
 else if (en_i)
 begin
     if (valid_i)
-        acc_q <= acc_q + a_i * b_i;
+        acc_q <= acc_q + {{16{product_w[31]}}, product_w};   // sign-extend to 48 bits
     a_q <= a_i;
     b_q <= b_i;
 end
 
 assign a_o   = a_q;
 assign b_o   = b_q;
-assign acc_o = acc_q;
+assign acc_o = acc_q[31:0];
 
 endmodule

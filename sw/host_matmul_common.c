@@ -137,6 +137,16 @@ static int choose_element_bytes(const int32_t *a, const int32_t *b, long count)
     return 1;
 }
 
+/* The accelerator's PEs use only the low 16 bits of each operand, so a value
+ * outside int16 would be truncated silently. Refuse such inputs up front. */
+static int all_fit_int16(const int32_t *a, const int32_t *b, long count)
+{
+    for (long index = 0; index < count; ++index)
+        if (a[index] < -32768 || a[index] > 32767 || b[index] < -32768 || b[index] > 32767)
+            return 0;
+    return 1;
+}
+
 /*-----------------------------------------------------------------
  * The serial port
  *-----------------------------------------------------------------*/
@@ -736,6 +746,13 @@ int run_matmul_test(const matmul_test *test, int argc, char **argv)
     if (!read_matrix_file(opt.a_file, size, a) || !read_matrix_file(opt.b_file, size, b))
         return 1;
 
+    if (!all_fit_int16(a, b, count))
+    {
+        fprintf(stderr, "ERROR: A or B has a value outside int16 (-32768..32767); "
+                        "the accelerator uses 16-bit operands\n");
+        return 1;
+    }
+
     int element_bytes = choose_element_bytes(a, b, count);
     printf("Inputs      : %s, %s (%s values, sent as %d byte%s each)\n",
            opt.a_file, opt.b_file, element_bytes == 1 ? "int8" : "int32",
@@ -753,8 +770,9 @@ int run_matmul_test(const matmul_test *test, int argc, char **argv)
     uint32_t accel_dim = 0, accel_max_k = 0;
     if (!sync_with_board(fd, &accel_dim, &accel_max_k))
         return 1;
-    printf("Board       : %s, matmul_server, accelerator %ux%u grid, MAX_K %u\n",
-           opt.port, accel_dim, accel_dim, accel_max_k);
+    printf("Board       : %s\n", opt.port);
+    printf("Array size  : %ux%u systolic array (%u PEs), int16 operands, MAX_K %u\n",
+           accel_dim, accel_dim, accel_dim * accel_dim, accel_max_k);
     printf("Plan        : two passes over %d blocks of %dx%dx%d\n", total_jobs, block, block, block);
     printf("              pass 1: the board's CPU multiplies every block\n");
     printf("              pass 2: the board's accelerator multiplies every block\n\n");
@@ -813,7 +831,7 @@ int run_matmul_test(const matmul_test *test, int argc, char **argv)
            (unsigned long long)cpu_sum.cpu_cycles, cpu_seconds);
     printf("  data resent    : %d chunk%s\n", cpu_sum.resent_chunks, cpu_sum.resent_chunks == 1 ? "" : "s");
 
-    printf("\nAccelerator pass (all %d blocks)\n", total_jobs);
+    printf("\nAccelerator pass (all %d blocks, %ux%u array)\n", total_jobs, accel_dim, accel_dim);
     printf("  wall time      : %s total, of which %s moving data over the UART\n", accel_wall_text, accel_uart_text);
     printf("  accelerator    : %llu cycles  (%.3f s at 25 MHz)\n",
            (unsigned long long)accel_sum.accel_cycles, accel_seconds);

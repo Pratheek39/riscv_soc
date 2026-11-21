@@ -91,7 +91,7 @@ int hw_accel_multiply(const int32_t *a, const int32_t *b, int32_t *product,
         {
             uint32_t sum = 0;
             for (uint32_t index = 0; index < k; ++index)
-                sum += (uint32_t)a[row * k + index] * (uint32_t)b[index * n + col];
+                sum += (uint32_t)(int16_t)a[row * k + index] * (uint32_t)(int16_t)b[index * n + col];
             product[row * n + col] = (int32_t)sum;
         }
 

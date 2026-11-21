@@ -255,11 +255,11 @@ static uint32_t cpu_multiply_and_compare(uint32_t m, uint32_t n, uint32_t k)
     for (uint32_t row = 0; row < m; ++row)
         for (uint32_t col = 0; col < n; ++col)
         {
-            /* unsigned maths wraps around exactly like the 32-bit hardware */
+            /* int16 operands (the PEs use the low 16 bits); unsigned maths wraps like the hardware */
             uint32_t sum = 0;
             for (uint32_t index = 0; index < k; ++index)
-                sum += (uint32_t)block_a[row * k + index] *
-                       (uint32_t)block_b[index * n + col];
+                sum += (uint32_t)(int16_t)block_a[row * k + index] *
+                       (uint32_t)(int16_t)block_b[index * n + col];
 
             if ((int32_t)sum != block_product[row * n + col])
                 mismatches++;
@@ -275,8 +275,8 @@ static void cpu_multiply_into_product(uint32_t m, uint32_t n, uint32_t k)
         {
             uint32_t sum = 0;
             for (uint32_t index = 0; index < k; ++index)
-                sum += (uint32_t)block_a[row * k + index] *
-                       (uint32_t)block_b[index * n + col];
+                sum += (uint32_t)(int16_t)block_a[row * k + index] *
+                       (uint32_t)(int16_t)block_b[index * n + col];
             block_product[row * n + col] = (int32_t)sum;
         }
 }

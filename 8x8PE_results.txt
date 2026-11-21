@@ -1,0 +1,114 @@
+lone-warrior@lone-warrior-Legion-Pro-7-16IAX10H:~/test_soc/riscv_soc_with_accel/riscv_soc/sw$ ./build_host/host_matmul_128 /dev/ttyUSB1
+=== Matrix multiply 128 x 128 on the Boolean board ===
+Inputs      : A_128.txt, B_128.txt (int8 values, sent as 1 byte each)
+PC reference: computed in 0.00 s
+Board       : /dev/ttyUSB1
+Array size  : 8x8 systolic array (64 PEs), int16 operands, MAX_K 64
+Plan        : two passes over 8 blocks of 64x64x64
+              pass 1: the board's CPU multiplies every block
+              pass 2: the board's accelerator multiplies every block
+
+Pass 1 of 2: CPU multiply on the board
+  [########################] 100%  block 8/8  elapsed 0:03  ETA 0:00  accel 0.0 M cyc  cpu 38.0 M cyc 
+
+Pass 2 of 2: accelerator multiply on the board
+  [########################] 100%  block 8/8  elapsed 0:01  ETA 0:00  accel 0.5 M cyc  cpu 0.0 M cyc 
+
+CPU pass (all 8 blocks)
+  wall time      : 0:03 total, of which 0:01 moving data over the UART
+  CPU multiply   : 38016194 cycles  (1.521 s at 25 MHz)
+  data resent    : 0 chunks
+
+Accelerator pass (all 8 blocks, 8x8 array)
+  wall time      : 0:02 total, of which 0:02 moving data over the UART
+  accelerator    : 492094 cycles  (0.020 s at 25 MHz)
+  load/mac/store : 401342 / 39936 / 50304 cycles
+  multiply-adds  : 2097152  (4.26 per cycle)
+  data resent    : 0 chunks
+
+Comparison (same blocks, same UART transfers)
+  end to end     : CPU path 0:03, accelerator path 0:02
+  end-to-end speed-up     : 1.95x
+  compute-only speed-up   : 77.3x  (CPU cycles / accelerator cycles)
+
+Result check
+  CPU pass vs PC reference         : 0 of 16384 values differ
+  accelerator pass vs PC reference : 0 of 16384 values differ
+  CPU pass vs accelerator pass     : 0 of 16384 values differ
+RESULT: PASS
+lone-warrior@lone-warrior-Legion-Pro-7-16IAX10H:~/test_soc/riscv_soc_with_accel/riscv_soc/sw$ ./build_host/host_matmul_256 /dev/ttyUSB1
+=== Matrix multiply 256 x 256 on the Boolean board ===
+Inputs      : A_256.txt, B_256.txt (int8 values, sent as 1 byte each)
+PC reference: computed in 0.00 s
+Board       : /dev/ttyUSB1
+Array size  : 8x8 systolic array (64 PEs), int16 operands, MAX_K 64
+Plan        : two passes over 64 blocks of 64x64x64
+              pass 1: the board's CPU multiplies every block
+              pass 2: the board's accelerator multiplies every block
+
+Pass 1 of 2: CPU multiply on the board
+  [########################] 100%  block 64/64  elapsed 0:21  ETA 0:00  accel 0.0 M cyc  cpu 304.1 M cyc 
+
+Pass 2 of 2: accelerator multiply on the board
+  [########################] 100%  block 64/64  elapsed 0:09  ETA 0:00  accel 3.9 M cyc  cpu 0.0 M cyc 
+
+CPU pass (all 64 blocks)
+  wall time      : 0:21 total, of which 0:09 moving data over the UART
+  CPU multiply   : 304129024 cycles  (12.165 s at 25 MHz)
+  data resent    : 0 chunks
+
+Accelerator pass (all 64 blocks, 8x8 array)
+  wall time      : 0:09 total, of which 0:09 moving data over the UART
+  accelerator    : 3936704 cycles  (0.157 s at 25 MHz)
+  load/mac/store : 3210688 / 319488 / 402432 cycles
+  multiply-adds  : 16777216  (4.26 per cycle)
+  data resent    : 0 chunks
+
+Comparison (same blocks, same UART transfers)
+  end to end     : CPU path 0:21, accelerator path 0:09
+  end-to-end speed-up     : 2.26x
+  compute-only speed-up   : 77.3x  (CPU cycles / accelerator cycles)
+
+Result check
+  CPU pass vs PC reference         : 0 of 65536 values differ
+  accelerator pass vs PC reference : 0 of 65536 values differ
+  CPU pass vs accelerator pass     : 0 of 65536 values differ
+RESULT: PASS
+lone-warrior@lone-warrior-Legion-Pro-7-16IAX10H:~/test_soc/riscv_soc_with_accel/riscv_soc/sw$ ./build_host/host_matmul_512 /dev/ttyUSB1
+=== Matrix multiply 512 x 512 on the Boolean board ===
+Inputs      : A_512.txt, B_512.txt (int8 values, sent as 1 byte each)
+PC reference: computed in 0.03 s
+Board       : /dev/ttyUSB1
+Array size  : 8x8 systolic array (64 PEs), int16 operands, MAX_K 64
+Plan        : two passes over 512 blocks of 64x64x64
+              pass 1: the board's CPU multiplies every block
+              pass 2: the board's accelerator multiplies every block
+
+Pass 1 of 2: CPU multiply on the board
+  [########################] 100%  block 512/512  elapsed 2:38  ETA 0:00  accel 0.0 M cyc  cpu 2433.0 M cyc 
+
+Pass 2 of 2: accelerator multiply on the board
+  [########################] 100%  block 512/512  elapsed 1:02  ETA 0:00  accel 31.5 M cyc  cpu 0.0 M cyc 
+
+CPU pass (all 512 blocks)
+  wall time      : 2:38 total, of which 0:59 moving data over the UART
+  CPU multiply   : 2433032192 cycles  (97.321 s at 25 MHz)
+  data resent    : 0 chunks
+
+Accelerator pass (all 512 blocks, 8x8 array)
+  wall time      : 1:03 total, of which 0:59 moving data over the UART
+  accelerator    : 31493632 cycles  (1.260 s at 25 MHz)
+  load/mac/store : 25685504 / 2555904 / 3219456 cycles
+  multiply-adds  : 134217728  (4.26 per cycle)
+  data resent    : 0 chunks
+
+Comparison (same blocks, same UART transfers)
+  end to end     : CPU path 2:38, accelerator path 1:03
+  end-to-end speed-up     : 2.53x
+  compute-only speed-up   : 77.3x  (CPU cycles / accelerator cycles)
+
+Result check
+  CPU pass vs PC reference         : 0 of 262144 values differ
+  accelerator pass vs PC reference : 0 of 262144 values differ
+  CPU pass vs accelerator pass     : 0 of 262144 values differ
+RESULT: PASS

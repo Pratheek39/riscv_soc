@@ -123,6 +123,15 @@ static int32_t next_rand(void)
     return (int32_t)((lcg_state >> 16) & 0xfu) - 8;   /* -8..7 */
 }
 
+/* Full int16 range (-32768..32767): exercises the 16-bit operands and the wrap-around */
+static int wide_values = 0;
+
+static int32_t next_rand16(void)
+{
+    lcg_state = lcg_state * 1103515245u + 12345u;
+    return (int32_t)((lcg_state >> 8) & 0xffffu) - 32768;   /* -32768..32767 */
+}
+
 static void print_dec(const char *label, uint32_t value)
 {
     sim_puts(label);
@@ -139,12 +148,12 @@ static void fill_inputs(const matmul_job *job)
     for (uint32_t row = 0; row < job->m; ++row)
         for (uint32_t col = 0; col < lda; ++col)
             case_a[row * lda + col] = (col >= job->k) ? PAD_VALUE :
-                job->fixed ? fixed_a[row * job->k + col] : next_rand();
+                job->fixed ? fixed_a[row * job->k + col] : (wide_values ? next_rand16() : next_rand());
 
     for (uint32_t row = 0; row < job->k; ++row)
         for (uint32_t col = 0; col < ldb; ++col)
             case_b[row * ldb + col] = (col >= job->n) ? PAD_VALUE :
-                job->fixed ? fixed_b[row * job->n + col] : next_rand();
+                job->fixed ? fixed_b[row * job->n + col] : (wide_values ? next_rand16() : next_rand());
 
     for (uint32_t i = 0; i < job->m * ldc; ++i)
         case_c[i] = C_UNWRITTEN;
@@ -159,10 +168,12 @@ static void calculate_reference(const matmul_job *job)
     for (uint32_t row = 0; row < job->m; ++row)
         for (uint32_t col = 0; col < job->n; ++col)
         {
-            int32_t sum = 0;
+            /* The PEs use the low 16 bits of each operand; the sum wraps mod 2^32 like the 48-bit accumulator's low 32 bits */
+            uint32_t sum = 0;
             for (uint32_t index = 0; index < job->k; ++index)
-                sum += case_a[row * lda + index] * case_b[index * ldb + col];
-            expected_c[row * job->n + col] = sum;
+                sum += (uint32_t)(int16_t)case_a[row * lda + index] *
+                       (uint32_t)(int16_t)case_b[index * ldb + col];
+            expected_c[row * job->n + col] = (int32_t)sum;
         }
 }
 
@@ -358,6 +369,16 @@ int main(void)
                 2 * PAGE_WORDS);
     ok &= run_case(2 * dim + 1, 2 * dim + 1, 2 * max_k + 1);
     use_buffers(matrix_a, matrix_b, matrix_c, TEST_MAX_WORDS);
+
+    /* --- Full int16 range: products up to 2^30, sums that overflow 32 bits --- */
+    wide_values = 1;
+    {
+        matmul_job job = { 8, 8, 64, 0, 0, 0, 0, 0 };
+        ok &= run_job(&job);
+        matmul_job job_tall = { 13, 5, 37, 0, 0, 0, 0, 0 };
+        ok &= run_job(&job_tall);
+    }
+    wide_values = 0;
 
     /* --- Bad configurations must be rejected --- */
     sim_puts("-- errors --\n");
